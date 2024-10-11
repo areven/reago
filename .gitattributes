@@ -1,0 +1,22 @@
+# ==============================================================================
+# Line endings
+# ==============================================================================
+# Default to unix file endings for all text files
+
+* text=auto eol=lf
+
+
+# ==============================================================================
+# Unsafe merges
+# ==============================================================================
+# Some files should never be merged automatically. For example if a yarn.lock
+# file changes and git auto-merges it with the target branch, it may silently
+# produce an invalid lock file that will cause many issues. We can force users
+# to resolve these conflicts manually by treating these files as 'binary'.
+
+.pnp.js merge=binary
+npm-shrinkwrap.json merge=binary
+package-lock.json merge=binary
+pnpm-lock.yaml merge=binary
+shrinkwrap.yaml merge=binary
+yarn.lock merge=binary

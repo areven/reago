@@ -1,0 +1,41 @@
+# ==============================================================================
+# Build files
+# ==============================================================================
+# Compiled resources, downloaded packages and anything else that's generated
+# during the build process should be ignored.
+
+# Node.js
+/.yarn/
+node_modules/
+
+# Compiled code
+dist/
+*.pyc
+*.o
+
+
+# ==============================================================================
+# Runtime files
+# ==============================================================================
+# Some of the tools we use might produce extra files during runtime or in
+# case of an error. While useful for debugging, they shouldn't be commited.
+
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# ==============================================================================
+# OS files
+# ==============================================================================
+# Modern operating systems love to create a mess and we have to ignore it.
+
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+*.nosync
+desktop.ini
+ehthumbs.db
+Thumbs.db
