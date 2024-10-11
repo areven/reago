@@ -1,0 +1,24 @@
+{
+  "name": "reago-monorepo",
+  "author": "Sebastian Daniel Nowak",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastian-nowak/reago.git"
+  },
+  "type": "module",
+  "workspaces": [
+    "package/*"
+  ],
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "2.1.2",
+    "tsup": "8.3.0",
+    "typescript": "5.6.3",
+    "vite-tsconfig-paths": "5.0.1",
+    "vitest": "2.1.2"
+  }
+}
