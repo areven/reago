@@ -12,10 +12,13 @@
     "package/*"
   ],
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@commitlint/cli": "19.5.0",
     "@vitest/coverage-v8": "2.1.2",
+    "husky": "9.1.6",
     "tsup": "8.3.0",
     "typescript": "5.6.3",
     "vite-tsconfig-paths": "5.0.1",
