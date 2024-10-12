@@ -12,11 +12,12 @@
     "package/*"
   ],
   "scripts": {
-    "test": "vitest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "vitest"
   },
   "devDependencies": {
     "@commitlint/cli": "19.5.0",
+    "@commitlint/types": "19.5.0",
     "@vitest/coverage-v8": "2.1.2",
     "husky": "9.1.6",
     "tsup": "8.3.0",
