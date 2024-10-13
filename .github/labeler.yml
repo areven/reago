@@ -2,24 +2,24 @@
 # PR labeler
 # ==============================================================================
 
-'scope/root':
+'scope:root':
   - changed-files:
     - any-glob-to-any-file:
       - '*'
       - '.*/**'
 
-'scope/documentation':
+'scope:documentation':
   - changed-files:
     - any-glob-to-any-file: documentation/**
 
-'scope/package/reago':
+'scope:package/reago':
   - changed-files:
     - any-glob-to-any-file: package/reago/**
 
-'scope/package/reago-react':
+'scope:package/reago-react':
   - changed-files:
     - any-glob-to-any-file: package/reago-react/**
 
-'scope/package/eslint-plugin-reago':
+'scope:package/eslint-plugin-reago':
   - changed-files:
     - any-glob-to-any-file: package/eslint-plugin-reago/**
