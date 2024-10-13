@@ -7,5 +7,15 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 
 export default defineConfig({
-  plugins: [tsconfigPaths()]
+  plugins: [tsconfigPaths()],
+  test: {
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json'],
+      reportOnFailure: true,
+      include: [
+        'package/*/src/**'
+      ]
+    }
+  }
 });

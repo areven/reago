@@ -1,0 +1,23 @@
+# ==============================================================================
+# Codecov configuration
+# ==============================================================================
+
+coverage:
+  status:
+    project:
+      default:
+        informational: true
+    patch:
+      default:
+        informational: true
+
+comment:
+  layout: 'diff, flags, files'
+  behavior: default
+  require_changes: false
+  require_base: false
+  require_head: true
+  hide_project_coverage: false
+
+github_checks:
+  annotations: false
