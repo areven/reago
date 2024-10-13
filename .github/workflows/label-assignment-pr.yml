@@ -1,0 +1,17 @@
+# ==============================================================================
+# Label assignment for PRs
+# ==============================================================================
+
+name: Label assignment (PR)
+on:
+  - pull_request_target
+
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'sebastian-nowak'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/labeler@v5
