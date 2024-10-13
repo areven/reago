@@ -1,0 +1,35 @@
+# ==============================================================================
+# Label management
+# ==============================================================================
+# This workflow allows us to manage github labels using an .yml config file
+
+name: Label management
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '.github/labels.yml'
+      - '.github/workflows/label-management.yml'
+  pull_request:
+    paths:
+      - '.github/labels.yml'
+      - '.github/workflows/label-management.yml'
+
+jobs:
+  label-sync:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'sebastian-nowak'
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run label sync
+        uses: crazy-max/ghaction-github-labeler@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          yaml-file: .github/labels.yml
+          dry-run: ${{ github.event_name == 'pull_request' }}
