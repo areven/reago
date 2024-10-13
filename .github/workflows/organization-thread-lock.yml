@@ -1,0 +1,43 @@
+# ==============================================================================
+# Organization (thread lock)
+# ==============================================================================
+# This workflow locks old closed/stale threads
+
+name: Organization (thread lock)
+
+on:
+  schedule:
+    - cron: '0 0,12 * * *'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+  discussions: write
+
+concurrency:
+  group: lock-threads
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'sebastian-nowak'
+    steps:
+      - uses: dessant/lock-threads@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          log-output: true
+          issue-inactive-days: 14
+          issue-comment: >
+            This closed issue has been automatically locked because it had no new activity
+            for 2 weeks. If you are running into a similar issue, please create a new issue
+            with the steps to reproduce. Thank you.
+          pr-inactive-days: 7
+          pr-comment: >
+            This closed pull request has been automatically locked because it had no new
+            activity for a week. If you are running into issues with this change, please create
+            a new issue with the steps to reproduce. Thank you.
+          discussion-inactive-days: 365
+          discussion-comment: >
+            This discussion has been automatically locked because it had no new activity
+            for a year.

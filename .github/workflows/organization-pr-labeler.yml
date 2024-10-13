@@ -1,8 +1,9 @@
 # ==============================================================================
-# Label assignment for PRs
+# Organization (PR labeler)
 # ==============================================================================
+# This workflow assigns labels to PRs based on affected patgs
 
-name: Label assignment (PR)
+name: Organization (PR labeler)
 on:
   - pull_request_target
 
