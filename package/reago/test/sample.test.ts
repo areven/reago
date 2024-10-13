@@ -3,6 +3,7 @@
 // =============================================================================
 // TODO: remove this file
 
+import type {Atom} from 'reago';
 import {expect, test} from 'vitest';
 
 
