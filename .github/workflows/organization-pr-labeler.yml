@@ -1,7 +1,7 @@
 # ==============================================================================
 # Organization (PR labeler)
 # ==============================================================================
-# This workflow assigns labels to PRs based on affected patgs
+# This workflow assigns labels to PRs based on affected paths
 
 name: Organization (PR labeler)
 on:
