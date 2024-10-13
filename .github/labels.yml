@@ -34,9 +34,9 @@
   color: '5f6858'
   description: 'This went stale'
 
-- name: 'scope:root'
+- name: 'scope:meta'
   color: '0e8a16'
-  description: 'Refers to the monorepo root'
+  description: 'Refers to the monorepo setup'
 - name: 'scope:documentation'
   color: '0e8a16'
   description: 'Refers to the documentation'
