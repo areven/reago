@@ -30,12 +30,12 @@ jobs:
           issue-inactive-days: 14
           issue-comment: >
             This closed issue has been automatically locked because it had no new activity
-            for 2 weeks. If you are running into a similar issue, please create a new issue
+            for 2 weeks. If you are running into a similar problem, please create a new issue
             with the steps to reproduce. Thank you.
           pr-inactive-days: 7
           pr-comment: >
             This closed pull request has been automatically locked because it had no new
-            activity for a week. If you are running into issues with this change, please create
+            activity for a week. If you are running into problems with this change, please create
             a new issue with the steps to reproduce. Thank you.
           discussion-inactive-days: 365
           discussion-comment: >
