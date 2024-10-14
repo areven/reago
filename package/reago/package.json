@@ -17,7 +17,7 @@
   "homepage": "https://reago.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sebastian-nowak/reago.git",
+    "url": "git+https://github.com/sebastian-nowak/reago.git",
     "directory": "package/reago"
   },
   "bugs": {
