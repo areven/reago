@@ -35,6 +35,10 @@ export {
 } from '~/hook/atom-effect';
 
 export {
+  atomMemo
+} from '~/hook/atom-memo';
+
+export {
   atomMountEffect,
   AtomMountEffect,
   AtomMountEffectCleanup
