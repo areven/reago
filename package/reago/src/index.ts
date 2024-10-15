@@ -45,6 +45,13 @@ export {
 } from '~/hook/atom-mount-effect';
 
 export {
+  atomReducer,
+  AtomReducer,
+  AtomReducerReducer,
+  AtomReducerDispatcher
+} from '~/hook/atom-reducer';
+
+export {
   atomRef,
   AtomRef
 } from '~/hook/atom-ref';
