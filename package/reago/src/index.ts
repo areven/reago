@@ -61,3 +61,7 @@ export {
   AtomState,
   AtomStateSetter
 } from '~/hook/atom-state';
+
+export {
+  atomStore
+} from '~/hook/atom-store';
