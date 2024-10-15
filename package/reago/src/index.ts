@@ -24,6 +24,10 @@ export {dispatch} from '~/api/dispatch';
 export {invalidate} from '~/api/invalidate';
 
 export {
+  atomAbortSignal
+} from '~/hook/atom-abort-signal';
+
+export {
   atomAction,
   AtomAction
 } from '~/hook/atom-action';
