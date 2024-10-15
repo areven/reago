@@ -1,0 +1,195 @@
+// =============================================================================
+// Atom computation
+// =============================================================================
+
+import {AnyAtom, AtomResultOf} from '~/atom';
+import {FUNCTIONAL_ATOM, GENERATIVE_ATOM, NO_VALUE, REJECTED, RESOLVED} from '~/const';
+import {ComputationAbortedAtomError, GeneratorPromiseExpectedAtomError} from '~/error';
+import {AtomInstance} from '~/space/instance';
+import {AtomSupervisor} from '~/space/supervisor';
+import {getPromiseState, PromiseState, trackPromise} from '~/util/tracked-promise';
+import {isPromise} from '~/util/type-check';
+import {ComputationContext, runWithComputationContext} from './computation-context';
+import {AtomRunnerGenerator, AtomRunnerStep, createRunner} from './runner';
+
+
+export interface Computation<T extends AnyAtom> {
+  /**
+   * Computation mode - functional or generative.
+   */
+  mode: typeof FUNCTIONAL_ATOM | typeof GENERATIVE_ATOM;
+
+  /**
+   * Value of the atom or NO_VALUE if atom is not computed yet.
+   */
+  result: AtomResultOf<T> | typeof NO_VALUE;
+
+  /**
+   * Error thrown during the computation or NO_VALUE if there was no error.
+   */
+  error: unknown | typeof NO_VALUE;
+
+  /**
+   * Promise that tracks the state of an async computation.
+   *
+   * It's present only if the computation turned out to be async. Note that
+   * only generative atoms can compute asynchronously, but not all of them will.
+   */
+  promise?: Promise<void>;
+
+  /**
+   * Abort controller for the computation.
+   */
+  abortController: AbortController;
+
+  /**
+   * Pointer to the current stack frame, for hooks.
+   */
+  pointer: number;
+
+  /**
+   * Set of atom instance dependencies.
+   *
+   * These are atom instances that were referenced during this computation.
+   */
+  dependencies: Set<AtomInstance<AnyAtom>>;
+}
+
+export function runComputation<T extends AnyAtom>(
+  supervisor: AtomSupervisor,
+  instance: AtomInstance<T>
+): Computation<T> {
+  // Set up the environment
+  const computation: Computation<T> = {
+    mode: FUNCTIONAL_ATOM,
+    result: NO_VALUE,
+    error: NO_VALUE,
+    abortController: new AbortController(),
+    pointer: 0,
+    dependencies: new Set()
+  };
+
+  const context: ComputationContext<T> = {
+    supervisor,
+    instance,
+    computation
+  };
+
+  // Get the runner generator
+  let generator: AtomRunnerGenerator<AtomResultOf<T>>;
+  try {
+    runWithComputationContext(context, () => {
+      generator = createRunner<T>(instance.atom)(...instance.args);
+    });
+  } catch (err) {
+    storeComputationError(computation, err);
+    return computation;
+  }
+
+  if (generator![FUNCTIONAL_ATOM] !== true) {
+    computation.mode = GENERATIVE_ATOM;
+  }
+
+  // Try to compute it synchronously first
+  let stepPromise = runComputationSynchronousSteps(context, generator!, 'next');
+  if (stepPromise === null) {
+    return computation;
+  }
+
+  // Compute the remaining steps asynchronously
+  computation.promise = (async () => {
+    while (stepPromise !== null) {
+      let method: 'next' | 'throw', value: unknown;
+      try {
+        value = await stepPromise;
+        method = 'next';
+      } catch (err) {
+        value = err;
+        method = 'throw';
+      }
+      stepPromise = runComputationSynchronousSteps(context, generator!, method, value);
+    }
+  })();
+
+  return computation;
+}
+
+function runComputationSynchronousSteps<T extends AnyAtom>(
+  context: ComputationContext<T>,
+  generator: AtomRunnerGenerator<AtomResultOf<T>>,
+  method: 'next' | 'throw',
+  value: unknown = undefined
+): null | Promise<unknown> {
+  let step = runComputationStep(context, generator, method, value);
+  if (step === null) return null;
+
+  do {
+    if (!isPromise(step.value)) {
+      throw new GeneratorPromiseExpectedAtomError(step.value);
+    }
+
+    trackPromise(step.value);
+    const promiseState: PromiseState = getPromiseState(step.value);
+
+    if (promiseState.status === RESOLVED) {
+      step = runComputationStep(context, generator, 'next', promiseState.result);
+      if (step === null) return null;
+    } else if (promiseState.status === REJECTED) {
+      step = runComputationStep(context, generator, 'throw', promiseState.error);
+      if (step === null) return null;
+    } else {
+      // ugh, async computation needed
+      return step.value;
+    }
+  } while (true);
+}
+
+function runComputationStep<T extends AnyAtom>(
+  context: ComputationContext<T>,
+  generator: AtomRunnerGenerator<AtomResultOf<T>>,
+  method: 'next' | 'throw',
+  value: unknown = undefined
+): null | AtomRunnerStep<AtomResultOf<T>> {
+  let result = null;
+  runWithComputationContext(context, () => {
+    if (context.computation.abortController.signal.aborted) {
+      // if the computation is prematurely aborted, allow the generator to clean
+      // up its resources using a try .. finally block
+      try {
+        generator.return(undefined as AtomResultOf<T>);
+      } catch (err) {
+        // swallow errors, they're irrelevant
+      }
+      storeComputationAborted(context.computation);
+      return;
+    }
+
+    let step;
+    try {
+      step = generator[method](value);
+    } catch (err) {
+      storeComputationError(context.computation, err);
+      return;
+    }
+
+    if (step.done) {
+      storeComputationResult(context.computation, step.value);
+      return;
+    }
+
+    result = step;
+  });
+  return result;
+}
+
+function storeComputationResult<T extends AnyAtom>(computation: Computation<T>, result: AtomResultOf<T>): void {
+  computation.result = result;
+}
+
+function storeComputationError<T extends AnyAtom>(computation: Computation<T>, error: unknown): void {
+  computation.error = error;
+}
+
+function storeComputationAborted<T extends AnyAtom>(computation: Computation<T>): void {
+  computation.error = new ComputationAbortedAtomError();
+}
