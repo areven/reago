@@ -39,3 +39,9 @@ export {
   AtomMountEffect,
   AtomMountEffectCleanup
 } from '~/hook/atom-mount-effect';
+
+export {
+  atomState,
+  AtomState,
+  AtomStateSetter
+} from '~/hook/atom-state';
