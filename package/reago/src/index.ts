@@ -41,6 +41,11 @@ export {
 } from '~/hook/atom-mount-effect';
 
 export {
+  atomRef,
+  AtomRef
+} from '~/hook/atom-ref';
+
+export {
   atomState,
   AtomState,
   AtomStateSetter
