@@ -1,0 +1,17 @@
+
+{
+  "name": "Reago dev container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "EditorConfig.EditorConfig",
+        "vitest.explorer"
+      ]
+    }
+  }
+}
