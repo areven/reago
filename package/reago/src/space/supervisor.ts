@@ -336,13 +336,18 @@ export class AtomSupervisor {
     this.#mountEffectQueue.delete(instance);
     const isMounted = instance.mount !== UNMOUNTED;
 
-    for (const mountEffect of instance.stackMountEffect) {
+    // cleanup in reverse order mount effects appeared in code
+    for (let x = instance.stackMountEffect.length - 1; x >= 0; --x) {
+      const mountEffect = instance.stackMountEffect[x];
       if (mountEffect.cleanup && (!isMounted || (isMounted && mountEffect.status === UNLOADED))) {
         runWithCallbackContext({supervisor: this}, mountEffect.cleanup);
         mountEffect.status = UNLOADED;
         mountEffect.cleanup = undefined;
       }
+    }
 
+    // setup in the order mount effects appeared in code
+    for (const mountEffect of instance.stackMountEffect) {
       if (isMounted && mountEffect.status === UNLOADED) {
         let effectResult;
         runWithCallbackContext({supervisor: this}, () => {
