@@ -90,6 +90,7 @@ export class AtomSupervisor {
         if (instance.watchers.delete(watcher)) {
           if (instance.watchers.size === 0) {
             this.unmountInstance(instance);
+            this.flush();
           }
         }
       },
