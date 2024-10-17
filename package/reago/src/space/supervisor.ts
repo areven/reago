@@ -157,10 +157,15 @@ export class AtomSupervisor {
     if (instance.mount === UNMOUNTED) {
       this.#mountEffectQueue.add(instance);
 
+      const reverseUnmount: AtomInstance<AnyAtom>[] = [];
       for (const dependency of instance.dependencies) {
         if (dependency.mount === MOUNTED_TRANSITIVELY) {
-          this.unmountInstance(dependency);
+          reverseUnmount.push(dependency);
         }
+      }
+
+      for (let x = reverseUnmount.length - 1; x >= 0; --x) {
+        this.unmountInstance(reverseUnmount[x]);
       }
     }
   }
