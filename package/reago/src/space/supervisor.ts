@@ -334,6 +334,7 @@ export class AtomSupervisor {
     for (const mountEffect of instance.stackMountEffect) {
       if (mountEffect.cleanup && (!isMounted || (isMounted && mountEffect.status === UNLOADED))) {
         runWithCallbackContext({supervisor: this}, mountEffect.cleanup);
+        mountEffect.status = UNLOADED;
         mountEffect.cleanup = undefined;
       }
 
