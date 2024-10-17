@@ -34,7 +34,9 @@ export class AtomStore {
       atom,
       ...args.slice(0, -1) as AtomFamilyArgsOf<T>
     );
-    return this.#supervisor.watchInstance(instance, args[args.length - 1] as AtomListener<T>);
+    const watcher = this.#supervisor.watchInstance(instance, args[args.length - 1] as AtomListener<T>);
+    this.#supervisor.flush();
+    return watcher;
   }
 
   dispatch<T extends AnyAtom>(
