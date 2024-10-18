@@ -7,14 +7,12 @@ coverage:
     project:
       default:
         informational: true
-    patch:
-      default:
-        informational: true
+    patch: off
 
 comment:
-  layout: 'diff, flags, files'
+  layout: 'diff, files'
   behavior: default
-  require_changes: false
+  require_changes: true
   require_base: false
   require_head: true
   hide_project_coverage: false
