@@ -239,6 +239,29 @@ test('atomMountEffect mounted handler re-runs if dependencies have changed', () 
   expect(unmountCounter).toBe(1);
 });
 
+test('atomMountEffect mounted handler re-runs immediately if atom is invalidated', () => {
+  let mountCounter = 0, unmountCounter = 0;
+  let recompute = 0;
+
+  function $atom() {
+    atomMountEffect(() => {
+      ++mountCounter;
+      return () => {
+        ++unmountCounter;
+      };
+    }, [recompute]);
+  }
+
+  using watcher = watch($atom, () => {});
+  expect(mountCounter).toBe(1);
+  expect(unmountCounter).toBe(0);
+
+  ++recompute;
+  invalidate($atom); // no read() needed!
+  expect(mountCounter).toBe(2);
+  expect(unmountCounter).toBe(1);
+});
+
 test('atomMountEffect handlers run in the order they appeared in an atom', () => {
   const runOrder: number[] = [];
 
