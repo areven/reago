@@ -7,7 +7,7 @@ import {
   COMPUTING, COMPUTED, MOUNTED_DIRECTLY, MOUNTED_TRANSITIVELY, UNMOUNTED, FRESH, OUTDATED, STALE
 } from '~/const';
 import {AtomActionFrame} from '~/hook/atom-action';
-import {AtomEffectFrame} from '~/hook/atom-effect';
+import {AtomComputationEffectFrame} from '~/hook/atom-computation-effect';
 import {AtomMountEffectFrame} from '~/hook/atom-mount-effect';
 import {Computation} from '~/reactor/computation';
 import {IterableWeakSet} from '~/util/iterable-weakset';
@@ -112,12 +112,12 @@ export interface AtomInstance<T extends AnyAtom> {
   stackAction: AtomActionFrame[];
 
   /**
-   * Internal stack for hooks, restricted to `atomEffect` hook type.
+   * Internal stack for hooks, restricted to `atomComputationEffect` hook type.
    *
-   * Contains the same data as `stack.filter(o => o.hook = atomEffect)`.
-   * Used to improve performance of side effects handling.
+   * Contains the same data as `stack.filter(o => o.hook = atomComputationEffect)`.
+   * Used to improve performance of computation effects handling.
    */
-  stackSideEffect: AtomEffectFrame[];
+  stackComputationEffect: AtomComputationEffectFrame[];
 
   /**
    * Internal stack for hooks, restricted to `atomMountEffect` hook type.
@@ -152,7 +152,7 @@ export function createAtomInstance<T extends AnyAtom>(
     dependants: new IterableWeakSet(),
     stack: [],
     stackAction: [],
-    stackSideEffect: [],
+    stackComputationEffect: [],
     stackMountEffect: [],
     freezeStack: false
   };

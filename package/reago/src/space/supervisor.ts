@@ -29,7 +29,7 @@ export class AtomSupervisor {
   #flushTimeout: ReturnType<typeof setTimeout> | null = null;
   readonly #computationQueue: Set<AtomInstance<AnyAtom>> = new Set();
   readonly #watcherDispatchQueue: Set<AtomWatcher<AnyAtom>> = new Set();
-  readonly #sideEffectQueue: Set<AtomInstance<AnyAtom>> = new Set();
+  readonly #computationEffectQueue: Set<AtomInstance<AnyAtom>> = new Set();
   readonly #mountEffectQueue: Set<AtomInstance<AnyAtom>> = new Set();
 
   getFamily<T extends AnyAtom>(atom: T): AtomFamily<T> {
@@ -189,8 +189,8 @@ export class AtomSupervisor {
       this.#runInstanceComputation(pendingInstance);
     }
 
-    for (const pendingInstance of this.#sideEffectQueue) {
-      this.#runInstanceSideEffects(pendingInstance);
+    for (const pendingInstance of this.#computationEffectQueue) {
+      this.#runInstanceComputationEffects(pendingInstance);
     }
 
     for (const pendingInstance of this.#mountEffectQueue) {
@@ -306,28 +306,28 @@ export class AtomSupervisor {
     }
   }
 
-  #runInstanceSideEffects<T extends AnyAtom>(instance: AtomInstance<T>): void {
-    this.#sideEffectQueue.delete(instance);
+  #runInstanceComputationEffects<T extends AnyAtom>(instance: AtomInstance<T>): void {
+    this.#computationEffectQueue.delete(instance);
 
-    for (const sideEffect of instance.stackSideEffect) {
-      if (!sideEffect.setup) continue;
+    for (const computationEffect of instance.stackComputationEffect) {
+      if (!computationEffect.setup) continue;
 
-      if (sideEffect.cleanup) {
-        runWithCallbackContext({supervisor: this}, sideEffect.cleanup);
-        sideEffect.cleanup = undefined;
+      if (computationEffect.cleanup) {
+        runWithCallbackContext({supervisor: this}, computationEffect.cleanup);
+        computationEffect.cleanup = undefined;
       }
 
       let effectResult;
       runWithCallbackContext({supervisor: this}, () => {
-        effectResult = sideEffect.setup!.call(undefined);
+        effectResult = computationEffect.setup!.call(undefined);
       });
-      sideEffect.setup = undefined;
+      computationEffect.setup = undefined;
 
       if (effectResult !== undefined) {
         if (typeof effectResult !== 'function') {
           throw new InvalidCleanupFunctionAtomError();
         }
-        sideEffect.cleanup = effectResult;
+        computationEffect.cleanup = effectResult;
       }
     }
   }
@@ -447,9 +447,9 @@ export class AtomSupervisor {
       }
     }
 
-    // Queue side effects
-    if (instance.stackSideEffect.some(frame => !!frame.setup)) {
-      this.#sideEffectQueue.add(instance);
+    // Queue computation effects
+    if (instance.stackComputationEffect.some(frame => !!frame.setup)) {
+      this.#computationEffectQueue.add(instance);
     }
 
     // Queue mount effects

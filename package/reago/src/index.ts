@@ -33,10 +33,10 @@ export {
 } from '~/hook/atom-action';
 
 export {
-  atomEffect,
-  AtomEffect,
-  AtomEffectCleanup
-} from '~/hook/atom-effect';
+  atomComputationEffect,
+  AtomComputationEffect,
+  AtomComputationEffectCleanup
+} from '~/hook/atom-computation-effect';
 
 export {
   atomMemo
