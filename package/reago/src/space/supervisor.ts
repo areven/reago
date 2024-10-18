@@ -309,12 +309,20 @@ export class AtomSupervisor {
   #runInstanceComputationEffects<T extends AnyAtom>(instance: AtomInstance<T>): void {
     this.#computationEffectQueue.delete(instance);
 
-    for (const computationEffect of instance.stackComputationEffect) {
-      if (!computationEffect.setup) continue;
-
-      if (computationEffect.cleanup) {
+    // cleanup in reverse order computation effects appeared in code
+    for (let x = instance.stackComputationEffect.length - 1; x >= 0; --x) {
+      const computationEffect = instance.stackComputationEffect[x];
+      if (computationEffect.setup && computationEffect.cleanup) {
         runWithCallbackContext({supervisor: this}, computationEffect.cleanup);
         computationEffect.cleanup = undefined;
+      }
+    }
+
+    // setup in the order computation effects appeared in code
+    for (const computationEffect of instance.stackComputationEffect) {
+      if (!computationEffect.setup) continue;
+      if (computationEffect.cleanup) {
+        throw new InternalAtomError();
       }
 
       let effectResult;
@@ -349,6 +357,10 @@ export class AtomSupervisor {
     // setup in the order mount effects appeared in code
     for (const mountEffect of instance.stackMountEffect) {
       if (isMounted && mountEffect.status === UNLOADED) {
+        if (mountEffect.cleanup) {
+          throw new InternalAtomError();
+        }
+
         let effectResult;
         runWithCallbackContext({supervisor: this}, () => {
           effectResult = mountEffect.setup.call(undefined);
