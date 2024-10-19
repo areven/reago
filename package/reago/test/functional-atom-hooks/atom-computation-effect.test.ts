@@ -4,7 +4,7 @@
 
 import {atomAction, atomComputationEffect, atomMemo, atomRef, invalidate, read, watch} from 'reago';
 import {expect, test} from 'vitest';
-import {ComputationContextRequiredAtomError} from '~/error';
+import {ComputationContextRequiredAtomError, InvalidCleanupFunctionAtomError} from '~/error';
 
 
 test('atomComputationEffect handler without specified dependencies runs on every computation', () => {
@@ -138,6 +138,16 @@ test('atomComputationEffect handler can optionally return a cleanup function', (
   read($atom);
   expect(setupCounter).toBe(2);
   expect(cleanupCounter).toBe(1);
+});
+
+test('atomComputationEffect cleanup function must be a valid function', () => {
+  function $atom() {
+    atomComputationEffect(() => {
+      return 123 as any;
+    }, []);
+  }
+
+  expect(() => read($atom)).toThrowError(InvalidCleanupFunctionAtomError);
 });
 
 test('atomComputationEffect handlers run and clean in the order atoms are committed', () => {

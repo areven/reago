@@ -4,7 +4,7 @@
 
 import {atomAction, atomMemo, atomMountEffect, atomRef, atomState, dispatch, invalidate, read, watch} from 'reago';
 import {expect, test} from 'vitest';
-import {ComputationContextRequiredAtomError} from '~/error';
+import {ComputationContextRequiredAtomError, InvalidCleanupFunctionAtomError} from '~/error';
 
 
 test('atomMountEffect has no effect if atom is not mounted', () => {
@@ -496,6 +496,16 @@ test('atomMountEffect can be called multiple times with the same function', () =
   watcher.clear();
   expect(mountCounter).toBe(3);
   expect(unmountCounter).toBe(3);
+});
+
+test('atomMountEffect cleanup function must be a valid function', () => {
+  function $atom() {
+    atomMountEffect(() => {
+      return 123 as any;
+    }, []);
+  }
+
+  expect(() => watch($atom, () => {})).toThrowError(InvalidCleanupFunctionAtomError);
 });
 
 test('atomMountEffect cannot be called outside of a computation', () => {
