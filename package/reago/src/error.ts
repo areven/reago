@@ -44,8 +44,8 @@ export class GeneratorPromiseExpectedAtomError extends AtomError {
 }
 
 export function assert(condition: unknown): asserts condition {
+  /* v8 ignore next 3 */
   if (!condition) {
-    /* v8 ignore next */
     throw new InternalAtomError();
   }
 }

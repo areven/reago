@@ -2,7 +2,7 @@
 // Generative atom rules
 // =============================================================================
 
-import {read} from 'reago';
+import {invalidate, read} from 'reago';
 import {expect, test} from 'vitest';
 import {GeneratorPromiseExpectedAtomError} from '~/error';
 
@@ -33,4 +33,86 @@ test('generative atom requires yielded values to be promises', () => {
   expect(() => read($atom3)).toThrowError(GeneratorPromiseExpectedAtomError);
   expect(() => read($atom4)).toThrowError(GeneratorPromiseExpectedAtomError);
   expect(() => read($atom5)).toThrowError(GeneratorPromiseExpectedAtomError);
+});
+
+test('generative atom will receive results from yielded promises', async () => {
+  function* $atom() {
+    let val: number;
+    try {
+      val = yield Promise.resolve(123);
+    } catch (err) {
+      val = 0;
+    }
+    return val;
+  }
+
+  await expect(read($atom)).resolves.toBe(123);
+});
+
+
+test('generative atom will receive exceptions thrown by yielded promises', async () => {
+  function* $atom() {
+    try {
+      yield Promise.reject();
+    } catch (err) {
+      return true;
+    }
+    return false;
+  }
+
+  await expect(read($atom)).resolves.toBeTruthy();
+});
+
+test('generative atom will run the `try .. finally` block for interrupted computations', async () => {
+  let beforeYield = false, afterYield = false, cleanup = false, killed = false;;
+
+  function* $atom() {
+    if (killed) {
+      return 123;
+    }
+
+    try {
+      beforeYield = true;
+      yield Promise.resolve();
+      afterYield = true;
+    } finally {
+      cleanup = true;
+      throw new Error('this error will be swallowed as it is not relevant');
+    }
+  }
+
+  // run everything up to the first yield
+  const promise = read($atom);
+  expect(beforeYield).toBeTruthy();
+  expect(afterYield).toBeFalsy();
+  expect(cleanup).toBeFalsy();
+
+  // we kill the computation and start a new one
+  killed = true;
+  invalidate($atom);
+  await promise;
+  expect(beforeYield).toBeTruthy();
+  expect(afterYield).toBeFalsy();
+  expect(cleanup).toBeTruthy();
+});
+
+test('generative atom will ignore errors thrown from interrupted computations', async () => {
+  let killed = false;
+
+  function* $atom() {
+    yield Promise.resolve();
+    if (!killed) {
+      throw new Error('will be ignored')
+    } else {
+      return 123;
+    }
+  }
+
+  // run everything up to the first yield
+  const promise = read($atom);
+
+  // kill the computation and start a new one
+  killed = true;
+  invalidate($atom);
+  await expect(promise).resolves.toBe(123);
 });
