@@ -27,15 +27,6 @@ export function createRunner<T extends AnyAtom>(atom: T): AtomRunner<T> {
         [FUNCTIONAL_ATOM]: true,
         next() {
           return {done: true, value: result as AtomResultOf<T>};
-        },
-        return() {
-          return {done: true, value: undefined as AtomResultOf<T>};
-        },
-        throw() {
-          return {done: true, value: undefined as AtomResultOf<T>};
-        },
-        [Symbol.iterator]() {
-          return this;
         }
       } as unknown as AtomRunnerGenerator<AtomResultOf<T>>;
     }
