@@ -283,6 +283,30 @@ test('atomMountEffect handlers run in the order they appeared in an atom', () =>
   expect(runOrder).toEqual([1, 2, 3]);
 });
 
+test('atomMountEffect handler runs if atom was transitively mounted later', () => {
+  let mounted = false;
+
+  function $atom1() {
+    atomMountEffect(() => {
+      mounted = true;
+    }, []);
+  }
+
+  function $atom2() {
+    const [nested, setNested] = atomState(false);
+    atomAction(setNested, []);
+    if (nested) {
+      read($atom1);
+    }
+  }
+
+  using watcher = watch($atom2, () => {});
+  expect(mounted).toBeFalsy();
+
+  dispatch($atom2)(true);
+  expect(mounted).toBeTruthy();
+});
+
 test('atomMountEffect handlers cleanup in reverse order they appeared in an atom', () => {
   const runOrder: number[] = [];
 
