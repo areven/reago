@@ -1,5 +1,5 @@
 // =============================================================================
-// Rules of hooks
+// Atom hook rules
 // =============================================================================
 
 import {atomAction, atomRef, atomState, createStore, dispatch, invalidate, read} from 'reago';
