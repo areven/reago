@@ -10,7 +10,7 @@ import {
   COMPUTING, COMPUTED, FUNCTIONAL_ATOM, GENERATIVE_ATOM, NO_VALUE, MOUNTED_DIRECTLY,
   MOUNTED_TRANSITIVELY, OUTDATED, FRESH, STALE, UNMOUNTED, UNLOADED, LOADED
 } from '~/const';
-import {HookCountMismatchAtomError, InternalAtomError, InvalidCleanupFunctionAtomError} from '~/error';
+import {assert, HookCountMismatchAtomError, InvalidCleanupFunctionAtomError} from '~/error';
 import {runWithCallbackContext} from '~/reactor/callback-context';
 import {runComputation} from '~/reactor/computation';
 import {hashFamilyArguments} from '~/util/arg-hash';
@@ -120,7 +120,7 @@ export class AtomSupervisor {
           this.dispatchInstance(instance, ...args);
         }).catch(() => {});
     } else {
-      throw new InternalAtomError();
+      assert(false);
     }
   }
 
@@ -330,9 +330,7 @@ export class AtomSupervisor {
     // setup in the order computation effects appeared in code
     for (const computationEffect of instance.stackComputationEffect) {
       if (!computationEffect.setup) continue;
-      if (computationEffect.cleanup) {
-        throw new InternalAtomError();
-      }
+      assert(!computationEffect.cleanup);
 
       let effectResult;
       runWithCallbackContext({supervisor: this}, () => {
@@ -366,9 +364,7 @@ export class AtomSupervisor {
     // setup in the order mount effects appeared in code
     for (const mountEffect of instance.stackMountEffect) {
       if (isMounted && mountEffect.status === UNLOADED) {
-        if (mountEffect.cleanup) {
-          throw new InternalAtomError();
-        }
+        assert(!mountEffect.cleanup);
 
         let effectResult;
         runWithCallbackContext({supervisor: this}, () => {

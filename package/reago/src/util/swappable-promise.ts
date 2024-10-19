@@ -3,7 +3,7 @@
 // =============================================================================
 
 import {PENDING, REJECTED, RESOLVED} from '~/const';
-import {InternalAtomError} from '~/error';
+import {assert} from '~/error';
 
 
 const SWAPPABLE = Symbol();
@@ -43,9 +43,7 @@ export function createSwappablePromise<Type>(initial: Promise<Type> | null = nul
     status: PENDING,
     promise: null,
     setPromise: (p: Promise<Type> | null) => {
-      if (promise[SWAPPABLE].status !== PENDING) {
-        throw new InternalAtomError();
-      }
+      assert(promise[SWAPPABLE].status === PENDING);
 
       if (promise[SWAPPABLE].promise === p) {
         return;
