@@ -41,15 +41,6 @@ export class AtomSupervisor {
     return family;
   }
 
-  hasInstance<T extends AnyAtom>(
-    atom: T,
-    ...args: AtomFamilyArgsOf<T>
-  ): Boolean {
-    const family = this.getFamily(atom);
-    const hash = hashFamilyArguments(args);
-    return family.instanceMap.has(hash);
-  }
-
   getInstance<T extends AnyAtom>(
     atom: T,
     ...args: AtomFamilyArgsOf<T>
@@ -115,12 +106,11 @@ export class AtomSupervisor {
     this.syncInstance(instance);
     if (instance.status === COMPUTED) {
       this.#runInstanceActions(instance, ...args);
-    } else if (instance.status === COMPUTING) {
-        instance.promise!.finally(() => {
-          this.dispatchInstance(instance, ...args);
-        }).catch(() => {});
     } else {
-      assert(false);
+      assert(instance.status === COMPUTING);
+      instance.promise!.finally(() => {
+        this.dispatchInstance(instance, ...args);
+      }).catch(() => {});
     }
   }
 
