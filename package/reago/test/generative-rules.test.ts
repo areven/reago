@@ -49,6 +49,26 @@ test('generative atom will receive results from yielded promises', async () => {
   await expect(read($atom)).resolves.toBe(123);
 });
 
+test('generative atom will cache results from yielded promises', async () => {
+  const resolved = Promise.resolve(123);
+  let counter = 0;
+
+  function* $atom() {
+    const value: number = yield resolved;
+    ++counter;
+    return value;
+  }
+
+  // first run will have to wait for `resolved` to return
+  const promise = read($atom);
+  expect(counter).toBe(0);
+  await expect(promise).resolves.toBe(123);
+
+  // second run will compute synchronously
+  invalidate($atom);
+  read($atom); // no await here!
+  expect(counter).toBe(2);
+});
 
 test('generative atom will receive exceptions thrown by yielded promises', async () => {
   function* $atom() {
@@ -61,6 +81,31 @@ test('generative atom will receive exceptions thrown by yielded promises', async
   }
 
   await expect(read($atom)).resolves.toBeTruthy();
+});
+
+test('generative atom will cache exceptions thrown by yielded promises', async () => {
+  const rejected = Promise.reject();
+  let counter = 0;
+
+  function* $atom() {
+    try {
+      yield rejected;
+    } catch (err) {
+      ++counter;
+      return true;
+    }
+    return false;
+  }
+
+  // first run will have to wait for `rejected` to throw
+  const promise = read($atom);
+  expect(counter).toBe(0);
+  await promise;
+
+  // second run will compute synchronously
+  invalidate($atom);
+  read($atom); // no await here!
+  expect(counter).toBe(2);
 });
 
 test('generative atom will run the `try .. finally` block for interrupted computations', async () => {
