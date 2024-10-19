@@ -213,6 +213,17 @@ test('hooks cannot be removed in subsequent computations', async () => {
   await expect(read($atom2)).rejects.toThrowError(HookCountMismatchAtomError);
 });
 
+test('hooks cannot be used in an async function after `await`', async () => {
+  async function $invalidAtom() {
+    await Promise.resolve(123);
+    const [state] = atomState(123);
+    return state;
+  }
+
+  const promise = read($invalidAtom);
+  await expect(promise).rejects.toThrow(ComputationContextRequiredAtomError);
+})
+
 test('hooks cannot be called outside of a computation', () => {
   expect(() => atomRef(null)).toThrowError(ComputationContextRequiredAtomError);
   expect(() => atomState([])).toThrowError(ComputationContextRequiredAtomError);
