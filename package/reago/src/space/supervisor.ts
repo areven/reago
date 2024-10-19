@@ -53,6 +53,15 @@ export class AtomSupervisor {
   getInstance<T extends AnyAtom>(
     atom: T,
     ...args: AtomFamilyArgsOf<T>
+  ): AtomInstance<T> | null {
+    const family = this.getFamily(atom);
+    const hash = hashFamilyArguments(args);
+    return family.instanceMap.get(hash) ?? null;
+  }
+
+  requireInstance<T extends AnyAtom>(
+    atom: T,
+    ...args: AtomFamilyArgsOf<T>
   ): AtomInstance<T> {
     const family = this.getFamily(atom);
     const hash = hashFamilyArguments(args);

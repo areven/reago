@@ -22,7 +22,7 @@ export class AtomStore {
     atom: T,
     ...args: AtomFamilyArgsOf<T>
   ): AtomResultOf<T> | Promise<AtomResultOf<T>> {
-    const instance = this.#supervisor.getInstance(atom, ...args);
+    const instance = this.#supervisor.requireInstance(atom, ...args);
     return this.#supervisor.readInstance(instance);
   }
 
@@ -30,7 +30,7 @@ export class AtomStore {
     atom: T,
     ...args: [...AtomFamilyArgsOf<T>, AtomListener<T>]
   ): AtomWatcher<T> {
-    const instance = this.#supervisor.getInstance(
+    const instance = this.#supervisor.requireInstance(
       atom,
       ...args.slice(0, -1) as AtomFamilyArgsOf<T>
     );
@@ -44,7 +44,7 @@ export class AtomStore {
     ...args: AtomFamilyArgsOf<T>
   ): AtomDispatcher<T> {
     return (...actionArgs) => {
-      const instance = this.#supervisor.getInstance(atom, ...args);
+      const instance = this.#supervisor.requireInstance(atom, ...args);
       this.#supervisor.dispatchInstance(instance, ...actionArgs);
       this.#supervisor.flush();
     };
@@ -52,7 +52,9 @@ export class AtomStore {
 
   invalidate<T extends AnyAtom>(atom: T, ...args: AtomFamilyArgsOf<T>): void {
     const instance = this.#supervisor.getInstance(atom, ...args);
-    this.#supervisor.invalidateInstance(instance);
-    this.#supervisor.flush();
+    if (instance) {
+      this.#supervisor.invalidateInstance(instance);
+      this.#supervisor.flush();
+    }
   }
 }

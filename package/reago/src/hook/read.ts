@@ -14,7 +14,7 @@ export function _read<T extends AnyAtom>(
   ...args: AtomFamilyArgsOf<T>
 ): AtomResultOf<T> | Promise<AtomResultOf<T>> {
   const context = requireComputationContext();
-  const targetInstance = context.supervisor.getInstance(atom, ...args);
+  const targetInstance = context.supervisor.requireInstance(atom, ...args);
 
   if (!context.computation.abortController.signal.aborted) {
     context.computation.dependencies.add(targetInstance);
