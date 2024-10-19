@@ -5,12 +5,15 @@
 export {
   Atom,
   AnyAtom,
-  AtomWatcher,
-  AtomListener,
   AtomResultOf,
   AtomFamilyArgsOf,
   AtomActionArgsOf
-} from '~/atom';
+} from '~/core/atom';
+
+export {
+  AtomWatcher,
+  AtomListener
+} from '~/core/atom-watcher';
 
 export {
   Store,

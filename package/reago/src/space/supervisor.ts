@@ -3,13 +3,16 @@
 // =============================================================================
 
 import {
-  AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomActionArgsOf, AtomFamilyArgsOf,
-  AtomListener, AtomResultOf, AtomWatcher
-} from '~/atom';
-import {
-  COMPUTING, COMPUTED, FUNCTIONAL_ATOM, GENERATIVE_ATOM, NO_VALUE, MOUNTED_DIRECTLY,
-  MOUNTED_TRANSITIVELY, OUTDATED, FRESH, STALE, UNMOUNTED, UNLOADED, LOADED
+  COMPUTED, COMPUTING, FRESH, FUNCTIONAL_ATOM, GENERATIVE_ATOM, LOADED, METADATA,
+  MOUNTED_DIRECTLY, MOUNTED_TRANSITIVELY, NO_VALUE, OUTDATED, STALE, UNLOADED, UNMOUNTED
 } from '~/const';
+import {
+  AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomActionArgsOf, AtomFamilyArgsOf,
+  AtomResultOf
+} from '~/core/atom';
+import {AtomFamily, createAtomFamily} from '~/core/atom-family';
+import {AtomInstance, createAtomInstance} from '~/core/atom-instance';
+import {AtomListener, AtomWatcher, createAtomWatcher} from '~/core/atom-watcher';
 import {assert, HookCountMismatchAtomError, InvalidCleanupFunctionAtomError} from '~/error';
 import {runWithCallbackContext} from '~/reactor/callback-context';
 import {runComputation} from '~/reactor/computation';
@@ -17,13 +20,11 @@ import {hashFamilyArguments} from '~/util/arg-hash';
 import {compareEqual} from '~/util/comparison';
 import {swapOrRecreatePromise, unbindSwappablePromiseIfPending} from '~/util/swappable-promise';
 import {trackPromise, trackRejectedPromise, trackResolvedPromise} from '~/util/tracked-promise';
-import {AtomFamily, createAtomFamily} from './family';
-import {AtomInstance, createAtomInstance} from './instance';
-import {AtomStore} from './store';
+import {Store} from './store';
 
 
-export class AtomSupervisor {
-  readonly store: AtomStore = new AtomStore(this);
+export class Supervisor {
+  readonly store: Store = new Store(this);
   readonly #atomFamily: WeakMap<AnyAtom, AtomFamily<AnyAtom>> = new WeakMap();
 
   #flushTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -83,22 +84,10 @@ export class AtomSupervisor {
   watchInstance<T extends AnyAtom>(instance: AtomInstance<T>, listener: AtomListener<T>): AtomWatcher<T> {
     this.syncInstance(instance);
     this.mountInstance(instance);
-    const watcher = {
-      listener,
-      clear: () => {
-        this.#watcherDispatchQueue.delete(watcher);
-        if (instance.watchers.delete(watcher)) {
-          if (instance.watchers.size === 0) {
-            this.unmountInstance(instance);
-            this.flush();
-          }
-        }
-      },
-      [Symbol.dispose]: () => {
-        watcher.clear();
-      }
-    };
+
+    const watcher = createAtomWatcher(this, instance, listener);
     instance.watchers.add(watcher);
+
     return watcher;
   }
 
@@ -198,7 +187,9 @@ export class AtomSupervisor {
 
     for (const pendingWatcher of this.#watcherDispatchQueue) {
       this.#watcherDispatchQueue.delete(pendingWatcher);
-      runWithCallbackContext({supervisor: this}, pendingWatcher.listener);
+      if (pendingWatcher[METADATA]) {
+        runWithCallbackContext({supervisor: this}, pendingWatcher[METADATA].listener);
+      }
     }
 
     if (this.#flushTimeout) {

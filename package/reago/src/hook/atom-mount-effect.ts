@@ -2,8 +2,8 @@
 // atomMountEffect hook
 // =============================================================================
 
-import {AtomHookFrame} from '~/atom';
 import {LOADED, UNLOADED} from '~/const';
+import {AtomHookFrame} from '~/core/atom-hook';
 import {requireComputationContextStackFrame} from '~/reactor/computation-context';
 import {compareDepsEqual} from '~/util/comparison';
 

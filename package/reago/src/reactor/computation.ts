@@ -1,16 +1,16 @@
 // =============================================================================
-// Atom computation
+// Reactor computation
 // =============================================================================
 
-import {AnyAtom, AtomResultOf} from '~/atom';
 import {FUNCTIONAL_ATOM, GENERATIVE_ATOM, NO_VALUE, REJECTED, RESOLVED} from '~/const';
+import {AnyAtom, AtomResultOf} from '~/core/atom';
+import {AtomInstance} from '~/core/atom-instance';
 import {ComputationAbortedAtomError, GeneratorPromiseExpectedAtomError} from '~/error';
-import {AtomInstance} from '~/space/instance';
-import {AtomSupervisor} from '~/space/supervisor';
+import {Supervisor} from '~/space/supervisor';
 import {getPromiseState, PromiseState, trackPromise} from '~/util/tracked-promise';
 import {isPromise} from '~/util/type-check';
 import {ComputationContext, runWithComputationContext} from './computation-context';
-import {AtomRunnerGenerator, AtomRunnerStep, createRunner} from './runner';
+import {RunnerGenerator, RunnerStep, createRunner} from './runner';
 
 
 export interface Computation<T extends AnyAtom> {
@@ -56,7 +56,7 @@ export interface Computation<T extends AnyAtom> {
 }
 
 export function runComputation<T extends AnyAtom>(
-  supervisor: AtomSupervisor,
+  supervisor: Supervisor,
   instance: AtomInstance<T>
 ): Computation<T> {
   // Set up the environment
@@ -76,7 +76,7 @@ export function runComputation<T extends AnyAtom>(
   };
 
   // Get the runner generator
-  let generator: AtomRunnerGenerator<AtomResultOf<T>>;
+  let generator: RunnerGenerator<AtomResultOf<T>>;
   try {
     runWithComputationContext(context, () => {
       generator = createRunner<T>(instance.atom)(...instance.args);
@@ -116,7 +116,7 @@ export function runComputation<T extends AnyAtom>(
 
 function runComputationSynchronousSteps<T extends AnyAtom>(
   context: ComputationContext<T>,
-  generator: AtomRunnerGenerator<AtomResultOf<T>>,
+  generator: RunnerGenerator<AtomResultOf<T>>,
   method: 'next' | 'throw',
   value: unknown = undefined
 ): null | Promise<unknown> {
@@ -146,10 +146,10 @@ function runComputationSynchronousSteps<T extends AnyAtom>(
 
 function runComputationStep<T extends AnyAtom>(
   context: ComputationContext<T>,
-  generator: AtomRunnerGenerator<AtomResultOf<T>>,
+  generator: RunnerGenerator<AtomResultOf<T>>,
   method: 'next' | 'throw',
   value: unknown = undefined
-): null | AtomRunnerStep<AtomResultOf<T>> {
+): null | RunnerStep<AtomResultOf<T>> {
   let result = null;
   runWithComputationContext(context, () => {
     if (context.computation.abortController.signal.aborted) {

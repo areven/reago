@@ -1,11 +1,12 @@
 // =============================================================================
-// Atom computation context
+// Reactor computation context
 // =============================================================================
 
-import {AnyAtom, AtomHook, AtomHookFrame} from '~/atom';
+import {AnyAtom} from '~/core/atom';
+import {AtomHook, AtomHookFrame} from '~/core/atom-hook';
+import {AtomInstance} from '~/core/atom-instance';
 import {ComputationContextRequiredAtomError, HookCountMismatchAtomError, HookMismatchAtomError} from '~/error';
-import {AtomInstance} from '~/space/instance';
-import {AtomSupervisor} from '~/space/supervisor';
+import {Supervisor} from '~/space/supervisor';
 import {Computation} from './computation';
 
 
@@ -15,7 +16,7 @@ export interface ComputationContext<T extends AnyAtom> {
   /**
    * Reference to the space supervisor.
    */
-  readonly supervisor: AtomSupervisor;
+  readonly supervisor: Supervisor;
 
   /**
    * Reference to the currently active atom instance.

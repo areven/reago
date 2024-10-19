@@ -99,20 +99,3 @@ export type AtomActionArgsOf<T> = (
 // Other structures
 
 export type AtomDispatcher<T extends AnyAtom> = (...args: AtomActionArgsOf<T>) => void;
-
-export interface AtomHook {
-  (...args: any[]): any;
-  onSkip?: {bivarianceHack(frame: AtomHookFrame): void}['bivarianceHack'];
-}
-
-export interface AtomHookFrame {
-  readonly hook: AtomHook;
-}
-
-export type AtomWatcher<T extends AnyAtom = AnyAtom> = {
-  readonly listener: AtomListener<T>,
-  readonly clear: () => void,
-  [Symbol.dispose]: () => void
-};
-
-export type AtomListener<T extends AnyAtom = AnyAtom> = () => any;

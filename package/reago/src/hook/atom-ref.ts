@@ -2,7 +2,7 @@
 // atomRef hook
 // =============================================================================
 
-import {AtomHookFrame} from '~/atom';
+import {AtomHookFrame} from '~/core/atom-hook';
 import {requireComputationContextStackFrame} from '~/reactor/computation-context';
 
 

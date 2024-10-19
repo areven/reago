@@ -2,8 +2,8 @@
 // Atom family
 // =============================================================================
 
-import {AnyAtom} from '~/atom';
-import {AtomInstance} from './instance';
+import {AnyAtom} from './atom';
+import {AtomInstance} from './atom-instance';
 
 
 export interface AtomFamily<T extends AnyAtom> {

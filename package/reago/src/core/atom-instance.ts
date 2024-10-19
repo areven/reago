@@ -2,7 +2,6 @@
 // Atom instance
 // =============================================================================
 
-import {AnyAtom, AtomFamilyArgsOf, AtomHookFrame, AtomResultOf, AtomWatcher} from '~/atom';
 import {
   COMPUTING, COMPUTED, MOUNTED_DIRECTLY, MOUNTED_TRANSITIVELY, UNMOUNTED, FRESH, OUTDATED, STALE
 } from '~/const';
@@ -12,6 +11,9 @@ import {AtomMountEffectFrame} from '~/hook/atom-mount-effect';
 import {Computation} from '~/reactor/computation';
 import {IterableWeakSet} from '~/util/iterable-weakset';
 import {SwappablePromise} from '~/util/swappable-promise';
+import {AnyAtom, AtomFamilyArgsOf, AtomResultOf} from './atom';
+import {AtomHookFrame} from './atom-hook';
+import {AtomWatcher} from './atom-watcher';
 
 
 export interface AtomInstance<T extends AnyAtom> {

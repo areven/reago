@@ -2,7 +2,8 @@
 // atomAction hook
 // =============================================================================
 
-import {AtomActionArg, AtomHookFrame} from '~/atom';
+import {AtomActionArg} from '~/core/atom';
+import {AtomHookFrame} from '~/core/atom-hook';
 import {requireComputationContextStackFrame} from '~/reactor/computation-context';
 import {compareDepsEqual} from '~/util/comparison';
 

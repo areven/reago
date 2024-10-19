@@ -1,23 +1,23 @@
 // =============================================================================
-// Atom runner
+// Reactor runner
 // =============================================================================
 
-import {AnyAtom, AtomFamilyArgsOf, AtomGenerator, AtomResultOf} from '~/atom';
+import {AnyAtom, AtomFamilyArgsOf, AtomGenerator, AtomResultOf} from '~/core/atom';
 import {FUNCTIONAL_ATOM} from '~/const';
 import {isGenerator} from '~/util/type-check';
 
 
-export interface AtomRunner<T extends AnyAtom> {
-  (...args: AtomFamilyArgsOf<T>): AtomRunnerGenerator<AtomResultOf<T>>;
+export interface Runner<T extends AnyAtom> {
+  (...args: AtomFamilyArgsOf<T>): RunnerGenerator<AtomResultOf<T>>;
 }
 
-export type AtomRunnerGenerator<Result> = AtomGenerator<Result> & {
+export type RunnerGenerator<Result> = AtomGenerator<Result> & {
   readonly [FUNCTIONAL_ATOM]?: true;
 };
 
-export type AtomRunnerStep<Result> = IteratorResult<Promise<unknown>, Result>;
+export type RunnerStep<Result> = IteratorResult<Promise<unknown>, Result>;
 
-export function createRunner<T extends AnyAtom>(atom: T): AtomRunner<T> {
+export function createRunner<T extends AnyAtom>(atom: T): Runner<T> {
   return function (...args: any[]) {
     const result = atom(...args);
     if (isGenerator(result)) {
@@ -28,7 +28,7 @@ export function createRunner<T extends AnyAtom>(atom: T): AtomRunner<T> {
         next() {
           return {done: true, value: result as AtomResultOf<T>};
         }
-      } as unknown as AtomRunnerGenerator<AtomResultOf<T>>;
+      } as unknown as RunnerGenerator<AtomResultOf<T>>;
     }
   };
 }

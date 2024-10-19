@@ -3,16 +3,16 @@
 // =============================================================================
 
 import {
-  AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomDispatcher, AtomFamilyArgsOf,
-  AtomListener, AtomResultOf, AtomWatcher
-} from '~/atom';
-import {AtomSupervisor} from './supervisor';
+  AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomDispatcher, AtomFamilyArgsOf, AtomResultOf
+} from '~/core/atom';
+import {AtomListener, AtomWatcher} from '~/core/atom-watcher';
+import {Supervisor} from './supervisor';
 
 
-export class AtomStore {
-  readonly #supervisor: AtomSupervisor;
+export class Store {
+  readonly #supervisor: Supervisor;
 
-  constructor(supervisor: AtomSupervisor) {
+  constructor(supervisor: Supervisor) {
     this.#supervisor = supervisor;
   }
 

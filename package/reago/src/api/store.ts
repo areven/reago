@@ -2,23 +2,23 @@
 // Public store API
 // =============================================================================
 
-import {AtomStore} from '~/space/store';
-import {AtomSupervisor} from '~/space/supervisor';
+import {Store as StoreClass} from '~/space/store';
+import {Supervisor} from '~/space/supervisor';
 
 
-export type Store = AtomStore;
+export type Store = StoreClass;
 
 let defaultStore: Store | null = null;
 
 export function getDefaultStore(): Store {
   if (defaultStore === null) {
-    const supervisor = new AtomSupervisor();
+    const supervisor = new Supervisor();
     defaultStore = supervisor.store;
   }
   return defaultStore;
 }
 
 export function createStore(): Store {
-  const supervisor = new AtomSupervisor();
+  const supervisor = new Supervisor();
   return supervisor.store;
 }

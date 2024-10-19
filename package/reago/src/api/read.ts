@@ -2,7 +2,7 @@
 // Public read() API
 // =============================================================================
 
-import {AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomFamilyArgsOf, AtomResultOf} from '~/atom';
+import {AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomFamilyArgsOf, AtomResultOf} from '~/core/atom';
 import {_read} from '~/hook/read';
 import {getCallbackContext} from '~/reactor/callback-context';
 import {getComputationContext} from '~/reactor/computation-context';

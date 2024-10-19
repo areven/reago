@@ -2,14 +2,12 @@
 // Swappable promise
 // =============================================================================
 
-import {PENDING, REJECTED, RESOLVED} from '~/const';
+import {METADATA, PENDING, REJECTED, RESOLVED} from '~/const';
 import {assert} from '~/error';
 
 
-const SWAPPABLE = Symbol();
-
 export type SwappablePromise<Type> = Promise<Type> & {
-  [SWAPPABLE]: (
+  [METADATA]: (
     PendingSwappablePromise<Type> |
     ResolvedSwappablePromise |
     RejectedSwappablePromise
@@ -39,29 +37,29 @@ export function createSwappablePromise<Type>(initial: Promise<Type> | null = nul
     reject = rej;
   }) as SwappablePromise<Type>;
 
-  promise[SWAPPABLE] = {
+  promise[METADATA] = {
     status: PENDING,
     promise: null,
     setPromise: (p: Promise<Type> | null) => {
-      assert(promise[SWAPPABLE].status === PENDING);
+      assert(promise[METADATA].status === PENDING);
 
-      if (promise[SWAPPABLE].promise === p) {
+      if (promise[METADATA].promise === p) {
         return;
       }
 
-      promise[SWAPPABLE].promise = p;
+      promise[METADATA].promise = p;
       p?.then(
         (result) => {
-          if (promise[SWAPPABLE].status === PENDING && promise[SWAPPABLE].promise === p) {
-            promise[SWAPPABLE] = {
+          if (promise[METADATA].status === PENDING && promise[METADATA].promise === p) {
+            promise[METADATA] = {
               status: RESOLVED
             };
             resolve(result);
           }
         },
         (error) => {
-          if (promise[SWAPPABLE].status === PENDING && promise[SWAPPABLE].promise === p) {
-            promise[SWAPPABLE] = {
+          if (promise[METADATA].status === PENDING && promise[METADATA].promise === p) {
+            promise[METADATA] = {
               status: REJECTED
             };
             reject(error);
@@ -72,7 +70,7 @@ export function createSwappablePromise<Type>(initial: Promise<Type> | null = nul
   };
 
   if (initial) {
-    promise[SWAPPABLE].setPromise(initial);
+    promise[METADATA].setPromise(initial);
   }
 
   return promise;
@@ -82,8 +80,8 @@ export function swapOrRecreatePromise<Type>(
   swappablePromise: SwappablePromise<Type> | undefined,
   innerPromise: Promise<Type>
 ): SwappablePromise<Type> {
-  if (swappablePromise && swappablePromise[SWAPPABLE].status === PENDING) {
-    swappablePromise[SWAPPABLE].setPromise(innerPromise);
+  if (swappablePromise && swappablePromise[METADATA].status === PENDING) {
+    swappablePromise[METADATA].setPromise(innerPromise);
     return swappablePromise;
   } else {
     return createSwappablePromise(innerPromise);
@@ -91,7 +89,7 @@ export function swapOrRecreatePromise<Type>(
 }
 
 export function unbindSwappablePromiseIfPending<Type>(swappablePromise: SwappablePromise<Type>): void {
-  if (swappablePromise[SWAPPABLE].status === PENDING) {
-    swappablePromise[SWAPPABLE].setPromise(null);
+  if (swappablePromise[METADATA].status === PENDING) {
+    swappablePromise[METADATA].setPromise(null);
   }
 }

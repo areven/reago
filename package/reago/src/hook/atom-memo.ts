@@ -2,8 +2,8 @@
 // atomMemo hook
 // =============================================================================
 
-import {AtomHookFrame} from '~/atom';
 import {PENDING, REJECTED, RESOLVED} from '~/const';
+import {AtomHookFrame} from '~/core/atom-hook';
 import {requireComputationContextStackFrame, runWithoutComputationContext} from '~/reactor/computation-context';
 import {compareDepsEqual} from '~/util/comparison';
 

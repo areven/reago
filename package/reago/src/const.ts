@@ -1,8 +1,20 @@
 // =============================================================================
-// Constants
+// Reago constants
 // =============================================================================
 
+export const METADATA = Symbol();
+
 export const NO_VALUE = Symbol();
+
+export const FUNCTIONAL_ATOM = Symbol();
+export const GENERATIVE_ATOM = Symbol();
+
+export const PENDING = Symbol();
+export const RESOLVED = Symbol();
+export const REJECTED = Symbol();
+
+export const LOADED = Symbol();
+export const UNLOADED = Symbol();
 
 export const COMPUTED = Symbol();
 export const COMPUTING = Symbol();
@@ -14,13 +26,3 @@ export const STALE = Symbol();
 export const MOUNTED_DIRECTLY = Symbol();
 export const MOUNTED_TRANSITIVELY = Symbol();
 export const UNMOUNTED = Symbol();
-
-export const PENDING = Symbol();
-export const RESOLVED = Symbol();
-export const REJECTED = Symbol();
-
-export const LOADED = Symbol();
-export const UNLOADED = Symbol();
-
-export const FUNCTIONAL_ATOM = Symbol();
-export const GENERATIVE_ATOM = Symbol();

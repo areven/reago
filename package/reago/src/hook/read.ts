@@ -2,8 +2,8 @@
 // read hook
 // =============================================================================
 
-import {AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomFamilyArgsOf, AtomResultOf} from '~/atom';
 import {MOUNTED_TRANSITIVELY, UNMOUNTED} from '~/const';
+import {AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomFamilyArgsOf, AtomResultOf} from '~/core/atom';
 import {requireComputationContext} from '~/reactor/computation-context';
 
 

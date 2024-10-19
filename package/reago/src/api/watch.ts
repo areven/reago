@@ -2,7 +2,8 @@
 // Public watch() API
 // =============================================================================
 
-import {AnyAtom, AtomFamilyArgsOf, AtomListener, AtomWatcher} from '~/atom';
+import {AnyAtom, AtomFamilyArgsOf} from '~/core/atom';
+import {AtomListener, AtomWatcher} from '~/core/atom-watcher';
 import {IllegalOperationAtomError} from '~/error';
 import {_read} from '~/hook/read';
 import {getCallbackContext} from '~/reactor/callback-context';

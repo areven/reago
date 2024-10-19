@@ -2,7 +2,7 @@
 // atomReducer hook
 // =============================================================================
 
-import {AtomHookFrame} from '~/atom';
+import {AtomHookFrame} from '~/core/atom-hook';
 import {
   requireComputationContext, requireComputationContextStackFrame, runWithoutComputationContext
 } from '~/reactor/computation-context';
