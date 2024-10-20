@@ -17,6 +17,19 @@ test('reago does not hold atoms that are no longer referenced', async () => {
   await expect(detector()).resolves.toBe(false);
 });
 
+test('reago holds atoms that are tracked as dependencies', async () => {
+  let $atom1: Atom<number> | undefined = () => 123;
+  let $atom2: Atom<number> | undefined = () => read($atom1!) * 2;
+  const detector1 = createDetector($atom1);
+
+  // add $atom1 as a dependency of $atom2
+  read($atom2);
+
+  // unref $atom1 but it shouldn't be garbage collected
+  $atom1 = undefined;
+  await expect(detector1()).resolves.toBe(true);
+});
+
 test('reago does not hold atoms that were tracked as dependants', async () => {
   const $atom1 = () => {
     const [value, setValue] = atomState(123);
@@ -39,7 +52,36 @@ test('reago does not hold atoms that were tracked as dependants', async () => {
   expect(read($atom1)).toBe(13); // $atom2 entry should be wiped here
 });
 
-test('reago does not hold atoms that are no longer subscribed', async () => {
+test('reago holds atoms that are mounted', async () => {
+  // $atom1 value can be freely changed
+  let $atom1 = () => {
+    const [value, setValue] = atomState(123);
+    atomAction(setValue, []);
+    return value;
+  };
+
+  // $atom2 value doesn't change directly, but together with $atom1
+  let $atom2: Atom<number> | undefined = () => read($atom1) * 2;
+  const detector = createDetector($atom2);
+  expect(read($atom2)).toBe(246);
+
+  // we're creating a watcher on $atom2 that effectively triggers on $atom1 changes
+  let changed = false;
+  watch($atom2, () => { // we have to leak the watcher here and never clear() it
+    changed = true;
+  });
+
+  // even though nothing directly references $atom2 anymore, we still have a watcher
+  // that should run whenever $atom1 changes - mounted $atom2 must be kept internally
+  $atom2 = undefined;
+  await expect(detector()).resolves.toBe(true);
+
+  // changing $atom1 should trigger the leaked watcher on $atom2
+  dispatch($atom1)(14);
+  expect(changed).toBeTruthy();
+});
+
+test('reago does not hold atoms that are no longer mounted', async () => {
   let $atom: Atom<number> | undefined = () => 123;
   const detector = createDetector($atom);
 

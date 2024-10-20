@@ -26,6 +26,7 @@ import {Store} from './store';
 export class Supervisor {
   readonly store: Store = new Store(this);
   readonly #atomFamily: WeakMap<AnyAtom, AtomFamily<AnyAtom>> = new WeakMap();
+  readonly #mountGCLock: Set<AtomInstance<AnyAtom>> = new Set();
 
   #flushTimeout: ReturnType<typeof setTimeout> | null = null;
   readonly #computationQueue: Set<AtomInstance<AnyAtom>> = new Set();
@@ -130,6 +131,7 @@ export class Supervisor {
         this.mountInstance(dependency, MOUNTED_TRANSITIVELY);
       }
 
+      this.#mountGCLock.add(instance);
       this.#mountEffectQueue.add(instance);
     }
 
@@ -143,6 +145,7 @@ export class Supervisor {
     instance.mount = hasMountedParent ? MOUNTED_TRANSITIVELY : UNMOUNTED;
 
     if (instance.mount === UNMOUNTED) {
+      this.#mountGCLock.delete(instance);
       this.#mountEffectQueue.add(instance);
 
       const reverseUnmount: AtomInstance<AnyAtom>[] = [];
