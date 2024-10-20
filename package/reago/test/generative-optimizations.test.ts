@@ -94,3 +94,36 @@ test('generative atom syncs its actions synchronously if yielded promises have k
   read($atom);
   expect(lastReturnedValue).toBe(8);
 });
+
+test('generative atom will not restart computation if outdated dependency was not reached yet', async () => {
+  let counter = 0;
+
+  function $atom1() {
+    const [value, setValue] = atomState(13);
+    atomAction(setValue, []);
+    return value;
+  }
+
+  function* $atom2() {
+    ++counter;
+    yield Promise.resolve(123);
+    return read($atom1);
+  }
+
+  // initialize both
+  await expect(read($atom2)).resolves.toBe(13);
+  expect(counter).toBe(1);
+
+  // run $atom2 up to the first yield
+  invalidate($atom2);
+  const promise = read($atom2);
+  expect(counter).toBe(2);
+
+  // update $atom1, it should not restart computation since we didn't reach read($atom1) yet
+  dispatch($atom1)(82382);
+  expect(counter).toBe(2);
+
+  // let it run till the end and observe computation wasn't restarted
+  await promise;
+  expect(counter).toBe(2);
+});

@@ -37,8 +37,8 @@ export interface AtomInstance<T extends AnyAtom> {
    * - `COMPUTING` - atom is generative and computation is still running
    * - `OUTDATED` - outdated or not computed at all
    *
-   * Note that in case of functional atoms the `COMPUTING` state is never used
-   * since their value is always computed synchronously.
+   * Note that in case of functional atoms the `COMPUTING` state can't be observed
+   * outside since everything runs synchronously.
    */
   status: typeof COMPUTED | typeof COMPUTING | typeof OUTDATED;
 

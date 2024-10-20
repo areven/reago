@@ -22,7 +22,7 @@ export class Store {
     atom: T,
     ...args: AtomFamilyArgsOf<T>
   ): AtomResultOf<T> | Promise<AtomResultOf<T>> {
-    const instance = this.#supervisor.requireInstance(atom, ...args);
+    const instance = this.#supervisor.getOrCreateInstance(atom, ...args);
     return this.#supervisor.readInstance(instance);
   }
 
@@ -30,7 +30,7 @@ export class Store {
     atom: T,
     ...args: [...AtomFamilyArgsOf<T>, AtomListener<T>]
   ): AtomWatcher<T> {
-    const instance = this.#supervisor.requireInstance(
+    const instance = this.#supervisor.getOrCreateInstance(
       atom,
       ...args.slice(0, -1) as AtomFamilyArgsOf<T>
     );
@@ -44,7 +44,7 @@ export class Store {
     ...args: AtomFamilyArgsOf<T>
   ): AtomDispatcher<T> {
     return (...actionArgs) => {
-      const instance = this.#supervisor.requireInstance(atom, ...args);
+      const instance = this.#supervisor.getOrCreateInstance(atom, ...args);
       this.#supervisor.dispatchInstance(instance, ...actionArgs);
       this.#supervisor.flush();
     };

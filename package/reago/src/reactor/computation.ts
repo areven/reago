@@ -2,7 +2,7 @@
 // Reactor computation
 // =============================================================================
 
-import {FUNCTIONAL_ATOM, GENERATIVE_ATOM, NO_VALUE, REJECTED, RESOLVED} from '~/const';
+import {COMPUTING, FRESH, FUNCTIONAL_ATOM, GENERATIVE_ATOM, NO_VALUE, REJECTED, RESOLVED} from '~/const';
 import {AnyAtom, AtomResultOf} from '~/core/atom';
 import {AtomInstance} from '~/core/atom-instance';
 import {ComputationAbortedAtomError, GeneratorPromiseExpectedAtomError} from '~/error';
@@ -55,12 +55,8 @@ export interface Computation<T extends AnyAtom> {
   dependencies: Set<AtomInstance<AnyAtom>>;
 }
 
-export function runComputation<T extends AnyAtom>(
-  supervisor: Supervisor,
-  instance: AtomInstance<T>
-): Computation<T> {
-  // Set up the environment
-  const computation: Computation<T> = {
+export function createComputation<T extends AnyAtom>(): Computation<T> {
+  return {
     mode: FUNCTIONAL_ATOM,
     result: NO_VALUE,
     error: NO_VALUE,
@@ -68,7 +64,14 @@ export function runComputation<T extends AnyAtom>(
     pointer: 0,
     dependencies: new Set()
   };
+}
 
+export function runComputation<T extends AnyAtom>(
+  supervisor: Supervisor,
+  instance: AtomInstance<T>,
+  computation: Computation<T>
+): void {
+  // Set up the environment
   const context: ComputationContext<T> = {
     supervisor,
     instance,
@@ -83,7 +86,7 @@ export function runComputation<T extends AnyAtom>(
     });
   } catch (err) {
     storeComputationError(computation, err);
-    return computation;
+    return;
   }
 
   if (generator![FUNCTIONAL_ATOM] !== true) {
@@ -93,7 +96,7 @@ export function runComputation<T extends AnyAtom>(
   // Try to compute it synchronously first
   let stepPromise = runComputationSynchronousSteps(context, generator!, 'next');
   if (stepPromise === null) {
-    return computation;
+    return;
   }
 
   // Compute the remaining steps asynchronously
@@ -110,8 +113,6 @@ export function runComputation<T extends AnyAtom>(
       stepPromise = runComputationSynchronousSteps(context, generator!, method, value);
     }
   })();
-
-  return computation;
 }
 
 function runComputationSynchronousSteps<T extends AnyAtom>(

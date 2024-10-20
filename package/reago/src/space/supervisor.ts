@@ -16,7 +16,7 @@ import {AtomListener, AtomWatcher, createAtomWatcher} from '~/core/atom-watcher'
 import {assert, HookCountMismatchAtomError, InvalidCleanupFunctionAtomError} from '~/error';
 import {AtomComputationEffectCleanup} from '~/hook/atom-computation-effect';
 import {runWithCallbackContext} from '~/reactor/callback-context';
-import {runComputation} from '~/reactor/computation';
+import {createComputation, runComputation} from '~/reactor/computation';
 import {hashFamilyArguments} from '~/util/arg-hash';
 import {compareEqual} from '~/util/comparison';
 import {swapOrRecreatePromise, unbindSwappablePromiseIfPending} from '~/util/swappable-promise';
@@ -43,7 +43,7 @@ export class Supervisor {
     });
   }
 
-  getFamily<T extends AnyAtom>(atom: T): AtomFamily<T> {
+  getOrCreateFamily<T extends AnyAtom>(atom: T): AtomFamily<T> {
     let family = this.#atomFamily.get(atom) as AtomFamily<T> | undefined;
     if (family === undefined) {
       family = createAtomFamily(atom);
@@ -56,16 +56,16 @@ export class Supervisor {
     atom: T,
     ...args: AtomFamilyArgsOf<T>
   ): AtomInstance<T> | null {
-    const family = this.getFamily(atom);
+    const family = this.getOrCreateFamily(atom);
     const hash = hashFamilyArguments(args);
     return family.instanceMap.get(hash) ?? null;
   }
 
-  requireInstance<T extends AnyAtom>(
+  getOrCreateInstance<T extends AnyAtom>(
     atom: T,
     ...args: AtomFamilyArgsOf<T>
   ): AtomInstance<T> {
-    const family = this.getFamily(atom);
+    const family = this.getOrCreateFamily(atom);
     const hash = hashFamilyArguments(args);
     let instance = family.instanceMap.get(hash);
     if (instance === undefined) {
@@ -211,9 +211,7 @@ export class Supervisor {
 
   requestAsyncFlush(): void {
     if (this.#flushTimeout === null) {
-      this.#flushTimeout = setTimeout(() => {
-        this.flush();
-      }, 0);
+      this.#flushTimeout = setTimeout(this.flush.bind(this), 0);
     }
   }
 
@@ -224,11 +222,13 @@ export class Supervisor {
     // Run a new computation
     this.#computationQueue.delete(instance);
     const prevComputation = instance.computation;
-    const newComputation = runComputation(this, instance);
+    const newComputation = createComputation<T>();
+    let instanceValueChanged = false;
+
     instance.status = COMPUTING;
     instance.freshness = FRESH;
     instance.computation = newComputation;
-    let instanceValueChanged = false;
+    runComputation(this, instance, instance.computation);
 
     // Process the result
     if (!newComputation.promise) {
