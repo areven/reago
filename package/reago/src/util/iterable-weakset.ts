@@ -13,8 +13,8 @@ export class IterableWeakSet<T extends WeakKey> {
     return this;
   }
 
-  has(value: T): boolean {
-    return this.#set.has(stableWeakRef(value));
+  delete(value: T): boolean {
+    return this.#set.delete(stableWeakRef(value));
   }
 
   some(callback: (value: T) => boolean): boolean {
@@ -29,14 +29,6 @@ export class IterableWeakSet<T extends WeakKey> {
       }
     }
     return false;
-  }
-
-  delete(value: T): boolean {
-    return this.#set.delete(stableWeakRef(value));
-  }
-
-  clear(): void {
-    this.#set.clear();
   }
 
   *[Symbol.iterator]() {
