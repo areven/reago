@@ -460,7 +460,7 @@ test('atomMountEffect discards handlers that appeared in an older computation bu
   expect(results).toEqual([1]);
 });
 
-test('atomMountEffect cleanups handlers that appeared in an older computation but are now unreachable', () => {
+test('atomMountEffect cleans up handlers that appeared in an older computation but are now unreachable', () => {
   let throwError = false;
   let mountOrder: number[] = [];
   let unmountOrder: number[] = [];

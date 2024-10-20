@@ -2,7 +2,8 @@
 // atomComputationEffect functional atom tests
 // =============================================================================
 
-import {atomAction, atomComputationEffect, atomMemo, atomRef, invalidate, read, watch} from 'reago';
+import LeakDetector from 'jest-leak-detector';
+import {Atom, atomAction, atomComputationEffect, atomMemo, atomRef, invalidate, read, watch} from 'reago';
 import {expect, test} from 'vitest';
 import {ComputationContextRequiredAtomError, InvalidCleanupFunctionAtomError} from '~/error';
 
@@ -354,7 +355,7 @@ test('atomComputationEffect does not make a copy of the dependency array to use 
   expect(wrongHandler).toBeFalsy();
 });
 
-test('atomComputationEffect cleanups handlers that appeared in an older computation but are now unreachable', () => {
+test('atomComputationEffect cleans up handlers that appeared in an older computation but are now unreachable', () => {
   let throwError = false;
   let setupOrder: number[] = [];
   let cleanupOrder: number[] = [];
@@ -390,6 +391,23 @@ test('atomComputationEffect cleanups handlers that appeared in an older computat
   expect(() => read($atom)).toThrow();
   expect(setupOrder).toEqual([1, 2]);
   expect(cleanupOrder).toEqual([2]);
+});
+
+test('atomComputationEffect cleans up handlers from atoms that were garbage collected', async () => {
+  let cleaned = false;
+  let $atom: Atom<void> | undefined = () => {
+    atomComputationEffect(() => {
+      return () => {
+        cleaned = true;
+      };
+    }, []);
+  }
+  const detector = createDetector($atom);
+
+  read($atom!);
+  $atom = undefined;
+  await expect(detector()).resolves.toBe(false);
+  expect(cleaned).toBeTruthy();
 });
 
 test('atomComputationEffect can be called multiple times with the same function', () => {
@@ -470,3 +488,17 @@ test('atomComputationEffect does not allow running hooks inside its handler', ()
   read($atom3);
   expect(err3).toBeInstanceOf(ComputationContextRequiredAtomError);
 });
+
+
+function createDetector(value: unknown) {
+  const detector = new LeakDetector(value);
+  return async function () {
+    // annoyingly, jest-leak-detector isn't very reliable when it comes to
+    // WeakRefs and sometimes it needs this extra push to trigger gc
+    await detector.isLeaking();
+    await detector.isLeaking();
+    await detector.isLeaking();
+    await detector.isLeaking();
+    return detector.isLeaking();
+  };
+}

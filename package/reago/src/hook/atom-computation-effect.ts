@@ -2,6 +2,7 @@
 // atomComputationEffect hook
 // =============================================================================
 
+import {METADATA} from '~/const';
 import {AtomHookFrame} from '~/core/atom-hook';
 import {requireComputationContextStackFrame} from '~/reactor/computation-context';
 import {compareDepsEqual} from '~/util/comparison';
@@ -14,7 +15,12 @@ export interface AtomComputationEffectFrame extends AtomHookFrame {
 }
 
 export type AtomComputationEffect = () => (void | AtomComputationEffectCleanup);
-export type AtomComputationEffectCleanup = () => void;
+export interface AtomComputationEffectCleanup {
+  (): void;
+  [METADATA]?: {
+    token: WeakKey;
+  };
+}
 
 export function atomComputationEffect(
   setup: AtomComputationEffect,

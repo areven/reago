@@ -1,5 +1,5 @@
 // =============================================================================
-// Atom supervisor
+// Space supervisor
 // =============================================================================
 
 import {
@@ -14,6 +14,7 @@ import {AtomFamily, createAtomFamily} from '~/core/atom-family';
 import {AtomInstance, createAtomInstance} from '~/core/atom-instance';
 import {AtomListener, AtomWatcher, createAtomWatcher} from '~/core/atom-watcher';
 import {assert, HookCountMismatchAtomError, InvalidCleanupFunctionAtomError} from '~/error';
+import {AtomComputationEffectCleanup} from '~/hook/atom-computation-effect';
 import {runWithCallbackContext} from '~/reactor/callback-context';
 import {runComputation} from '~/reactor/computation';
 import {hashFamilyArguments} from '~/util/arg-hash';
@@ -31,8 +32,16 @@ export class Supervisor {
   #flushTimeout: ReturnType<typeof setTimeout> | null = null;
   readonly #computationQueue: Set<AtomInstance<AnyAtom>> = new Set();
   readonly #watcherDispatchQueue: Set<AtomWatcher<AnyAtom>> = new Set();
+
   readonly #computationEffectQueue: Set<AtomInstance<AnyAtom>> = new Set();
+  readonly #computationEffectCleanupRegistry: FinalizationRegistry<AtomComputationEffectCleanup>;
   readonly #mountEffectQueue: Set<AtomInstance<AnyAtom>> = new Set();
+
+  constructor() {
+    this.#computationEffectCleanupRegistry = new FinalizationRegistry((cleanup) => {
+      runWithCallbackContext({supervisor: this}, cleanup);
+    });
+  }
 
   getFamily<T extends AnyAtom>(atom: T): AtomFamily<T> {
     let family = this.#atomFamily.get(atom) as AtomFamily<T> | undefined;
@@ -307,6 +316,7 @@ export class Supervisor {
       const computationEffect = instance.stackComputationEffect[x];
       if (computationEffect.setup && computationEffect.cleanup) {
         runWithCallbackContext({supervisor: this}, computationEffect.cleanup);
+        this.#computationEffectCleanupRegistry.unregister(computationEffect.cleanup[METADATA]!.token);
         computationEffect.cleanup = undefined;
       }
     }
@@ -326,7 +336,19 @@ export class Supervisor {
         if (typeof effectResult !== 'function') {
           throw new InvalidCleanupFunctionAtomError();
         }
-        computationEffect.cleanup = effectResult;
+
+        computationEffect.cleanup = function () {
+          effectResult!();
+        };
+        computationEffect.cleanup[METADATA] = {
+          token: {} // guaranteed to be unique
+        };
+
+        this.#computationEffectCleanupRegistry.register(
+          instance, // tracked ref
+          computationEffect.cleanup, // held value
+          computationEffect.cleanup[METADATA].token // unregister token
+        );
       }
     }
   }
