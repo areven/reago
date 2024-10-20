@@ -3,7 +3,7 @@
 // =============================================================================
 
 import LeakDetector from 'jest-leak-detector';
-import {Atom, atomAction, atomComputationEffect, atomMemo, atomRef, invalidate, read, watch} from 'reago';
+import {atomAction, atomComputationEffect, atomMemo, atomRef, invalidate, read, watch, type Atom} from 'reago';
 import {expect, test} from 'vitest';
 import {ComputationContextRequiredAtomError, InvalidCleanupFunctionAtomError} from '~/error';
 

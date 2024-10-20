@@ -3,9 +3,9 @@
 // =============================================================================
 
 import {METADATA} from '~/const';
-import {AnyAtom} from './atom';
-import {AtomInstance} from './atom-instance';
 import {Supervisor} from '~/space/supervisor';
+import type {AnyAtom} from './atom';
+import type {AtomInstance} from './atom-instance';
 
 
 export type AtomWatcher<T extends AnyAtom = AnyAtom> = {

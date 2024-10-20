@@ -3,9 +3,9 @@
 // =============================================================================
 
 import {LOADED, UNLOADED} from '~/const';
-import {AtomHookFrame} from '~/core/atom-hook';
 import {requireComputationContextStackFrame} from '~/reactor/computation-context';
 import {compareDepsEqual} from '~/util/comparison';
+import type {AtomHook, AtomHookFrame} from '~/core/atom-hook';
 
 
 export interface AtomMountEffectFrame extends AtomHookFrame {
@@ -40,7 +40,7 @@ export function atomMountEffect(
   }
 }
 
-atomMountEffect.onSkip = (frame: AtomMountEffectFrame) => {
+(atomMountEffect as AtomHook).onSkip = (frame: AtomMountEffectFrame) => {
   // force unload of the previous effect
   frame.status = UNLOADED;
   frame.setup = () => {};

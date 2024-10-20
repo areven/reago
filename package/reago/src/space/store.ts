@@ -2,11 +2,11 @@
 // Space store
 // =============================================================================
 
-import {
+import {Supervisor} from './supervisor';
+import type {
   AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomDispatcher, AtomFamilyArgsOf, AtomResultOf
 } from '~/core/atom';
-import {AtomListener, AtomWatcher} from '~/core/atom-watcher';
-import {Supervisor} from './supervisor';
+import type {AtomListener, AtomWatcher} from '~/core/atom-watcher';
 
 
 export class Store {

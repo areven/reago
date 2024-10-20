@@ -2,7 +2,7 @@
 // Reago
 // =============================================================================
 
-export {
+export type {
   Atom,
   AnyAtom,
   AtomResultOf,
@@ -10,15 +10,15 @@ export {
   AtomActionArgsOf
 } from '~/core/atom';
 
-export {
+export type {
   AtomWatcher,
   AtomListener
 } from '~/core/atom-watcher';
 
 export {
-  Store,
   getDefaultStore,
-  createStore
+  createStore,
+  type Store
 } from '~/api/store';
 
 export {read} from '~/api/read';
@@ -32,13 +32,13 @@ export {
 
 export {
   atomAction,
-  AtomAction
+  type AtomAction
 } from '~/hook/atom-action';
 
 export {
   atomComputationEffect,
-  AtomComputationEffect,
-  AtomComputationEffectCleanup
+  type AtomComputationEffect,
+  type AtomComputationEffectCleanup
 } from '~/hook/atom-computation-effect';
 
 export {
@@ -47,26 +47,26 @@ export {
 
 export {
   atomMountEffect,
-  AtomMountEffect,
-  AtomMountEffectCleanup
+  type AtomMountEffect,
+  type AtomMountEffectCleanup
 } from '~/hook/atom-mount-effect';
 
 export {
   atomReducer,
-  AtomReducer,
-  AtomReducerReducer,
-  AtomReducerDispatcher
+  type AtomReducer,
+  type AtomReducerReducer,
+  type AtomReducerDispatcher
 } from '~/hook/atom-reducer';
 
 export {
   atomRef,
-  AtomRef
+  type AtomRef
 } from '~/hook/atom-ref';
 
 export {
   atomState,
-  AtomState,
-  AtomStateSetter
+  type AtomState,
+  type AtomStateSetter
 } from '~/hook/atom-state';
 
 export {

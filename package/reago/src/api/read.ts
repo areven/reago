@@ -2,11 +2,11 @@
 // Public read() API
 // =============================================================================
 
-import {AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomFamilyArgsOf, AtomResultOf} from '~/core/atom';
 import {_read} from '~/hook/read';
 import {getCallbackContext} from '~/reactor/callback-context';
 import {getComputationContext} from '~/reactor/computation-context';
 import {getDefaultStore} from './store';
+import type {AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomFamilyArgsOf, AtomResultOf} from '~/core/atom';
 
 
 export function read<T extends AnyGenerativeAtom>(atom: T, ...args: AtomFamilyArgsOf<T>): Promise<AtomResultOf<T>>;

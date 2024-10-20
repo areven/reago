@@ -31,7 +31,7 @@ export class IterableWeakSet<T extends WeakKey> {
     return false;
   }
 
-  *[Symbol.iterator]() {
+  *[Symbol.iterator](): Generator<T, void, unknown> {
     for (const ref of this.#set.values()) {
       const value = ref.deref();
       if (value) {

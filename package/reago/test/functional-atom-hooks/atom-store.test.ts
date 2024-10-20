@@ -2,7 +2,7 @@
 // atomStore functional atom tests
 // =============================================================================
 
-import {atomStore, createStore, getDefaultStore, read, Store} from 'reago';
+import {atomStore, createStore, getDefaultStore, read, type Store} from 'reago';
 import {expect, test} from 'vitest';
 import {ComputationContextRequiredAtomError} from '~/error';
 

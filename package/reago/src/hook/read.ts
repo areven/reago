@@ -3,8 +3,8 @@
 // =============================================================================
 
 import {MOUNTED_TRANSITIVELY, UNMOUNTED} from '~/const';
-import {AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomFamilyArgsOf, AtomResultOf} from '~/core/atom';
 import {requireComputationContext} from '~/reactor/computation-context';
+import type {AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomFamilyArgsOf, AtomResultOf} from '~/core/atom';
 
 
 export function _read<T extends AnyGenerativeAtom>(atom: T, ...args: AtomFamilyArgsOf<T>): Promise<AtomResultOf<T>>;

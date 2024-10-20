@@ -2,15 +2,15 @@
 // Reactor computation
 // =============================================================================
 
-import {COMPUTING, FRESH, FUNCTIONAL_ATOM, GENERATIVE_ATOM, NO_VALUE, REJECTED, RESOLVED} from '~/const';
-import {AnyAtom, AtomResultOf} from '~/core/atom';
-import {AtomInstance} from '~/core/atom-instance';
+import {FUNCTIONAL_ATOM, GENERATIVE_ATOM, NO_VALUE, REJECTED, RESOLVED} from '~/const';
 import {ComputationAbortedAtomError, GeneratorPromiseExpectedAtomError} from '~/error';
 import {Supervisor} from '~/space/supervisor';
-import {getPromiseState, PromiseState, trackPromise} from '~/util/tracked-promise';
+import {getPromiseState, trackPromise, type PromiseState} from '~/util/tracked-promise';
 import {isPromise} from '~/util/type-check';
-import {ComputationContext, runWithComputationContext} from './computation-context';
-import {RunnerGenerator, RunnerStep, createRunner} from './runner';
+import {runWithComputationContext, type ComputationContext} from './computation-context';
+import {createRunner, type RunnerGenerator, type RunnerStep} from './runner';
+import type {AnyAtom, AtomResultOf} from '~/core/atom';
+import type {AtomInstance} from '~/core/atom-instance';
 
 
 export interface Computation<T extends AnyAtom> {

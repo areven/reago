@@ -2,7 +2,9 @@
 // atomState functional atom tests
 // =============================================================================
 
-import {atomAction, atomMemo, atomRef, AtomState, atomState, dispatch, invalidate, read} from 'reago';
+import {
+  atomAction, atomMemo, atomRef, atomState, dispatch, invalidate, read, type AtomState
+} from 'reago';
 import {expect, test} from 'vitest';
 import {ComputationContextRequiredAtomError} from '~/error';
 

@@ -2,7 +2,9 @@
 // atomReducer functional atom tests
 // =============================================================================
 
-import {atomAction, atomMemo, AtomReducer, atomReducer, atomRef, atomState, dispatch, invalidate, read} from 'reago';
+import {
+  atomAction, atomMemo, atomReducer, atomRef, atomState, dispatch, invalidate, read, type AtomReducer
+} from 'reago';
 import {expect, expectTypeOf, test} from 'vitest';
 import {ComputationContextRequiredAtomError} from '~/error';
 

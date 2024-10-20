@@ -2,8 +2,8 @@
 // Reactor callback context
 // =============================================================================
 
-import {AnyAtom} from '~/core/atom';
 import {Supervisor} from '~/space/supervisor';
+import type {AnyAtom} from '~/core/atom';
 
 
 const callbackContextStack: CallbackContext<AnyAtom>[] = [];

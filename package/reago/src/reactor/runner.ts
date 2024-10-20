@@ -2,9 +2,9 @@
 // Reactor runner
 // =============================================================================
 
-import {AnyAtom, AtomFamilyArgsOf, AtomGenerator, AtomResultOf} from '~/core/atom';
 import {FUNCTIONAL_ATOM} from '~/const';
 import {isGenerator} from '~/util/type-check';
+import type {AnyAtom, AtomFamilyArgsOf, AtomGenerator, AtomResultOf} from '~/core/atom';
 
 
 export interface Runner<T extends AnyAtom> {

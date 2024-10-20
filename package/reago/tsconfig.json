@@ -4,7 +4,6 @@
     "rootDir": "./",
     "outDir": "./dist",
     "paths": {
-      "reago": ["./src"],
       "~/*": ["./src/*"]
     }
   },

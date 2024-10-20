@@ -2,12 +2,12 @@
 // Reactor computation context
 // =============================================================================
 
-import {AnyAtom} from '~/core/atom';
-import {AtomHook, AtomHookFrame} from '~/core/atom-hook';
-import {AtomInstance} from '~/core/atom-instance';
 import {ComputationContextRequiredAtomError, HookCountMismatchAtomError, HookMismatchAtomError} from '~/error';
 import {Supervisor} from '~/space/supervisor';
-import {Computation} from './computation';
+import type {AnyAtom} from '~/core/atom';
+import type {AtomHook, AtomHookFrame} from '~/core/atom-hook';
+import type {AtomInstance} from '~/core/atom-instance';
+import type {Computation} from './computation';
 
 
 const computationContextStack: (ComputationContext<AnyAtom> | null)[] = [];

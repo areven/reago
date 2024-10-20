@@ -6,15 +6,10 @@ import {
   COMPUTED, COMPUTING, FRESH, FUNCTIONAL_ATOM, GENERATIVE_ATOM, LOADED, METADATA,
   MOUNTED_DIRECTLY, MOUNTED_TRANSITIVELY, NO_VALUE, OUTDATED, STALE, UNLOADED, UNMOUNTED
 } from '~/const';
-import {
-  AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomActionArgsOf, AtomFamilyArgsOf,
-  AtomResultOf
-} from '~/core/atom';
-import {AtomFamily, createAtomFamily} from '~/core/atom-family';
-import {AtomInstance, createAtomInstance} from '~/core/atom-instance';
-import {AtomListener, AtomWatcher, createAtomWatcher} from '~/core/atom-watcher';
+import {createAtomFamily, type AtomFamily} from '~/core/atom-family';
+import {createAtomInstance, type AtomInstance} from '~/core/atom-instance';
+import {createAtomWatcher, type AtomListener, type AtomWatcher} from '~/core/atom-watcher';
 import {assert, HookCountMismatchAtomError, InvalidCleanupFunctionAtomError} from '~/error';
-import {AtomComputationEffectCleanup} from '~/hook/atom-computation-effect';
 import {runWithCallbackContext} from '~/reactor/callback-context';
 import {createComputation, runComputation} from '~/reactor/computation';
 import {hashFamilyArguments} from '~/util/arg-hash';
@@ -22,6 +17,11 @@ import {compareEqual} from '~/util/comparison';
 import {swapOrRecreatePromise, unbindSwappablePromiseIfPending} from '~/util/swappable-promise';
 import {trackPromise, trackRejectedPromise, trackResolvedPromise} from '~/util/tracked-promise';
 import {Store} from './store';
+import type {
+  AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomActionArgsOf, AtomFamilyArgsOf,
+  AtomResultOf
+} from '~/core/atom';
+import type {AtomComputationEffectCleanup} from '~/hook/atom-computation-effect';
 
 
 export class Supervisor {

@@ -2,8 +2,8 @@
 // atomStore hook
 // =============================================================================
 
-import {Store} from '~/api/store';
 import {requireComputationContext, requireComputationContextStackFrame} from '~/reactor/computation-context';
+import type {Store} from '~/api/store';
 
 
 export function atomStore(): Store {

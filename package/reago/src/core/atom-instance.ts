@@ -5,15 +5,15 @@
 import {
   COMPUTING, COMPUTED, MOUNTED_DIRECTLY, MOUNTED_TRANSITIVELY, UNMOUNTED, FRESH, OUTDATED, STALE
 } from '~/const';
-import {AtomActionFrame} from '~/hook/atom-action';
-import {AtomComputationEffectFrame} from '~/hook/atom-computation-effect';
-import {AtomMountEffectFrame} from '~/hook/atom-mount-effect';
-import {Computation} from '~/reactor/computation';
 import {IterableWeakSet} from '~/util/iterable-weakset';
-import {SwappablePromise} from '~/util/swappable-promise';
-import {AnyAtom, AtomFamilyArgsOf, AtomResultOf} from './atom';
-import {AtomHookFrame} from './atom-hook';
-import {AtomWatcher} from './atom-watcher';
+import type {AtomActionFrame} from '~/hook/atom-action';
+import type {AtomComputationEffectFrame} from '~/hook/atom-computation-effect';
+import type {AtomMountEffectFrame} from '~/hook/atom-mount-effect';
+import type {Computation} from '~/reactor/computation';
+import type {SwappablePromise} from '~/util/swappable-promise';
+import type {AnyAtom, AtomFamilyArgsOf, AtomResultOf} from './atom';
+import type {AtomHookFrame} from './atom-hook';
+import type {AtomWatcher} from './atom-watcher';
 
 
 export interface AtomInstance<T extends AnyAtom> {

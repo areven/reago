@@ -9,14 +9,14 @@ import {expect, test} from 'vitest';
 test('read() registers a simple linear dependency chain', async () => {
   let counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0;
 
-  function $atom1() {
+  function $atom1(): number {
     ++counter1;
     const [value, setValue] = atomState(5);
     atomAction(setValue, []);
     return value;
   }
 
-  function $atom2() {
+  function $atom2(): number {
     ++counter2;
     return read($atom1) * 2;
   }

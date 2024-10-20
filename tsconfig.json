@@ -1,12 +1,30 @@
 {
-
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    "strict": true,
+    "moduleResolution": "bundler",
+    "customConditions": ["raw"],
+
+    "composite": true,
     "declaration": true,
-    "moduleResolution": "node",
+    "declarationMap": true,
+    "noEmit": true,
+
+    "esModuleInterop": true,
     "skipLibCheck": true,
-    "esModuleInterop": true
-  }
+    "verbatimModuleSyntax": true,
+
+    "strict": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "isolatedDeclarations": true,
+    "isolatedModules": true,
+    "noImplicitOverride": true
+  },
+
+  "files": [],
+  "include": [],
+  "references": [
+    {"path": "./package/reago"}
+  ]
 }

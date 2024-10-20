@@ -2,11 +2,11 @@
 // Public invalidate() API
 // =============================================================================
 
-import {AnyAtom, AtomFamilyArgsOf} from '~/core/atom';
 import {IllegalOperationAtomError} from '~/error';
 import {getCallbackContext} from '~/reactor/callback-context';
 import {getComputationContext} from '~/reactor/computation-context';
 import {getDefaultStore} from './store';
+import type {AnyAtom, AtomFamilyArgsOf} from '~/core/atom';
 
 
 export function invalidate<T extends AnyAtom>(

@@ -2,8 +2,8 @@
 // atomRef hook
 // =============================================================================
 
-import {AtomHookFrame} from '~/core/atom-hook';
 import {requireComputationContextStackFrame} from '~/reactor/computation-context';
+import type {AtomHookFrame} from '~/core/atom-hook';
 
 
 export interface AtomRefFrame<Value> extends AtomHookFrame {

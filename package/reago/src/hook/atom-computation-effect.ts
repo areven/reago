@@ -3,9 +3,9 @@
 // =============================================================================
 
 import {METADATA} from '~/const';
-import {AtomHookFrame} from '~/core/atom-hook';
 import {requireComputationContextStackFrame} from '~/reactor/computation-context';
 import {compareDepsEqual} from '~/util/comparison';
+import type {AtomHook, AtomHookFrame} from '~/core/atom-hook';
 
 
 export interface AtomComputationEffectFrame extends AtomHookFrame {
@@ -42,7 +42,7 @@ export function atomComputationEffect(
   }
 }
 
-atomComputationEffect.onSkip = (frame: AtomComputationEffectFrame): void => {
+(atomComputationEffect as AtomHook).onSkip = (frame: AtomComputationEffectFrame): void => {
   // force unload of the previous effect
   frame.setup = () => {};
 

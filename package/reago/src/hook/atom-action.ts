@@ -2,10 +2,10 @@
 // atomAction hook
 // =============================================================================
 
-import {AtomActionArg} from '~/core/atom';
-import {AtomHookFrame} from '~/core/atom-hook';
 import {requireComputationContextStackFrame} from '~/reactor/computation-context';
 import {compareDepsEqual} from '~/util/comparison';
+import type {AtomActionArg} from '~/core/atom';
+import type {AtomHook, AtomHookFrame} from '~/core/atom-hook';
 
 
 export interface AtomActionFrame extends AtomHookFrame {
@@ -35,7 +35,7 @@ export function atomAction(
   }
 }
 
-atomAction.onSkip = (frame: AtomActionFrame): void => {
+(atomAction as AtomHook).onSkip = (frame: AtomActionFrame): void => {
   // disable current handler
   frame.handler = () => {};
 

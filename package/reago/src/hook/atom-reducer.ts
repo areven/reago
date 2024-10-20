@@ -2,11 +2,11 @@
 // atomReducer hook
 // =============================================================================
 
-import {AtomHookFrame} from '~/core/atom-hook';
 import {
   requireComputationContext, requireComputationContextStackFrame, runWithoutComputationContext
 } from '~/reactor/computation-context';
 import {compareEqual} from '~/util/comparison';
+import type {AtomHookFrame} from '~/core/atom-hook';
 
 
 export interface AtomReducerFrame<Value, ActionArgs extends any[]> extends AtomHookFrame {

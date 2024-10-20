@@ -2,7 +2,7 @@
 // Argument hashing
 // =============================================================================
 
-import {AtomFamilyArgs} from '~/core/atom';
+import type {AtomFamilyArgs} from '~/core/atom';
 
 
 export function hashFamilyArguments(args: AtomFamilyArgs): string {

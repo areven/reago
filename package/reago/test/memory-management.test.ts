@@ -3,7 +3,7 @@
 // =============================================================================
 
 import LeakDetector from 'jest-leak-detector';
-import {Atom, atomAction, atomState, dispatch, read, watch} from 'reago';
+import {atomAction, atomState, dispatch, read, watch, type Atom} from 'reago';
 import {expect, test} from 'vitest';
 
 

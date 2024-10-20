@@ -2,7 +2,7 @@
 // Commitlint configuration
 // =============================================================================
 
-import {RuleConfigSeverity as Severity, UserConfig} from '@commitlint/types';
+import {RuleConfigSeverity as Severity, type UserConfig} from '@commitlint/types';
 
 
 const commitlintConfig: UserConfig = {
