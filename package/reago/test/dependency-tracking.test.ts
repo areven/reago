@@ -2,7 +2,7 @@
 // Dependency tracking tests
 // =============================================================================
 
-import {atomAction, atomState, dispatch, invalidate, read} from 'reago';
+import {atomAction, atomState, dispatch, invalidate, read, watch} from 'reago';
 import {expect, test} from 'vitest';
 
 
@@ -384,6 +384,58 @@ test('read() drops dependencies that are no longer reachable', async () => {
   expect(counter1).toBe(3);
   expect(counter2).toBe(1);
   expect(counter3).toBe(4);
+});
+
+test('read() unmounts no longer reachable dependencies if they were mounted transitively', () => {
+  function $atom1() {
+    const [value, setValue] = atomState(0);
+    atomAction(setValue, []);
+    return value;
+  }
+
+  function $atom2() {
+    const [nested, setNested] = atomState(true);
+    atomAction(setNested, []);
+
+    if (nested) {
+      return read($atom1);
+    } else {
+      return 123;
+    }
+  }
+
+  function $atom3() {
+    const [nested, setNested] = atomState(true);
+    atomAction(setNested, []);
+
+    if (nested) {
+      return read($atom1);
+    } else {
+      return 123;
+    }
+  }
+
+  let counter = 0;
+  using watcher = watch($atom2, () => {
+    ++counter;
+  });
+
+
+  expect(read($atom2)).toBe(0);
+  expect(read($atom3)).toBe(0);
+  expect(counter).toBe(0);
+
+  dispatch($atom1)(8);
+  expect(read($atom2)).toBe(8);
+  expect(counter).toBe(1);
+
+  dispatch($atom2)(false);
+  dispatch($atom3)(false);
+  expect(counter).toBe(2);
+  expect(read($atom2)).toBe(123);
+  expect(read($atom3)).toBe(123);
+  dispatch($atom1)(13);
+  expect(counter).toBe(2);
 });
 
 test('read() drops dependencies found during an interrupted computation', async () => {
