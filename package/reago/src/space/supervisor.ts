@@ -260,12 +260,15 @@ export class Supervisor {
           if (!newComputation.abortController.signal.aborted) {
             this.#commitComputation(instance);
           }
-          if (instance.computation!.error !== NO_VALUE) {
-            throw instance.computation!.error;
+          if (newComputation.error !== NO_VALUE) {
+            throw newComputation.error;
           }
-          return instance.computation!.result as AtomResultOf<T>;
+          return newComputation.result as AtomResultOf<T>;
         },
         (err) => {
+          // should be unreachable - errors are reported via `computation.error`
+          /* v8 ignore next 6 */
+          newComputation.error = err;
           if (!newComputation.abortController.signal.aborted) {
             this.#commitComputation(instance);
           }
