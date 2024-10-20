@@ -1,5 +1,5 @@
 // =============================================================================
-// Generative atom optimizations
+// Generative atom optimizations tests
 // =============================================================================
 
 import {atomAction, atomRef, atomState, dispatch, invalidate, read, watch} from 'reago';
