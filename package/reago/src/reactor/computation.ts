@@ -125,7 +125,11 @@ function runComputationSynchronousSteps<T extends AnyAtom>(
 
   do {
     if (!isPromise(step.value)) {
-      throw new GeneratorPromiseExpectedAtomError(step.value);
+      storeComputationError(
+        context.computation,
+        new GeneratorPromiseExpectedAtomError(step.value)
+      );
+      return null;
     }
 
     trackPromise(step.value);

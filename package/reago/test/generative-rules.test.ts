@@ -7,7 +7,7 @@ import {expect, test} from 'vitest';
 import {GeneratorPromiseExpectedAtomError} from '~/error';
 
 
-test('generative atom requires yielded values to be promises', () => {
+test('generative atom requires yielded values to be promises', async () => {
   function* $atom1() {
     yield 123;
   }
@@ -25,14 +25,15 @@ test('generative atom requires yielded values to be promises', () => {
   }
 
   function* $atom5() {
+    yield Promise.resolve(123); // make computation async
     yield {};
   }
 
-  expect(() => read($atom1)).toThrowError(GeneratorPromiseExpectedAtomError);
-  expect(() => read($atom2)).toThrowError(GeneratorPromiseExpectedAtomError);
-  expect(() => read($atom3)).toThrowError(GeneratorPromiseExpectedAtomError);
-  expect(() => read($atom4)).toThrowError(GeneratorPromiseExpectedAtomError);
-  expect(() => read($atom5)).toThrowError(GeneratorPromiseExpectedAtomError);
+  await expect(read($atom1)).rejects.toThrowError(GeneratorPromiseExpectedAtomError);
+  await expect(read($atom2)).rejects.toThrowError(GeneratorPromiseExpectedAtomError);
+  await expect(read($atom3)).rejects.toThrowError(GeneratorPromiseExpectedAtomError);
+  await expect(read($atom4)).rejects.toThrowError(GeneratorPromiseExpectedAtomError);
+  await expect(read($atom5)).rejects.toThrowError(GeneratorPromiseExpectedAtomError);
 });
 
 test('generative atom will receive results from yielded promises', async () => {
