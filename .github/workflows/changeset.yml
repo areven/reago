@@ -9,6 +9,10 @@ on:
     branches:
       - main
 
+env:
+  CI: true
+  HUSKY: 0
+
 permissions:
   contents: write
   packages: write
@@ -49,7 +53,8 @@ jobs:
         with:
           title: 'chore: release packages'
           commit: 'chore: release packages'
-          publish: npm run build --workspaces --if-present && npx changeset publish
+          publish: ./script/ci-changeset-publish.sh
+          version: ./script/ci-changeset-version.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -11,6 +11,7 @@ on:
   pull_request:
     types: [opened, synchronize]
   workflow_dispatch:
+
 env:
   CI: true
   HUSKY: 0
