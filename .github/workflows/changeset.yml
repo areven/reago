@@ -49,7 +49,10 @@ jobs:
         with:
           title: 'chore: release packages'
           commit: 'chore: release packages'
-          publish: npm run build --workspaces --if-present && npx changeset publish
+          publish: |
+            npm run build --workspaces --if-present && npx changeset publish
+          version: |
+            npx changeset version && && find . -type f -iname "CHANGELOG.md" -execdir mv {} changelog.md \;
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
