@@ -10,6 +10,12 @@
       - '.*/**'
     - all-globs-to-all-files:
       - '!*.md'
+      - '!.changeset/*.md'
+
+'scope:changeset':
+- changed-files:
+  - any-glob-to-any-file:
+    - '.changeset/*.md'
 
 'scope:documentation':
 - changed-files:
