@@ -1,0 +1,15 @@
+---
+"reago": patch
+---
+
+Reago — a state management library, named after the Esperanto word for 'reaction'.
+
+Why Esperanto? Because it's the language of connection, designed to bring together people
+from different backgrounds. And just like that, Reago is here to connect your app’s states
+with clarity and ease.
+
+Special thanks to:
+- Mateusz Nowak for coming up with the perfect name for this library.
+- Richard Tong for kindly transferring the ownership of his old "reago" package.
+
+Let's see where this journey takes us!
