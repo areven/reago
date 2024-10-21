@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
   "baseBranch": "main",
   "access": "public",
-  "changelog": ["@changesets/changelog-github", { "repo": "sebastian-nowak/reago" }],
+  "changelog": "@changesets/changelog-git",
   "fixed": [],
   "linked": [],
   "ignore": [],
