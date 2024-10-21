@@ -27,6 +27,7 @@
   "sideEffects": false,
   "files": [
     "readme.md",
+    "changelog.md",
     "./dist/**/*",
     "!**/*.tsbuildinfo"
   ],

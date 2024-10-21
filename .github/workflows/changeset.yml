@@ -9,6 +9,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  packages: write
+  pull-requests: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
@@ -35,7 +40,7 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          cat << EOF > "~/.npmrc"
+          cat << EOF > ".npmrc"
             //registry.npmjs.org/:_authToken=$NPM_TOKEN
           EOF
       - name: Publish or create a PR
