@@ -1,0 +1,27 @@
+# ==============================================================================
+# Organization (Issue triage)
+# ==============================================================================
+# This workflow assigns the "flag:needs-triage" label to new issues
+
+name: Organization (Issue triage)
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    if: |
+      github.repository_owner == 'sebastian-nowak' &&
+      github.event.issue.user.login != github.repository_owner &&
+      github.event.issue.author_association != 'MEMBER' &&
+      github.event.issue.author_association != 'COLLABORATOR'
+    steps:
+      - run: gh issue edit "$ISSUE_NUMBER" --add-label "flag:needs-triage"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}

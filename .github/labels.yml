@@ -40,6 +40,16 @@
   color: '5f6858'
   description: 'This went stale'
 
+- name: 'flag:needs-triage'
+  color: '27cdf9'
+  description: 'This has not been reviewed yet'
+- name: 'flag:needs-more-info'
+  color: '27cdf9'
+  description: 'This requires more information before actions can be taken'
+- name: 'flag:breaking-change'
+  color: '27cdf9'
+  description: 'Addressing this would require a breaking change'
+
 - name: 'scope:meta'
   color: '0e8a16'
   description: 'Refers to the monorepo setup'
