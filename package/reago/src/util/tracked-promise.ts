@@ -64,6 +64,6 @@ export function trackRejectedPromise<Type>(promise: Promise<Type>, error: unknow
   });
 }
 
-export function getPromiseState<Type>(promise: Promise<Type>): PromiseState<Type> {
-  return promiseState.get(promise) as PromiseState<Type> ?? {status: PENDING};
+export function getPromiseState<Type>(promise: Promise<Type>): PromiseState<Awaited<Type>> {
+  return promiseState.get(promise) as PromiseState<Awaited<Type>> ?? {status: PENDING};
 }
