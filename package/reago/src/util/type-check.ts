@@ -2,6 +2,13 @@
 // Type checking
 // =============================================================================
 
+import type {AnyAtom} from '~/core/atom';
+
+
+export function isAnyAtom(value: any): value is AnyAtom {
+  return typeof value === 'function';
+}
+
 export function isPromise(value: any): value is Promise<any> {
   return value instanceof Object && typeof value.then === 'function';
 }

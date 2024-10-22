@@ -25,6 +25,11 @@ export {read} from '~/api/read';
 export {watch} from '~/api/watch';
 export {dispatch} from '~/api/dispatch';
 export {invalidate} from '~/api/invalidate';
+export {
+  deasync,
+  type DeasyncAtom,
+  type DeasyncState
+} from '~/api/deasync';
 
 export {
   atomAbortSignal

@@ -3,7 +3,7 @@
 // =============================================================================
 
 import LeakDetector from 'jest-leak-detector';
-import {atomAction, atomState, dispatch, read, watch, type Atom} from 'reago';
+import {atomAction, atomState, deasync, dispatch, read, watch, type Atom} from 'reago';
 import {expect, test} from 'vitest';
 
 
@@ -114,6 +114,32 @@ test('reago does not hold yielded promises that are no longer referenced', async
   promise2 = undefined;
   await expect(detector1()).resolves.toBe(false);
   await expect(detector2()).resolves.toBe(false);
+});
+
+test('reago does not hold promises passed to deasync()', async () => {
+  let promise1: Promise<number> | undefined = Promise.resolve(123);
+  let promise2: Promise<number> | undefined = Promise.reject();
+  const detector1 = createDetector(promise1);
+  const detector2 = createDetector(promise2);
+  deasync(promise1);
+  deasync(promise2);
+  promise1 = undefined;
+  promise2 = undefined;
+  await expect(detector1()).resolves.toBe(false);
+  await expect(detector2()).resolves.toBe(false);
+
+  let promise3: Promise<number> | undefined = Promise.resolve(123);
+  let promise4: Promise<number> | undefined = Promise.reject();
+  const detector3 = createDetector(promise3);
+  const detector4 = createDetector(promise4);
+  deasync(promise3);
+  deasync(promise4);
+  await promise3;
+  await promise4.catch(() => {});
+  promise3 = undefined;
+  promise4 = undefined;
+  await expect(detector3()).resolves.toBe(false);
+  await expect(detector4()).resolves.toBe(false);
 });
 
 function createDetector(value: unknown) {
