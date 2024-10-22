@@ -7,7 +7,7 @@
 export type Atom<
   Result,
   FamilyArgs extends AtomFamilyArgs = [],
-  ActionArgs extends AtomActionArgs = []
+  ActionArgs extends AtomActionArgs = never
 > = (
   FunctionalAtom<Result, FamilyArgs, ActionArgs> |
   GenerativeAtom<Result, FamilyArgs, ActionArgs>
@@ -28,13 +28,13 @@ export type AnyAtom<
 export type FunctionalAtom<
   Result,
   FamilyArgs extends AtomFamilyArgs = [],
-  ActionArgs extends AtomActionArgs = []
+  ActionArgs extends AtomActionArgs = never
 > = (...args: FamilyArgs) => Result extends AtomGenerator<any> ? never : Result;
 
 export type GenerativeAtom<
   Result,
   FamilyArgs extends AtomFamilyArgs = [],
-  ActionArgs extends AtomActionArgs = []
+  ActionArgs extends AtomActionArgs = never
 > = (...args: FamilyArgs) => AtomGenerator<Result>;
 
 export type AnyFunctionalAtom<
