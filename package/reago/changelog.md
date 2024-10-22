@@ -1,5 +1,11 @@
 # reago
 
+## 0.1.0
+
+### Minor Changes
+
+- c51ac2a: Updated `Atom<...>` generic to default to `ActionArgs = never` for better type safety
+
 ## 0.0.1
 
 ### Patch Changes
