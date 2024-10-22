@@ -1,0 +1,31 @@
+# ==============================================================================
+# Documentation issue
+# ==============================================================================
+
+name: Report a documentation issue
+description: Please report documentation issues here. Is there something undocumented, outdated or just wrong?
+labels: ["type:documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Hey there! 👋
+
+        Thank you for taking the time to report an issue with documentation. Your input helps make this project better.
+
+        Before you proceed:
+        - This template is used **only for documentation issues**.
+        - Before opening a new issue, please do a [search](https://github.com/sebastian-nowak/reago/issues) of existing issues and upvote the existing issue instead.
+        - For issues of a different nature, please consider posting in [Discussions](https://github.com/sebastian-nowak/reago/discussions) or selecting a more suitable category.
+
+        Need help with your own project? There are options too:
+        - Start a discussion in the [Q&A](https://github.com/sebastian-nowak/reago/discussions/categories/q-a) section.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the documentation issue
+      description: Tell us, what is undocumented, outdated or just wrong?
+      placeholder: >
+        Tip: It will make our life much easier if you link to the referenced documentation pages! :-)
+    validations:
+      required: true

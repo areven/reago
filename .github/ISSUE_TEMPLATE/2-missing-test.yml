@@ -1,0 +1,40 @@
+# ==============================================================================
+# Missing test coverage
+# ==============================================================================
+
+name: Report a missing test case
+description: Please report missing test coverage here. Is there a valid use case we don't have a test for?
+labels: ["type:test"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Hey there! 👋
+
+        Thank you for taking the time to report missing test coverage. Your input helps make this project better.
+
+        Before you proceed:
+        - This template is used **only for reporting missing tests**.
+        - Before opening a new issue, please do a [search](https://github.com/sebastian-nowak/reago/issues) of existing issues and upvote the existing issue instead.
+        - For issues of a different nature, please consider posting in [Discussions](https://github.com/sebastian-nowak/reago/discussions) or selecting a more suitable category.
+
+        Need help with your own project? There are options too:
+        - Start a discussion in the [Q&A](https://github.com/sebastian-nowak/reago/discussions/categories/q-a) section.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the missing test
+      description: Tell us, what use case is not covered by tests yet?
+    validations:
+      required: true
+  - type: textarea
+    id: test-code
+    attributes:
+      label: Test case code
+      description: (Optional) If possible, please implement the missing test case or a draft that could get us started.
+      placeholder: |
+        test('missing test case', () => {
+          ...
+        });
+    validations:
+      required: false
