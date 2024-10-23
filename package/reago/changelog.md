@@ -1,5 +1,12 @@
 # reago
 
+## 0.1.1
+
+### Patch Changes
+
+- 076b195: Removed duplicate changelog.md file from the published package
+- 6b8234c: Fixed the `getPromiseState` return type for tracked promises
+
 ## 0.1.0
 
 ### Minor Changes
