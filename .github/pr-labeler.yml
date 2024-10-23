@@ -8,6 +8,7 @@
     - any-glob-to-any-file:
       - '*'
       - '.*/**'
+      - 'script/**'
     - all-globs-to-all-files:
       - '!*.md'
       - '!.changeset/*.md'
