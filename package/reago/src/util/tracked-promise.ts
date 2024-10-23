@@ -5,7 +5,7 @@
 import {PENDING, REJECTED, RESOLVED} from '~/const';
 
 
-const promiseState = new WeakMap<Promise<any>, PromiseState<unknown>>();
+const promiseState = new WeakMap<PromiseLike<any>, PromiseState<unknown>>();
 
 export type PromiseState<ResultType = unknown, ErrorType = unknown> = (
   PendingPromiseState |
@@ -27,7 +27,7 @@ export interface RejectedPromiseState<ErrorType> {
   error: ErrorType;
 }
 
-export function trackPromise<Type>(promise: Promise<Type>): void {
+export function trackPromise<Type>(promise: PromiseLike<Type>): void {
   if (promiseState.has(promise)) {
     return;
   }
@@ -50,20 +50,20 @@ export function trackPromise<Type>(promise: Promise<Type>): void {
   );
 }
 
-export function trackResolvedPromise<Type>(promise: Promise<Type>, result: Type): void {
+export function trackResolvedPromise<Type>(promise: PromiseLike<Type>, result: Type): void {
   promiseState.set(promise, {
     status: RESOLVED,
     result
   });
 }
 
-export function trackRejectedPromise<Type>(promise: Promise<Type>, error: unknown): void {
+export function trackRejectedPromise<Type>(promise: PromiseLike<Type>, error: unknown): void {
   promiseState.set(promise, {
     status: REJECTED,
     error
   });
 }
 
-export function getPromiseState<Type>(promise: Promise<Type>): PromiseState<Awaited<Type>> {
+export function getPromiseState<Type>(promise: PromiseLike<Type>): PromiseState<Awaited<Type>> {
   return promiseState.get(promise) as PromiseState<Awaited<Type>> ?? {status: PENDING};
 }

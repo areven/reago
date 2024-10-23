@@ -16,8 +16,8 @@ export type SwappablePromise<Type> = Promise<Type> & {
 
 export interface PendingSwappablePromise<Type> {
   status: typeof PENDING;
-  promise: Promise<Type> | null;
-  setPromise: (p: Promise<Type> | null) => void;
+  promise: PromiseLike<Type> | null;
+  setPromise: (p: PromiseLike<Type> | null) => void;
 }
 
 export interface ResolvedSwappablePromise {
@@ -28,7 +28,7 @@ export interface RejectedSwappablePromise {
   status: typeof REJECTED;
 }
 
-export function createSwappablePromise<Type>(initial: Promise<Type> | null = null): SwappablePromise<Type> {
+export function createSwappablePromise<Type>(initial: PromiseLike<Type> | null = null): SwappablePromise<Type> {
   let resolve: (value: Type | PromiseLike<Type>) => void;
   let reject: (reason?: any) => void;
 
@@ -40,7 +40,7 @@ export function createSwappablePromise<Type>(initial: Promise<Type> | null = nul
   promise[METADATA] = {
     status: PENDING,
     promise: null,
-    setPromise: (p: Promise<Type> | null) => {
+    setPromise: (p: PromiseLike<Type> | null) => {
       assert(promise[METADATA].status === PENDING);
 
       if (promise[METADATA].promise === p) {
@@ -78,7 +78,7 @@ export function createSwappablePromise<Type>(initial: Promise<Type> | null = nul
 
 export function swapOrRecreatePromise<Type>(
   swappablePromise: SwappablePromise<Type> | undefined,
-  innerPromise: Promise<Type>
+  innerPromise: PromiseLike<Type>
 ): SwappablePromise<Type> {
   if (swappablePromise && swappablePromise[METADATA].status === PENDING) {
     swappablePromise[METADATA].setPromise(innerPromise);

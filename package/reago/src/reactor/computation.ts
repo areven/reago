@@ -6,7 +6,7 @@ import {FUNCTIONAL_ATOM, GENERATIVE_ATOM, NO_VALUE, REJECTED, RESOLVED} from '~/
 import {ComputationAbortedAtomError, GeneratorPromiseExpectedAtomError} from '~/error';
 import {Supervisor} from '~/space/supervisor';
 import {getPromiseState, trackPromise, type PromiseState} from '~/util/tracked-promise';
-import {isPromise} from '~/util/type-check';
+import {isPromiseLike} from '~/util/type-check';
 import {runWithComputationContext, type ComputationContext} from './computation-context';
 import {createRunner, type RunnerGenerator, type RunnerStep} from './runner';
 import type {AnyAtom, AtomResultOf} from '~/core/atom';
@@ -120,12 +120,12 @@ function runComputationSynchronousSteps<T extends AnyAtom>(
   generator: RunnerGenerator<AtomResultOf<T>>,
   method: 'next' | 'throw',
   value: unknown = undefined
-): null | Promise<unknown> {
+): null | PromiseLike<unknown> {
   let step = runComputationStep(context, generator, method, value);
   if (step === null) return null;
 
   do {
-    if (!isPromise(step.value)) {
+    if (!isPromiseLike(step.value)) {
       storeComputationError(
         context.computation,
         new GeneratorPromiseExpectedAtomError(step.value)

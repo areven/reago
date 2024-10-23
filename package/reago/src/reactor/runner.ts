@@ -15,7 +15,7 @@ export type RunnerGenerator<Result> = AtomGenerator<Result> & {
   readonly [FUNCTIONAL_ATOM]?: true;
 };
 
-export type RunnerStep<Result> = IteratorResult<Promise<unknown>, Result>;
+export type RunnerStep<Result> = IteratorResult<PromiseLike<unknown>, Result>;
 
 export function createRunner<T extends AnyAtom>(atom: T): Runner<T> {
   return function (...args: any[]) {

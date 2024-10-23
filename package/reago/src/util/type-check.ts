@@ -9,7 +9,7 @@ export function isAnyAtom(value: any): value is AnyAtom {
   return typeof value === 'function';
 }
 
-export function isPromise(value: any): value is Promise<any> {
+export function isPromiseLike(value: any): value is PromiseLike<any> {
   return value instanceof Object && typeof value.then === 'function';
 }
 

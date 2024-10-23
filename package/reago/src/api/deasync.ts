@@ -7,7 +7,7 @@ import {atomComputationEffect} from '~/hook/atom-computation-effect';
 import {atomMemo} from '~/hook/atom-memo';
 import {atomReducer} from '~/hook/atom-reducer';
 import {getPromiseState, trackPromise} from '~/util/tracked-promise';
-import {isAnyAtom, isPromise} from '~/util/type-check';
+import {isAnyAtom, isPromiseLike} from '~/util/type-check';
 import {read} from './read';
 import type {AnyAtom, AtomFamilyArgsOf, AtomResultOf, FunctionalAtom} from '~/core/atom';
 
@@ -38,11 +38,11 @@ interface RejectedDeasyncState<ErrorType> {
   error: ErrorType;
 }
 
-export function deasync<T>(promise: Promise<T>): DeasyncState<Awaited<T>>;
+export function deasync<T>(promise: PromiseLike<T>): DeasyncState<Awaited<T>>;
 export function deasync<T extends AnyAtom>(atom: T): DeasyncAtom<T>;
 export function deasync<T>(value: T): ResolvedDeasyncState<T>;
 export function deasync(input: unknown): unknown {
-  if (isPromise(input)) {
+  if (isPromiseLike(input)) {
     return deasyncPromise(input);
   } else if (isAnyAtom(input)) {
     return deasyncAtom(input);
@@ -58,7 +58,7 @@ function deasyncRaw<T>(value: T): ResolvedDeasyncState<T> {
   };
 }
 
-function deasyncPromise<T>(promise: Promise<T>): DeasyncState<Awaited<T>> {
+function deasyncPromise<T>(promise: PromiseLike<T>): DeasyncState<Awaited<T>> {
   trackPromise(promise);
   const state = getPromiseState(promise);
   if (state.status === PENDING) {
@@ -81,13 +81,13 @@ function deasyncPromise<T>(promise: Promise<T>): DeasyncState<Awaited<T>> {
 function deasyncAtom<T extends AnyAtom>(atom: T): DeasyncAtom<T> {
   return (...args) => {
     const result = read(atom, ...args);
-    const unpacked = isPromise(result) ? deasyncPromise(result) : deasyncRaw(result);
+    const unpacked = isPromiseLike(result) ? deasyncPromise(result) : deasyncRaw(result);
 
     const [_tick, refresh] = atomReducer(x => x + 1, 0);
     atomComputationEffect(
       () => {
-        if (unpacked.status === 'pending' && isPromise(result)) {
-          result.finally(refresh).catch(() => {});
+        if (unpacked.status === 'pending' && isPromiseLike(result)) {
+          result.then(refresh, refresh);
         }
       },
       [unpacked.status, result]

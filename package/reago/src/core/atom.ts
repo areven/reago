@@ -63,7 +63,7 @@ export type AtomActionArg = any;
 export type AtomActionArgs = AtomActionArg[];
 
 export type AtomGenerator<Result> = Generator<
-  Promise<unknown>, // accepted type in yield
+  PromiseLike<unknown>, // accepted type in yield
   Result, // return type
   unknown // type of data passed back via next()
 >;
