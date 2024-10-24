@@ -6,7 +6,10 @@
     "paths": {
       "~/*": ["./src/*"]
     },
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": [
+      "@vitest/browser/providers/playwright"
+    ]
   },
   "include": ["./src", "./test"],
   "references": [

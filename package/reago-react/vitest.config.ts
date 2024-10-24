@@ -8,7 +8,16 @@ import baseConfig from '../../vitest.config';
 
 export default mergeConfig(baseConfig, defineProject({
   test: {
-    include: ['test/**/*.test.ts'],
-    environment: 'node'
+    include: [
+      'test/**/*.test.ts',
+      'test/**/*.test.tsx'
+    ],
+    browser: {
+      provider: 'playwright',
+      name: 'chromium',
+      enabled: true,
+      headless: true,
+      screenshotFailures: false
+    }
   }
 }));
