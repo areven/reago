@@ -35,7 +35,7 @@ export function useReadAtom<T extends AnyAtom>(
   // that's it
   useDebugValue(value);
   if (isPromiseLike(value)) {
-    return use(value);
+    return use(value) as Awaited<AtomResultOf<T>>;
   } else {
     return value as Awaited<AtomResultOf<T>>;
   }
@@ -48,7 +48,7 @@ function use<T>(promise: PromiseLike<T>): Awaited<T> {
     return unpacked.result;
   } else if (unpacked.status === 'rejected') {
     throw unpacked.error;
-  } else if ('use' in ReactExports) {
+  } else if ((ReactExports as any).use) {
     return (ReactExports as any).use(promise);
   } else {
     throw promise;
