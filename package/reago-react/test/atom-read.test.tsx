@@ -2,7 +2,7 @@
 // Atom read tests
 // =============================================================================
 
-import ReactExports, {useState} from 'react';
+import ReactExports, {useLayoutEffect, useState} from 'react';
 import {atomAction, atomState, createStore, deasync, dispatch, invalidate, read} from 'reago';
 import {StoreProvider, useReadAtom} from 'reago-react';
 import {expect, test, vi} from 'vitest';
@@ -493,4 +493,30 @@ test('useReadAtom() throws pending promises if `use` from react is not available
   if (hasUse) {
     (ReactExports as any).use = orgUse;
   }
+});
+
+test('useReadAtom() reports correct value if it changed between first read() and the watch() call', async () => {
+  let renderCount = 0;
+
+  function $atom() {
+    const [value, setValue] = atomState(10);
+    atomAction(setValue, []);
+    return value;
+  }
+
+  function Component() {
+    ++renderCount;
+    useLayoutEffect(() => {
+      // mess up the value before useReadAtom can call watch()
+      dispatch($atom)(404);
+    });
+    const value = useReadAtom($atom);
+    return <div data-testid='test'>{value}</div>;
+  }
+
+  const screen = render(<Component/>);
+  const test = screen.getByTestId('test');
+
+  await expect.element(test).toHaveTextContent('404');
+  expect(renderCount).toBe(2);
 });
