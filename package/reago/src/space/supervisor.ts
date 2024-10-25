@@ -265,9 +265,9 @@ export class Supervisor {
           }
           return newComputation.result as AtomResultOf<T>;
         },
+        /* istanbul ignore next -- @preserve */
         (err) => {
           // should be unreachable - errors are reported via `computation.error`
-          /* v8 ignore next 6 */
           newComputation.error = err;
           if (!newComputation.abortController.signal.aborted) {
             this.#commitComputation(instance);
