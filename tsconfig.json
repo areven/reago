@@ -2,6 +2,7 @@
   "files": [],
   "include": [],
   "references": [
-    {"path": "./package/reago"}
+    {"path": "./package/reago"},
+    {"path": "./package/reago-react"}
   ]
 }
