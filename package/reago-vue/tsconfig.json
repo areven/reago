@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "./",
+    "outDir": "./dist",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "types": [
+      "@vitest/browser/providers/playwright"
+    ]
+  },
+  "include": ["./src", "./test"],
+  "references": [
+    {"path": "../reago"}
+  ]
+}

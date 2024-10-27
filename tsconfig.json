@@ -3,6 +3,7 @@
   "include": [],
   "references": [
     {"path": "./package/reago"},
-    {"path": "./package/reago-react"}
+    {"path": "./package/reago-react"},
+    {"path": "./package/reago-vue"}
   ]
 }
