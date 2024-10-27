@@ -1,5 +1,11 @@
 # reago
 
+## 0.1.4
+
+### Patch Changes
+
+- 77c711e: Added `main` and `types` fields to package.json
+
 ## 0.1.3
 
 ### Patch Changes

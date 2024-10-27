@@ -1,5 +1,14 @@
 # reago-react
 
+## 0.0.2
+
+### Patch Changes
+
+- 222564d: Simplified the package.json keywords
+- 77c711e: Added `main` and `types` fields to package.json
+- Updated dependencies [77c711e]
+  - reago@0.1.4
+
 ## 0.0.1
 
 ### Patch Changes
