@@ -6,13 +6,8 @@
   "description": "React bindings for the `reago` state manager",
   "keywords": [
     "reago",
-    "state",
-    "state manager",
-    "observable",
-    "reactive",
     "react",
-    "recoil",
-    "jotai"
+    "official"
   ],
   "homepage": "https://reago.dev",
   "repository": {
