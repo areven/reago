@@ -2,7 +2,7 @@
   "name": "reago-react",
   "author": "Sebastian Daniel Nowak",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "React bindings for the `reago` state manager",
   "keywords": [
     "reago",
