@@ -1,13 +1,13 @@
 // =============================================================================
-// useAtom hook
+// useAsyncAtom hook
 // =============================================================================
 
 import {useDispatchAtom} from './use-dispatch-atom';
-import {useReadAtom} from './use-read-atom';
+import {useReadAsyncAtom} from './use-read-async-atom';
 import type {AnyAtom, AtomFamilyArgsOf, AtomResultOf, dispatch} from 'reago';
 
 
-export function useAtom<T extends AnyAtom>(
+export function useAsyncAtom<T extends AnyAtom>(
   atom: T,
   ...args: AtomFamilyArgsOf<T>
 ): [
@@ -15,7 +15,7 @@ export function useAtom<T extends AnyAtom>(
   ReturnType<typeof dispatch<T>>
 ] {
   return [
-    useReadAtom(atom, ...args),
+    useReadAsyncAtom(atom, ...args),
     useDispatchAtom(atom, ...args)
   ];
 }

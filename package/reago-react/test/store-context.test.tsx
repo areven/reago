@@ -4,7 +4,7 @@
 
 import {useEffect} from 'react';
 import {atomAction, atomState, createStore, getDefaultStore, type Store} from 'reago';
-import {StoreProvider, useAtom, useDispatchAtom, useReadAtom, useStore} from 'reago-react';
+import {StoreProvider, useAsyncAtom, useDispatchAtom, useReadAsyncAtom, useStore} from 'reago-react';
 import {expect, test} from 'vitest';
 import {render} from 'vitest-browser-react';
 
@@ -122,7 +122,7 @@ test('useStore() used with nested store providers returns the closest provided s
   expect(returnedStore2).toBe(store2);
 });
 
-test('useAtom() uses the provided store', async () => {
+test('useAsyncAtom() uses the provided store', async () => {
   const store1 = getDefaultStore();
   const store2 = createStore();
   const store3 = createStore();
@@ -134,7 +134,7 @@ test('useAtom() uses the provided store', async () => {
   }
 
   function Component({testId, newValue}: {testId: number, newValue: number}) {
-    const [value, dispatch] = useAtom($atom);
+    const [value, dispatch] = useAsyncAtom($atom);
     useEffect(() => {
       dispatch(newValue);
     }, [newValue]);
@@ -154,7 +154,7 @@ test('useAtom() uses the provided store', async () => {
   await expect.element(screen.getByTestId('test-3')).toHaveTextContent('83');
 });
 
-test('useReadAtom() uses the provided store', async () => {
+test('useReadAsyncAtom() uses the provided store', async () => {
   const store1 = getDefaultStore();
   const store2 = createStore();
   const store3 = createStore();
@@ -169,7 +169,7 @@ test('useReadAtom() uses the provided store', async () => {
   store3.read($atom);
 
   function Component({testId}: {testId: number}) {
-    const value = useReadAtom($atom);
+    const value = useReadAsyncAtom($atom);
     return <div data-testid={'test-' + testId}>{value}</div>
   }
 

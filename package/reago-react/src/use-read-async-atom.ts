@@ -1,5 +1,5 @@
 // =============================================================================
-// useReadAtom hook
+// useReadAsyncAtom hook
 // =============================================================================
 
 import ReactExports, {useDebugValue, useEffect, useReducer} from 'react';
@@ -8,7 +8,7 @@ import {useStore} from './use-store';
 import {isPromiseLike} from './util';
 
 
-export function useReadAtom<T extends AnyAtom>(
+export function useReadAsyncAtom<T extends AnyAtom>(
   atom: T,
   ...args: AtomFamilyArgsOf<T>
 ): Awaited<AtomResultOf<T>> {
@@ -26,7 +26,7 @@ export function useReadAtom<T extends AnyAtom>(
       refresh();
     }
 
-    // setup a watcher even if value changed - it might revert before `useReadAtom`
+    // setup a watcher even if value changed - it might revert before `useReadAsyncAtom`
     // runs again, in which case useEffect dependencies will remain the same
     const watcher = store.watch(atom, ...args, refresh);
     return () => watcher.clear();
