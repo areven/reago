@@ -6,7 +6,7 @@ import {useReducer, useState} from 'react';
 import {atomAction, atomState, createStore, read} from 'reago';
 import {StoreProvider, useDispatchAtom} from 'reago-react';
 import {expect, test} from 'vitest';
-import {render} from 'vitest-browser-react'
+import {render} from 'vitest-browser-react';
 
 
 test('useDispatchAtom() targets the referenced atom', async () => {

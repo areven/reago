@@ -1,22 +1,26 @@
 // =============================================================================
-// Atom read async tests
+// Atom read deasync tests
 // =============================================================================
 
-import ReactExports, {useLayoutEffect, useState} from 'react';
+import {useLayoutEffect, useState} from 'react';
 import {atomAction, atomState, createStore, deasync, dispatch, invalidate, read} from 'reago';
-import {StoreProvider, useReadAsyncAtom} from 'reago-react';
-import {expect, test, vi} from 'vitest';
+import {StoreProvider, useReadDeasyncAtom} from 'reago-react';
+import {expect, test} from 'vitest';
 import {render} from 'vitest-browser-react';
 
 
-test('useReadAsyncAtom() reads the value of a functional atom', async () => {
+test('useReadDeasyncAtom() immediately reads the value of a non-async functional atom', async () => {
+  let renderCount = 0;
+
   function $atom() {
     return 123;
   }
 
   function Component() {
-    const value = useReadAsyncAtom($atom);
-    return <div title='result'>{value}</div>;
+    ++renderCount;
+    const unpacked = useReadDeasyncAtom($atom);
+    if (unpacked.status !== 'resolved') throw new Error('fail');
+    return <div title='result'>{unpacked.result}</div>;
   }
 
   const screen = render(<Component/>);
@@ -25,7 +29,7 @@ test('useReadAsyncAtom() reads the value of a functional atom', async () => {
   await expect.element(result).toHaveTextContent('123');
 });
 
-test('useReadAsyncAtom() unpacks resolved promises returned from functional atoms', async () => {
+test('useReadDeasyncAtom() unpacks resolved promises returned from functional atoms', async () => {
   let renderCount = 0;
 
   function $atom(instance: number) {
@@ -34,17 +38,18 @@ test('useReadAsyncAtom() unpacks resolved promises returned from functional atom
 
   function Component() {
     ++renderCount;
-    const value = useReadAsyncAtom($atom, 42);
-    return <div data-testid='test'>{value}</div>;
+    const unpacked = useReadDeasyncAtom($atom, 42);
+    return <div data-testid='test'>{unpacked.status === 'resolved' ? unpacked.result : 'pending'}</div>;
   }
 
   const screen = render(<Component/>);
 
+  await expect.element(screen.getByTestId('test')).toHaveTextContent('pending');
   await expect.element(screen.getByTestId('test')).toHaveTextContent('hello world 42');
   expect(renderCount).toBeLessThanOrEqual(2);
 });
 
-test('useReadAsyncAtom() synchronously unpacks known promises returned from functional atoms', async () => {
+test('useReadDeasyncAtom() synchronously unpacks known promises returned from functional atoms', async () => {
   let renderCount = 0;
   const returnedPromise = Promise.resolve('a&s');
 
@@ -57,8 +62,8 @@ test('useReadAsyncAtom() synchronously unpacks known promises returned from func
 
   function Component() {
     ++renderCount;
-    const value = useReadAsyncAtom($atom);
-    return <div data-testid='test'>{value}</div>;
+    const unpacked = useReadDeasyncAtom($atom);
+    return <div data-testid='test'>{unpacked.status === 'resolved' ? unpacked.result : 'pending'}</div>;
   }
 
   const screen = render(<Component/>);
@@ -67,7 +72,7 @@ test('useReadAsyncAtom() synchronously unpacks known promises returned from func
   expect(renderCount).toBe(1);
 });
 
-test('useReadAsyncAtom() throws on rejected promises returned from functional atoms', async () => {
+test('useReadDeasyncAtom() unpacks rejected promises returned from functional atoms', async () => {
   let renderCount = 0;
 
   function $atom() {
@@ -76,25 +81,24 @@ test('useReadAsyncAtom() throws on rejected promises returned from functional at
 
   function Component() {
     ++renderCount;
-    try {
-      useReadAsyncAtom($atom);
-      throw new Error('failed');
-    } catch (err: any) {
-      if (err && err.message && err.message === 'expected') {
-        return <div data-testid='test'>success</div>;
-      } else {
-        throw err;
-      }
-    }
+    const unpacked = useReadDeasyncAtom($atom);
+    return (
+      <div>
+        <div data-testid='status'>{unpacked.status}</div>
+        <div data-testid='error'>{unpacked.status === 'rejected' ? String(unpacked.error) : 'n/a'}</div>
+      </div>
+    );
   }
 
   const screen = render(<Component/>);
 
-  await expect.element(screen.getByTestId('test')).toHaveTextContent('success');
+  await expect.element(screen.getByTestId('status')).toHaveTextContent('pending');
+  await expect.element(screen.getByTestId('status')).toHaveTextContent('rejected');
+  await expect.element(screen.getByTestId('error')).toHaveTextContent('expected');
   expect(renderCount).toBeLessThanOrEqual(2);
 });
 
-test('useReadAsyncAtom() synchronously throws on known rejected promises returned from functional atoms', async () => {
+test('useReadDeasyncAtom() synchronously unpacks known rejected promises returned from functional atoms', async () => {
   let renderCount = 0;
   const returnedPromise = Promise.reject(new Error('expected'));
 
@@ -107,25 +111,23 @@ test('useReadAsyncAtom() synchronously throws on known rejected promises returne
 
   function Component() {
     ++renderCount;
-    try {
-      useReadAsyncAtom($atom);
-      throw new Error('failed');
-    } catch (err: any) {
-      if (err && err.message && err.message === 'expected') {
-        return <div data-testid='test'>success</div>;
-      } else {
-        return <div data-testid='test'>fail, suspense triggered</div>;
-      }
-    }
+    const {status, error} = useReadDeasyncAtom($atom);
+    return (
+      <div>
+        <div data-testid='status'>{status}</div>
+        <div data-testid='error'>{String(error)}</div>
+      </div>
+    );
   }
 
   const screen = render(<Component/>);
 
-  await expect.element(screen.getByTestId('test')).toHaveTextContent('success');
+  await expect.element(screen.getByTestId('status')).toHaveTextContent('rejected');
+  await expect.element(screen.getByTestId('error')).toHaveTextContent('expected');
   expect(renderCount).toBe(1);
 });
 
-test('useReadAsyncAtom() rerenders on changes of a functional atom', async () => {
+test('useReadDeasyncAtom() rerenders on changes of a functional atom', async () => {
   let renderCount = 0;
 
   function $atom() {
@@ -136,8 +138,8 @@ test('useReadAsyncAtom() rerenders on changes of a functional atom', async () =>
 
   function Component() {
     ++renderCount;
-    const value = useReadAsyncAtom($atom);
-    return <div data-testid='test'>{value}</div>;
+    const {result} = useReadDeasyncAtom($atom);
+    return <div data-testid='test'>{String(result)}</div>;
   }
 
   const screen = render(<Component/>);
@@ -159,7 +161,7 @@ test('useReadAsyncAtom() rerenders on changes of a functional atom', async () =>
   expect(renderCount).toBe(3);
 });
 
-test('useReadAsyncAtom() reads the unpacked value of a generative atom', async () => {
+test('useReadDeasyncAtom() reads the unpacked value of a generative atom', async () => {
   let renderCount = 0;
 
   function* $atom() {
@@ -169,39 +171,24 @@ test('useReadAsyncAtom() reads the unpacked value of a generative atom', async (
 
   function Component() {
     ++renderCount;
-    const value = useReadAsyncAtom($atom);
-    return <div data-testid='test'>{value}</div>;
+    const {status, result} = useReadDeasyncAtom($atom);
+    return (
+      <div>
+        <div data-testid='status'>{status}</div>
+        <div data-testid='result'>{String(result)}</div>
+      </div>
+    );
   }
 
   const screen = render(<Component/>);
-  const element = screen.getByTestId('test');
 
-  await expect.element(element).toHaveTextContent('made it!');
+  await expect.element(screen.getByTestId('status')).toHaveTextContent('pending');
+  await expect.element(screen.getByTestId('status')).toHaveTextContent('resolved');
+  await expect.element(screen.getByTestId('result')).toHaveTextContent('made it!');
   expect(renderCount).toBeLessThanOrEqual(2);
 });
 
-test('useReadAsyncAtom() unpacks promises returned from generative atoms', async () => {
-  let renderCount = 0;
-
-  function* $atom() {
-    yield Promise.resolve(null);
-    return Promise.resolve('made it too');
-  }
-
-  function Component() {
-    ++renderCount;
-    const value = useReadAsyncAtom($atom);
-    return <div data-testid='test'>{value}</div>;
-  }
-
-  const screen = render(<Component/>);
-  const element = screen.getByTestId('test');
-
-  await expect.element(element).toHaveTextContent('made it too');
-  expect(renderCount).toBeLessThanOrEqual(2);
-});
-
-test('useReadAsyncAtom() synchronously reads the value of a synchronously computed generative atom', async () => {
+test('useReadDeasyncAtom() synchronously reads the value of a synchronously computed generative atom', async () => {
   let renderCount = 0;
   const innerPromise = Promise.resolve(456);
 
@@ -215,18 +202,23 @@ test('useReadAsyncAtom() synchronously reads the value of a synchronously comput
 
   function Component() {
     ++renderCount;
-    const value = useReadAsyncAtom($atom);
-    return <div data-testid='test'>{value}</div>;
+    const {status, result} = useReadDeasyncAtom($atom);
+    return (
+      <div>
+        <div data-testid='status'>{status}</div>
+        <div data-testid='result'>{String(result)}</div>
+      </div>
+    );
   }
 
   const screen = render(<Component/>);
-  const element = screen.getByTestId('test');
 
-  await expect.element(element).toHaveTextContent('hi');
+  await expect.element(screen.getByTestId('status')).toHaveTextContent('resolved');
+  await expect.element(screen.getByTestId('result')).toHaveTextContent('hi');
   expect(renderCount).toBe(1);
 });
 
-test('useReadAsyncAtom() rerenders on changes of a generative atom', async () => {
+test('useReadDeasyncAtom() rerenders on changes of a generative atom', async () => {
   let renderCount = 0;
 
   function* $atom() {
@@ -240,27 +232,32 @@ test('useReadAsyncAtom() rerenders on changes of a generative atom', async () =>
 
   function Component() {
     ++renderCount;
-    const value = useReadAsyncAtom($atom);
-    return <div data-testid='test'>{value}</div>;
+    const {status, result} = useReadDeasyncAtom($atom);
+    return (
+      <div>
+        <div data-testid='status'>{status}</div>
+        <div data-testid='result'>{String(result)}</div>
+      </div>
+    );
   }
 
   const screen = render(<Component/>);
-  const element = screen.getByTestId('test');
+  const result = screen.getByTestId('result');
 
-  await expect.element(element).toHaveTextContent('0');
+  await expect.element(result).toHaveTextContent('0');
   expect(renderCount).toBeLessThanOrEqual(2);
 
   dispatch($atom)(42);
-  await expect.element(element).toHaveTextContent('42');
+  await expect.element(result).toHaveTextContent('42');
   expect(renderCount).toBeLessThanOrEqual(3);
 
   invalidate($atom);
   await read($atom);
-  await expect.element(element).toHaveTextContent('42');
+  await expect.element(result).toHaveTextContent('42');
   expect(renderCount).toBeLessThanOrEqual(3);
 });
 
-test('useReadAsyncAtom() does not rerender if atom is recomputed but its value remains the same', async () => {
+test('useReadDeasyncAtom() does not rerender if atom is recomputed but its value remains the same', async () => {
   let renderCount = 0;
 
   function $atom() {
@@ -275,8 +272,8 @@ test('useReadAsyncAtom() does not rerender if atom is recomputed but its value r
 
   function Component() {
     ++renderCount;
-    const value = useReadAsyncAtom($atom);
-    return <div data-testid='test'>{value}</div>;
+    const {result} = useReadDeasyncAtom($atom);
+    return <div data-testid='test'>{String(result)}</div>;
   }
 
   const screen = render(<Component/>);
@@ -298,7 +295,7 @@ test('useReadAsyncAtom() does not rerender if atom is recomputed but its value r
   expect(renderCount).toBe(2);
 });
 
-test('useReadAsyncAtom() supports atom families', async () => {
+test('useReadDeasyncAtom() supports atom families', async () => {
   let renderCount = 0;
 
   function $atom(instance: string) {
@@ -309,8 +306,8 @@ test('useReadAsyncAtom() supports atom families', async () => {
 
   function Component() {
     ++renderCount;
-    const value1 = useReadAsyncAtom($atom, 'first');
-    const value2 = useReadAsyncAtom($atom, 'second');
+    const {result: value1} = useReadDeasyncAtom($atom, 'first');
+    const {result: value2} = useReadDeasyncAtom($atom, 'second');
     return (
       <>
         <div data-testid={'test-1'}>{value1}</div>
@@ -341,7 +338,7 @@ test('useReadAsyncAtom() supports atom families', async () => {
   expect(renderCount).toBe(2);
 });
 
-test('useReadAsyncAtom() can switch from one store to another', async () => {
+test('useReadDeasyncAtom() can switch from one store to another', async () => {
   const store1 = createStore();
   const store2 = createStore();
 
@@ -365,8 +362,8 @@ test('useReadAsyncAtom() can switch from one store to another', async () => {
   }
 
   function Component2() {
-    const value = useReadAsyncAtom($atom);
-    return <div data-testid='test'>{value}</div>;
+    const {result} = useReadDeasyncAtom($atom);
+    return <div data-testid='test'>{String(result)}</div>;
   }
 
   const screen = render(<Component1/>);
@@ -381,7 +378,7 @@ test('useReadAsyncAtom() can switch from one store to another', async () => {
   await expect.element(test).toHaveTextContent('84');
 });
 
-test('useReadAsyncAtom() can switch from one atom to another', async () => {
+test('useReadDeasyncAtom() can switch from one atom to another', async () => {
   let renderCount = 0;
 
   function $atom1() {
@@ -395,10 +392,10 @@ test('useReadAsyncAtom() can switch from one atom to another', async () => {
   function Component1() {
     ++renderCount;
     const [firstAtom, setFirstAtom] = useState(true);
-    const value = useReadAsyncAtom(firstAtom ? $atom1 : $atom2);
+    const {result} = useReadDeasyncAtom(firstAtom ? $atom1 : $atom2);
     return (
       <>
-        <div data-testid='test'>{value}</div>
+        <div data-testid='test'>{String(result)}</div>
         <button onClick={() => setFirstAtom(false)}>toggle atom</button>
       </>
     );
@@ -416,13 +413,13 @@ test('useReadAsyncAtom() can switch from one atom to another', async () => {
   await expect.element(test).toHaveTextContent('456');
 });
 
-test('useReadAsyncAtom() preserves the original result reference', async () => {
+test('useReadDeasyncAtom() preserves the original result reference', async () => {
   const result = {x: 123};
   const $atom = () => result;
 
   let returnedResult;
   function Component() {
-    returnedResult = useReadAsyncAtom($atom);
+    returnedResult = useReadDeasyncAtom($atom).result;
     return null;
   }
 
@@ -430,72 +427,7 @@ test('useReadAsyncAtom() preserves the original result reference', async () => {
   expect(returnedResult).toBe(result);
 });
 
-test('useReadAsyncAtom() uses the new `use` from react if available', async () => {
-  const hasUse = !!(ReactExports as any).use;
-
-  let mockUse;
-  if (hasUse) {
-    mockUse = vi.spyOn(ReactExports, 'use' as any);
-  } else {
-    mockUse = vi.fn();
-    (ReactExports as any).use = mockUse;
-  }
-
-  mockUse.mockReturnValue(123);
-
-  function $atom() {
-    return Promise.resolve(456);
-  }
-
-  function Component() {
-    const value = useReadAsyncAtom($atom);
-    return <div data-testid='test'>{value}</div>;
-  }
-
-  const screen = render(<Component/>);
-  const test = screen.getByTestId('test');
-
-  await expect.element(test).toHaveTextContent('123'); // from the mock
-  expect(mockUse).toHaveBeenCalledOnce();
-
-  if (hasUse) {
-    mockUse.mockRestore();
-  } else {
-    delete (ReactExports as any).use;
-  }
-});
-
-test('useReadAsyncAtom() throws pending promises if `use` from react is not available', async () => {
-  const hasUse = !!(ReactExports as any).use;
-  const orgUse = (ReactExports as any).use;
-  let caughtSuspense = false;
-
-  if (hasUse) {
-    delete (ReactExports as any).use;
-  }
-
-  function $atom() {
-    return Promise.resolve(456);
-  }
-
-  function Component() {
-    try {
-      useReadAsyncAtom($atom);
-    } catch (err) {
-      caughtSuspense = true;
-    }
-    return null;
-  }
-
-  render(<Component/>);
-  expect(caughtSuspense).toBeTruthy();
-
-  if (hasUse) {
-    (ReactExports as any).use = orgUse;
-  }
-});
-
-test('useReadAsyncAtom() reports correct value if it changed between first read() and the watch() call', async () => {
+test('useReadDeasyncAtom() reports correct value if it changed between first read() and the watch() call', async () => {
   let renderCount = 0;
 
   function $atom() {
@@ -507,11 +439,11 @@ test('useReadAsyncAtom() reports correct value if it changed between first read(
   function Component() {
     ++renderCount;
     useLayoutEffect(() => {
-      // mess up the value before useReadAsyncAtom can call watch()
+      // mess up the value before useReadDeasyncAtom can call watch()
       dispatch($atom)(404);
     });
-    const value = useReadAsyncAtom($atom);
-    return <div data-testid='test'>{value}</div>;
+    const {result} = useReadDeasyncAtom($atom);
+    return <div data-testid='test'>{String(result)}</div>;
   }
 
   const screen = render(<Component/>);

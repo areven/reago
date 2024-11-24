@@ -4,7 +4,10 @@
 
 import {useEffect} from 'react';
 import {atomAction, atomState, createStore, getDefaultStore, type Store} from 'reago';
-import {StoreProvider, useAsyncAtom, useDispatchAtom, useReadAsyncAtom, useStore} from 'reago-react';
+import {
+  StoreProvider, useAsyncAtom, useAtom, useDeasyncAtom, useDispatchAtom, useReadAsyncAtom,
+  useReadAtom, useReadDeasyncAtom, useStore
+} from 'reago-react';
 import {expect, test} from 'vitest';
 import {render} from 'vitest-browser-react';
 
@@ -122,6 +125,38 @@ test('useStore() used with nested store providers returns the closest provided s
   expect(returnedStore2).toBe(store2);
 });
 
+test('useAtom() uses the provided store', async () => {
+  const store1 = getDefaultStore();
+  const store2 = createStore();
+  const store3 = createStore();
+
+  function $atom() {
+    const [value, setValue] = atomState(0);
+    atomAction(setValue, []);
+    return value;
+  }
+
+  function Component({testId, newValue}: {testId: number, newValue: number}) {
+    const [value, dispatch] = useAtom($atom);
+    useEffect(() => {
+      dispatch(newValue);
+    }, [newValue]);
+    return <div data-testid={'test-' + testId}>{value}</div>;
+  }
+
+  const screen = render(
+    <>
+      <StoreProvider store={store2}><Component testId={2} newValue={42}/></StoreProvider>
+      <Component testId={1} newValue={169}/>
+      <StoreProvider store={store3}><Component testId={3} newValue={83}/></StoreProvider>
+    </>
+  );
+
+  await expect.element(screen.getByTestId('test-1')).toHaveTextContent('169');
+  await expect.element(screen.getByTestId('test-2')).toHaveTextContent('42');
+  await expect.element(screen.getByTestId('test-3')).toHaveTextContent('83');
+});
+
 test('useAsyncAtom() uses the provided store', async () => {
   const store1 = getDefaultStore();
   const store2 = createStore();
@@ -154,6 +189,76 @@ test('useAsyncAtom() uses the provided store', async () => {
   await expect.element(screen.getByTestId('test-3')).toHaveTextContent('83');
 });
 
+
+test('useDeasyncAtom() uses the provided store', async () => {
+  const store1 = getDefaultStore();
+  const store2 = createStore();
+  const store3 = createStore();
+
+  function $atom() {
+    const [value, setValue] = atomState(0);
+    atomAction(setValue, []);
+    return value;
+  }
+
+  function Component({testId, newValue}: {testId: number, newValue: number}) {
+    const [value, dispatch] = useDeasyncAtom($atom);
+    useEffect(() => {
+      dispatch(newValue);
+    }, [newValue]);
+    return <div data-testid={'test-' + testId}>{value.status === 'resolved' ? value.result : 'n/a'}</div>;
+  }
+
+  const screen = render(
+    <>
+      <StoreProvider store={store2}><Component testId={2} newValue={42}/></StoreProvider>
+      <Component testId={1} newValue={169}/>
+      <StoreProvider store={store3}><Component testId={3} newValue={83}/></StoreProvider>
+    </>
+  );
+
+  await expect.element(screen.getByTestId('test-1')).toHaveTextContent('169');
+  await expect.element(screen.getByTestId('test-2')).toHaveTextContent('42');
+  await expect.element(screen.getByTestId('test-3')).toHaveTextContent('83');
+});
+
+test('useReadAtom() uses the provided store', async () => {
+  const store1 = getDefaultStore();
+  const store2 = createStore();
+  const store3 = createStore();
+
+  let counter = 0;
+  function $atom() {
+    return ++counter;
+  }
+
+  store1.read($atom);
+  store2.read($atom);
+  store3.read($atom);
+
+  function Component({testId}: {testId: number}) {
+    const value = useReadAtom($atom);
+    return <div data-testid={'test-' + testId}>{value}</div>
+  }
+
+  const screen = render(
+    <>
+      <Component testId={1}/>
+      <StoreProvider store={store2}><Component testId={2}/></StoreProvider>
+      <StoreProvider store={store3}><Component testId={3}/></StoreProvider>
+    </>
+  );
+
+  const result1 = screen.getByTestId('test-1');
+  await expect.element(result1).toHaveTextContent('1');
+
+  const result2 = screen.getByTestId('test-2');
+  await expect.element(result2).toHaveTextContent('2');
+
+  const result3 = screen.getByTestId('test-3');
+  await expect.element(result3).toHaveTextContent('3');
+});
+
 test('useReadAsyncAtom() uses the provided store', async () => {
   const store1 = getDefaultStore();
   const store2 = createStore();
@@ -171,6 +276,43 @@ test('useReadAsyncAtom() uses the provided store', async () => {
   function Component({testId}: {testId: number}) {
     const value = useReadAsyncAtom($atom);
     return <div data-testid={'test-' + testId}>{value}</div>
+  }
+
+  const screen = render(
+    <>
+      <Component testId={1}/>
+      <StoreProvider store={store2}><Component testId={2}/></StoreProvider>
+      <StoreProvider store={store3}><Component testId={3}/></StoreProvider>
+    </>
+  );
+
+  const result1 = screen.getByTestId('test-1');
+  await expect.element(result1).toHaveTextContent('1');
+
+  const result2 = screen.getByTestId('test-2');
+  await expect.element(result2).toHaveTextContent('2');
+
+  const result3 = screen.getByTestId('test-3');
+  await expect.element(result3).toHaveTextContent('3');
+});
+
+test('useReadDeasyncAtom() uses the provided store', async () => {
+  const store1 = getDefaultStore();
+  const store2 = createStore();
+  const store3 = createStore();
+
+  let counter = 0;
+  function $atom() {
+    return ++counter;
+  }
+
+  store1.read($atom);
+  store2.read($atom);
+  store3.read($atom);
+
+  function Component({testId}: {testId: number}) {
+    const value = useReadDeasyncAtom($atom);
+    return <div data-testid={'test-' + testId}>{value.status === 'resolved' ? value.result : 'n/a'}</div>
   }
 
   const screen = render(
