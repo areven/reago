@@ -1,5 +1,13 @@
 # reago
 
+## 0.2.0
+
+### Minor Changes
+
+- b0df7cc: Updated the `Atom<...>` type signature to explicitly require `Promise<...>` for generative atoms
+
+  This change simplifies result type inferring and makes typing more explicit and predictable.
+
 ## 0.1.4
 
 ### Patch Changes
