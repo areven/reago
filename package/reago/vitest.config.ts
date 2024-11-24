@@ -8,9 +8,15 @@ import baseConfig from '../../vitest.config';
 
 export default mergeConfig(baseConfig, defineProject({
   test: {
+    environment: 'node',
     include: [
       'test/**/*.test.ts'
     ],
-    environment: 'node'
+    typecheck: {
+      enabled: true,
+      include: [
+        'test/**/*.test-d.ts'
+      ],
+    }
   }
 }));

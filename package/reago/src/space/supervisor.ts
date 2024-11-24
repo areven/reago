@@ -17,10 +17,7 @@ import {compareEqual} from '~/util/comparison';
 import {swapOrRecreatePromise, unbindSwappablePromiseIfPending} from '~/util/swappable-promise';
 import {trackPromise, trackRejectedPromise, trackResolvedPromise} from '~/util/tracked-promise';
 import {Store} from './store';
-import type {
-  AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomActionArgsOf, AtomFamilyArgsOf,
-  AtomResultOf
-} from '~/core/atom';
+import type {AnyAtom, AtomActionArgsOf, AtomFamilyArgsOf, AtomResultOf, AtomImplResultOf} from '~/core/atom';
 import type {AtomComputationEffectCleanup} from '~/hook/atom-computation-effect';
 
 
@@ -75,17 +72,15 @@ export class Supervisor {
     return instance;
   }
 
-  readInstance<T extends AnyGenerativeAtom>(instance: AtomInstance<T>): Promise<AtomResultOf<T>>;
-  readInstance<T extends AnyFunctionalAtom>(instance: AtomInstance<T>): AtomResultOf<T>;
-  readInstance<T extends AnyAtom>(instance: AtomInstance<T>): AtomResultOf<T> | Promise<AtomResultOf<T>> {
+  readInstance<T extends AnyAtom>(instance: AtomInstance<T>): AtomResultOf<T> {
     this.syncInstance(instance);
 
     if (instance.promise) {
-      return instance.promise;
+      return instance.promise as AtomResultOf<T>;
     }
 
     if (instance.computation!.result !== NO_VALUE) {
-      return instance.computation!.result;
+      return instance.computation!.result as AtomResultOf<T>;
     }
 
     throw instance.computation!.error;
@@ -263,7 +258,7 @@ export class Supervisor {
           if (newComputation.error !== NO_VALUE) {
             throw newComputation.error;
           }
-          return newComputation.result as AtomResultOf<T>;
+          return newComputation.result as AtomImplResultOf<T>;
         },
         /* istanbul ignore next -- @preserve */
         (err) => {

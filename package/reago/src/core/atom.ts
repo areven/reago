@@ -10,7 +10,9 @@ export type Atom<
   ActionArgs extends AtomActionArgs = never
 > = (
   FunctionalAtom<Result, FamilyArgs, ActionArgs> |
-  GenerativeAtom<Result, FamilyArgs, ActionArgs>
+  (
+    Result extends Promise<infer InnerResult> ? GenerativeAtom<InnerResult, FamilyArgs, ActionArgs> : never
+  )
 );
 
 export type AnyAtom<
@@ -19,39 +21,41 @@ export type AnyAtom<
   ActionArgs extends AtomActionArgs = AtomActionArgs
 > = (
   AnyFunctionalAtom<Result, FamilyArgs, ActionArgs> |
-  AnyGenerativeAtom<Result, FamilyArgs, ActionArgs>
+  (
+    Result extends Promise<infer InnerResult> ? AnyGenerativeAtom<InnerResult, FamilyArgs, ActionArgs> : never
+  )
 );
 
 
 // Atom subtypes
 
 export type FunctionalAtom<
-  Result,
+  ImplResult,
   FamilyArgs extends AtomFamilyArgs = [],
   ActionArgs extends AtomActionArgs = never
-> = (...args: FamilyArgs) => Result extends AtomGenerator<any> ? never : Result;
+> = (...args: FamilyArgs) => ImplResult extends AtomGenerator<any> ? never : ImplResult;
 
 export type GenerativeAtom<
-  Result,
+  ImplResult,
   FamilyArgs extends AtomFamilyArgs = [],
   ActionArgs extends AtomActionArgs = never
-> = (...args: FamilyArgs) => AtomGenerator<Result>;
+> = (...args: FamilyArgs) => AtomGenerator<ImplResult>;
 
 export type AnyFunctionalAtom<
-  Result = unknown,
+  ImplResult = unknown,
   FamilyArgs extends AtomFamilyArgs = AtomFamilyArgs,
   ActionArgs extends AtomActionArgs = AtomActionArgs
 > = {
   // this is not perfect - works only if Result type is inferred
-  bivarianceHack(...args: FamilyArgs): Result extends AtomGenerator<any> ? never : Result;
+  bivarianceHack(...args: FamilyArgs): ImplResult extends AtomGenerator<any> ? never : ImplResult;
 }['bivarianceHack'];
 
 export type AnyGenerativeAtom<
-  Result = unknown,
+  ImplResult = unknown,
   FamilyArgs extends AtomFamilyArgs = AtomFamilyArgs,
   ActionArgs extends AtomActionArgs = AtomActionArgs
 > = {
-  bivarianceHack(...args: FamilyArgs): AtomGenerator<Result>;
+  bivarianceHack(...args: FamilyArgs): AtomGenerator<ImplResult>;
 }['bivarianceHack'];
 
 
@@ -72,27 +76,27 @@ export type AtomGenerator<Result> = Generator<
 // Atom type utils
 
 export type AtomResultOf<T> = (
-  T extends Atom<
-    infer Result,
-    infer FamilyArgs extends AtomFamilyArgs,
-    infer ActionArgs extends AtomActionArgs
-  > ? Result : never
+  T extends GenerativeAtom<infer IR, infer FA, infer AA> ? Promise<IR> :
+  T extends FunctionalAtom<infer IR, infer FA, infer AA> ? IR :
+  never
+);
+
+export type AtomImplResultOf<T> = (
+  T extends GenerativeAtom<infer IR, infer FA, infer AA> ? IR :
+  T extends FunctionalAtom<infer IR, infer FA, infer AA> ? IR :
+  never
 );
 
 export type AtomFamilyArgsOf<T> = (
-  T extends Atom<
-    infer Result,
-    infer FamilyArgs extends AtomFamilyArgs,
-    infer ActionArgs extends AtomActionArgs
-  > ? FamilyArgs : never
+  T extends GenerativeAtom<infer IR, infer FA, infer AA> ? FA :
+  T extends FunctionalAtom<infer IR, infer FA, infer AA> ? FA :
+  never
 );
 
 export type AtomActionArgsOf<T> = (
-  T extends Atom<
-    infer Result,
-    infer FamilyArgs extends AtomFamilyArgs,
-    infer ActionArgs extends AtomActionArgs
-  > ? ActionArgs : never
+  T extends GenerativeAtom<infer IR, infer FA, infer AA> ? AA :
+  T extends FunctionalAtom<infer IR, infer FA, infer AA> ? AA :
+  never
 );
 
 

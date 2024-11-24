@@ -98,7 +98,7 @@ test('reago does not hold yielded promises that are no longer referenced', async
   let promise1: Promise<number> | undefined = Promise.resolve(123);
   let promise2: Promise<number> | undefined = Promise.reject();
 
-  let $atom: Atom<number> | undefined = function* () {
+  let $atom: Atom<Promise<number>> | undefined = function* () {
     try {
       yield promise1!;
       yield promise2!;

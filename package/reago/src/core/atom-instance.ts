@@ -11,7 +11,7 @@ import type {AtomComputationEffectFrame} from '~/hook/atom-computation-effect';
 import type {AtomMountEffectFrame} from '~/hook/atom-mount-effect';
 import type {Computation} from '~/reactor/computation';
 import type {SwappablePromise} from '~/util/swappable-promise';
-import type {AnyAtom, AtomFamilyArgsOf, AtomResultOf} from './atom';
+import type {AnyAtom, AtomFamilyArgsOf, AtomImplResultOf} from './atom';
 import type {AtomHookFrame} from './atom-hook';
 import type {AtomWatcher} from './atom-watcher';
 
@@ -65,7 +65,7 @@ export interface AtomInstance<T extends AnyAtom> {
    *
    * The promise is created for generative atoms only.
    */
-  promise?: SwappablePromise<AtomResultOf<T>>;
+  promise?: SwappablePromise<AtomImplResultOf<T>>;
 
   /**
    * Reference to the active computation.

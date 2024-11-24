@@ -4,15 +4,13 @@
 
 import {MOUNTED_TRANSITIVELY, UNMOUNTED} from '~/const';
 import {requireComputationContext} from '~/reactor/computation-context';
-import type {AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomFamilyArgsOf, AtomResultOf} from '~/core/atom';
+import type {AnyAtom, AtomFamilyArgsOf, AtomResultOf} from '~/core/atom';
 
 
-export function _read<T extends AnyGenerativeAtom>(atom: T, ...args: AtomFamilyArgsOf<T>): Promise<AtomResultOf<T>>;
-export function _read<T extends AnyFunctionalAtom>(atom: T, ...args: AtomFamilyArgsOf<T>): AtomResultOf<T>;
 export function _read<T extends AnyAtom>(
   atom: T,
   ...args: AtomFamilyArgsOf<T>
-): AtomResultOf<T> | Promise<AtomResultOf<T>> {
+): AtomResultOf<T> {
   const context = requireComputationContext();
   const targetInstance = context.supervisor.getOrCreateInstance(atom, ...args);
 

@@ -3,9 +3,7 @@
 // =============================================================================
 
 import {Supervisor} from './supervisor';
-import type {
-  AnyAtom, AnyFunctionalAtom, AnyGenerativeAtom, AtomDispatcher, AtomFamilyArgsOf, AtomResultOf
-} from '~/core/atom';
+import type {AnyAtom, AtomDispatcher, AtomFamilyArgsOf, AtomResultOf} from '~/core/atom';
 import type {AtomListener, AtomWatcher} from '~/core/atom-watcher';
 
 
@@ -16,12 +14,10 @@ export class Store {
     this.#supervisor = supervisor;
   }
 
-  read<T extends AnyGenerativeAtom>(atom: T, ...args: AtomFamilyArgsOf<T>): Promise<AtomResultOf<T>>;
-  read<T extends AnyFunctionalAtom>(atom: T, ...args: AtomFamilyArgsOf<T>): AtomResultOf<T>;
   read<T extends AnyAtom>(
     atom: T,
     ...args: AtomFamilyArgsOf<T>
-  ): AtomResultOf<T> | Promise<AtomResultOf<T>> {
+  ): AtomResultOf<T> {
     const instance = this.#supervisor.getOrCreateInstance(atom, ...args);
     return this.#supervisor.readInstance(instance);
   }

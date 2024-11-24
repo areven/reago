@@ -4,11 +4,11 @@
 
 import {FUNCTIONAL_ATOM} from '~/const';
 import {isGenerator} from '~/util/type-check';
-import type {AnyAtom, AtomFamilyArgsOf, AtomGenerator, AtomResultOf} from '~/core/atom';
+import type {AnyAtom, AtomFamilyArgsOf, AtomGenerator, AtomImplResultOf} from '~/core/atom';
 
 
 export interface Runner<T extends AnyAtom> {
-  (...args: AtomFamilyArgsOf<T>): RunnerGenerator<AtomResultOf<T>>;
+  (...args: AtomFamilyArgsOf<T>): RunnerGenerator<AtomImplResultOf<T>>;
 }
 
 export type RunnerGenerator<Result> = AtomGenerator<Result> & {
@@ -26,9 +26,9 @@ export function createRunner<T extends AnyAtom>(atom: T): Runner<T> {
       return {
         [FUNCTIONAL_ATOM]: true,
         next() {
-          return {done: true, value: result as AtomResultOf<T>};
+          return {done: true, value: result as AtomImplResultOf<T>};
         }
-      } as unknown as RunnerGenerator<AtomResultOf<T>>;
+      } as unknown as RunnerGenerator<AtomImplResultOf<T>>;
     }
   };
 }

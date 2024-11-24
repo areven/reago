@@ -9,7 +9,7 @@ import {getPromiseState, trackPromise, type PromiseState} from '~/util/tracked-p
 import {isPromiseLike} from '~/util/type-check';
 import {runWithComputationContext, type ComputationContext} from './computation-context';
 import {createRunner, type RunnerGenerator, type RunnerStep} from './runner';
-import type {AnyAtom, AtomResultOf} from '~/core/atom';
+import type {AnyAtom, AtomImplResultOf} from '~/core/atom';
 import type {AtomInstance} from '~/core/atom-instance';
 
 
@@ -22,7 +22,7 @@ export interface Computation<T extends AnyAtom> {
   /**
    * Value of the atom or NO_VALUE if atom is not computed yet.
    */
-  result: AtomResultOf<T> | typeof NO_VALUE;
+  result: AtomImplResultOf<T> | typeof NO_VALUE;
 
   /**
    * Error thrown during the computation or NO_VALUE if there was no error.
@@ -79,7 +79,7 @@ export function runComputation<T extends AnyAtom>(
   };
 
   // Get the runner generator
-  let generator: RunnerGenerator<AtomResultOf<T>>;
+  let generator: RunnerGenerator<AtomImplResultOf<T>>;
   try {
     runWithComputationContext(context, () => {
       generator = createRunner<T>(instance.atom)(...instance.args);
@@ -117,7 +117,7 @@ export function runComputation<T extends AnyAtom>(
 
 function runComputationSynchronousSteps<T extends AnyAtom>(
   context: ComputationContext<T>,
-  generator: RunnerGenerator<AtomResultOf<T>>,
+  generator: RunnerGenerator<AtomImplResultOf<T>>,
   method: 'next' | 'throw',
   value: unknown = undefined
 ): null | PromiseLike<unknown> {
@@ -151,17 +151,17 @@ function runComputationSynchronousSteps<T extends AnyAtom>(
 
 function runComputationStep<T extends AnyAtom>(
   context: ComputationContext<T>,
-  generator: RunnerGenerator<AtomResultOf<T>>,
+  generator: RunnerGenerator<AtomImplResultOf<T>>,
   method: 'next' | 'throw',
   value: unknown = undefined
-): null | RunnerStep<AtomResultOf<T>> {
+): null | RunnerStep<AtomImplResultOf<T>> {
   let result = null;
   runWithComputationContext(context, () => {
     if (context.computation.abortController.signal.aborted) {
       // if the computation is prematurely aborted, allow the generator to clean
       // up its resources using a try .. finally block
       try {
-        generator.return(undefined as AtomResultOf<T>);
+        generator.return(undefined as AtomImplResultOf<T>);
       } catch (err) {
         // swallow errors, they're irrelevant
       }
@@ -187,7 +187,7 @@ function runComputationStep<T extends AnyAtom>(
   return result;
 }
 
-function storeComputationResult<T extends AnyAtom>(computation: Computation<T>, result: AtomResultOf<T>): void {
+function storeComputationResult<T extends AnyAtom>(computation: Computation<T>, result: AtomImplResultOf<T>): void {
   computation.result = result;
 }
 
