@@ -2,7 +2,7 @@
   "name": "reago-react",
   "author": "Sebastian Daniel Nowak",
   "license": "MIT",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "React bindings for the `reago` state manager",
   "keywords": [
     "reago",
@@ -50,7 +50,7 @@
   "peerDependencies": {
     "@types/react": ">=17.0.0",
     "react": ">=17.0.0",
-    "reago": "^0.2.0"
+    "reago": "^0.2.1"
   },
   "peerDependenciesMeta": {
     "@types/react": {

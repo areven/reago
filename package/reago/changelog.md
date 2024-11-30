@@ -1,5 +1,11 @@
 # reago
 
+## 0.2.1
+
+### Patch Changes
+
+- e5cc2f1: Updated typescript signatures of union types to better support destructuring
+
 ## 0.2.0
 
 ### Minor Changes
