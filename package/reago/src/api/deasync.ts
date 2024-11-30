@@ -26,15 +26,19 @@ export type DeasyncState<ResultType = unknown, ErrorType = unknown> = (
 
 interface PendingDeasyncState {
   status: 'pending';
+  result?: undefined;
+  error?: undefined;
 }
 
 interface ResolvedDeasyncState<ResultType> {
   status: 'resolved';
   result: ResultType;
+  error?: undefined;
 }
 
 interface RejectedDeasyncState<ErrorType> {
   status: 'rejected';
+  result?: undefined;
   error: ErrorType;
 }
 

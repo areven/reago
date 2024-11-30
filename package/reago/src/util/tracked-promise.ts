@@ -15,15 +15,19 @@ export type PromiseState<ResultType = unknown, ErrorType = unknown> = (
 
 export interface PendingPromiseState {
   status: typeof PENDING;
+  result?: undefined;
+  error?: undefined;
 }
 
 export interface ResolvedPromiseState<ResultType> {
   status: typeof RESOLVED;
   result: ResultType;
+  error?: undefined;
 }
 
 export interface RejectedPromiseState<ErrorType> {
   status: typeof REJECTED;
+  result?: undefined;
   error: ErrorType;
 }
 
