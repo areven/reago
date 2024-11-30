@@ -107,9 +107,11 @@ test('atomRef does not trigger recomputation if its value changes', () => {
 
   dispatch($atom)();
   expect(read($atom)).toBe(123);
+  expect(computeCount).toBe(1);
 
   invalidate($atom);
   expect(read($atom)).toBe(456);
+  expect(computeCount).toBe(2);
 });
 
 test('atomRef cannot be called outside of a computation', () => {
