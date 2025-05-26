@@ -1,5 +1,13 @@
 # reago-react
 
+## 0.2.1
+
+### Patch Changes
+
+- 1152e34: Transferred the package ownership to the `areven` organization
+- Updated dependencies [1152e34]
+  - reago@0.2.2
+
 ## 0.2.0
 
 ### Minor Changes

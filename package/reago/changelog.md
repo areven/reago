@@ -1,5 +1,11 @@
 # reago
 
+## 0.2.2
+
+### Patch Changes
+
+- 1152e34: Transferred the package ownership to the `areven` organization
+
 ## 0.2.1
 
 ### Patch Changes
