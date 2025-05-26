@@ -16,7 +16,7 @@ permissions:
   discussions: write
 
 concurrency:
-  group: lock-threads
+  group: organization-thread-lock
 
 jobs:
   action:

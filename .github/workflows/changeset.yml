@@ -19,15 +19,21 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: changeset/${{ github.workflow }}/${{ github.ref }}
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     if: github.repository_owner == 'areven'
+    outputs:
+      published: ${{ steps.flags.outputs.published }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Setup git user
+        run: |
+          git config --global user.name "Areven Bot"
+          git config --global user.email "bot@areven.com"
       - name: Setup nodejs
         uses: actions/setup-node@v4
         with:
@@ -55,6 +61,16 @@ jobs:
           commit: 'chore: release packages'
           publish: ./script/ci-changeset-publish.sh
           version: ./script/ci-changeset-version.sh
+          setupGitUser: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Set the output flags
+        id: flags
+        run: echo "published=${{ steps.changesets.outputs.published }}" >> "$GITHUB_OUTPUT"
+  deploy-documentation:
+    needs:
+      - sync
+    if: needs.sync.outputs.published == 'true'
+    uses: ./.github/workflows/documentation-deployment.yml
+    secrets: inherit

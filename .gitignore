@@ -8,6 +8,10 @@
 /.yarn/
 node_modules/
 
+# Vitepress
+**/.vitepress/dist/
+**/.vitepress/cache/
+
 # Compiled code
 dist/
 *.pyc
