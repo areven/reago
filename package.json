@@ -1,11 +1,11 @@
 {
   "name": "reago-monorepo",
-  "author": "Sebastian Daniel Nowak",
+  "author": "Areven (Sebastian Nowak)",
   "license": "MIT",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sebastian-nowak/reago.git"
+    "url": "git+https://github.com/areven/reago.git"
   },
   "type": "module",
   "workspaces": [

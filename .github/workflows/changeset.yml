@@ -24,7 +24,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'sebastian-nowak'
+    if: github.repository_owner == 'areven'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

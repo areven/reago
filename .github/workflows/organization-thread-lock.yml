@@ -21,7 +21,7 @@ concurrency:
 jobs:
   action:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'sebastian-nowak'
+    if: github.repository_owner == 'areven'
     steps:
       - uses: dessant/lock-threads@v5
         with:

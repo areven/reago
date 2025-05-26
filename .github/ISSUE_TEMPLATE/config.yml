@@ -5,13 +5,13 @@
 blank_issues_enabled: true
 contact_links:
   - name: Request a new feature
-    url: https://github.com/sebastian-nowak/reago/discussions/categories/ideas
+    url: https://github.com/areven/reago/discussions/categories/ideas
     about: Please request new features or enhancements in the Discussions board.
   - name: Ask the community for help
-    url: https://github.com/sebastian-nowak/reago/discussions/categories/q-a
+    url: https://github.com/areven/reago/discussions/categories/q-a
     about: Please submit support requests in the Discussions board.
   - name: Show us something awesome that you have built
-    url: https://github.com/sebastian-nowak/reago/discussions/categories/show-and-tell
+    url: https://github.com/areven/reago/discussions/categories/show-and-tell
     about: Please use the Discussions board to show us how you're using Reago.
   - name: Check out the documentation
     url: https://reago.dev

@@ -15,11 +15,11 @@ body:
 
         Before you proceed:
         - This template is used **only for reporting missing tests**.
-        - Before opening a new issue, please do a [search](https://github.com/sebastian-nowak/reago/issues) of existing issues and upvote the existing issue instead.
-        - For issues of a different nature, please consider posting in [Discussions](https://github.com/sebastian-nowak/reago/discussions) or selecting a more suitable category.
+        - Before opening a new issue, please do a [search](https://github.com/areven/reago/issues) of existing issues and upvote the existing issue instead.
+        - For issues of a different nature, please consider posting in [Discussions](https://github.com/areven/reago/discussions) or selecting a more suitable category.
 
         Need help with your own project? There are options too:
-        - Start a discussion in the [Q&A](https://github.com/sebastian-nowak/reago/discussions/categories/q-a) section.
+        - Start a discussion in the [Q&A](https://github.com/areven/reago/discussions/categories/q-a) section.
   - type: textarea
     id: description
     attributes:

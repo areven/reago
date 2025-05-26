@@ -10,7 +10,7 @@ on:
 jobs:
   labeler:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'sebastian-nowak'
+    if: github.repository_owner == 'areven'
     permissions:
       contents: read
       pull-requests: write

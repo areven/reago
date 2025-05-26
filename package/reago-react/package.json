@@ -1,6 +1,6 @@
 {
   "name": "reago-react",
-  "author": "Sebastian Daniel Nowak",
+  "author": "Areven (Sebastian Nowak)",
   "license": "MIT",
   "version": "0.2.0",
   "description": "React bindings for the `reago` state manager",
@@ -12,11 +12,11 @@
   "homepage": "https://reago.dev",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sebastian-nowak/reago.git",
+    "url": "git+https://github.com/areven/reago.git",
     "directory": "package/reago-react"
   },
   "bugs": {
-    "url": "https://github.com/sebastian-nowak/reago/issues"
+    "url": "https://github.com/areven/reago/issues"
   },
   "type": "module",
   "sideEffects": false,

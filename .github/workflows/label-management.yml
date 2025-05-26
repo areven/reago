@@ -20,7 +20,7 @@ on:
 jobs:
   label-sync:
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'sebastian-nowak'
+    if: github.repository_owner == 'areven'
     permissions:
       contents: read
       issues: write

@@ -117,7 +117,7 @@ jobs:
       - name: Run tests
         run: npx vitest run --coverage
       - name: Upload coverage stats
-        if: github.repository_owner == 'sebastian-nowak'
+        if: github.repository_owner == 'areven'
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

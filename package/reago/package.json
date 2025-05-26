@@ -1,6 +1,6 @@
 {
   "name": "reago",
-  "author": "Sebastian Daniel Nowak",
+  "author": "Areven (Sebastian Nowak)",
   "license": "MIT",
   "version": "0.2.1",
   "description": "Zero-dependency declarative state manager",
@@ -17,11 +17,11 @@
   "homepage": "https://reago.dev",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sebastian-nowak/reago.git",
+    "url": "git+https://github.com/areven/reago.git",
     "directory": "package/reago"
   },
   "bugs": {
-    "url": "https://github.com/sebastian-nowak/reago/issues"
+    "url": "https://github.com/areven/reago/issues"
   },
   "type": "module",
   "sideEffects": false,
