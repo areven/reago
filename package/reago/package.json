@@ -1,6 +1,6 @@
 {
   "name": "reago",
-  "author": "Areven (Sebastian Nowak)",
+  "author": "Areven, Sebastian Nowak",
   "license": "MIT",
   "version": "0.2.1",
   "description": "Zero-dependency declarative state manager",
