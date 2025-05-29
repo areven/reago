@@ -23,6 +23,10 @@ export default defineConfig({
     ['link', {rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml'}]
   ],
 
+  sitemap: {
+    hostname: 'https://reago.dev'
+  },
+
   themeConfig: {
     siteTitle: false,
     logo: {
