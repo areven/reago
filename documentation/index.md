@@ -2,12 +2,34 @@
 title: Reago - zero-dependency declarative state manager
 titleTemplate: false
 outline: false
+editLink: false
+lastUpdated: false
+layout: home
+
+hero:
+  name: 'Reago'
+  tagline: Zero-dependency declarative state manager
+  actions:
+    - theme: brand
+      text: Quick guide
+      link: /guide/
+    - theme: alt
+      text: API reference
+      link: /api/
+    - theme: alt
+      text: GitHub
+      link: https://github.com/areven/reago
+
+features:
+  - icon: 🔥
+    title: Framework agnostic
+    details: Works with vanilla JavaScript, React, or any other UI layer. No tight coupling.
+
+  - icon: 🧑‍💻
+    title: TypeScript first
+    details: Fully typed with great DX-autocompletion, inference, and safety by default.
+
+  - icon: 🚀
+    title: Zero dependencies
+    details: No runtime dependencies. Lightweight, fast, and easy to integrate.
 ---
-
-# Reago
-
-A state management library, named after the Esperanto word for 'reaction'.
-
-Why Esperanto? Because it's the language of connection, designed to bring together people
-from different backgrounds. And just like that, Reago is here to connect your app’s states
-with clarity and ease.
