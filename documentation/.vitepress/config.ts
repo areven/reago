@@ -41,7 +41,7 @@ export default defineConfig({
         link: '/'
       },
       {
-        text: 'Quick guide',
+        text: 'User guide',
         link: '/guide/',
         activeMatch: '/guide/',
       },
@@ -59,7 +59,7 @@ export default defineConfig({
 
     sidebar: {
       '/guide/': [
-        {text: 'Quick guide', items: [
+        {text: 'User guide', items: [
           {text: 'Introduction', link: '/guide/'}
         ]},
         {items: [{text: 'Continue to API reference', link: '/api/'}]}

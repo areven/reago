@@ -270,3 +270,11 @@
 .VPDocAside .outline-marker {
   width: 1.5px;
 }
+
+// Undesired text selection
+
+.VPNavBarTitle,
+.DocSearch-Button {
+  user-select: none;
+  -webkit-user-select: none;
+}

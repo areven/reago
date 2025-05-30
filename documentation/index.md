@@ -11,7 +11,7 @@ hero:
   tagline: Zero-dependency declarative state manager
   actions:
     - theme: brand
-      text: Quick guide
+      text: Get started
       link: /guide/
     - theme: alt
       text: API reference

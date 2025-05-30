@@ -37,6 +37,12 @@ function MyComponent() {
 }
 ```
 
+#### Parameters
+
+* `atom`: A reference to an atom you want to subscribe to.
+* `...familyArgs`: If the atom is a family (meaning it accepts arguments, where each unique combination of
+  arguments represents a separate atom with its own state), these are the atom arguments.
+
 #### Behavior
 
 The `useAsyncAtom` hook is a convenience shorthand for:
