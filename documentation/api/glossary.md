@@ -145,7 +145,7 @@ This is not a Reago term. Execution context in JavaScript is the environment in 
 executed. It includes the variables, functions, and the scope chain available at that moment during execution.
 
 When function A calls function B, a new execution context for B is created and placed on top of the call stack.
-Since A's context is still on the stack below, B runs “within” the overall context started by A. In other words,
+Since A's context is still on the stack below, B runs "within" the overall context started by A. In other words,
 A is the caller and is higher in the call stack, making B's execution context dependent on that call.
 
 #### Computation context

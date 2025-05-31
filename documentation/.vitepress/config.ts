@@ -2,7 +2,7 @@
 // Vitepress configuration
 // =============================================================================
 
-import {defineConfig} from 'vitepress';
+import {defineConfig, type HeadConfig} from 'vitepress';
 import {version as reagoVersion} from '../../package/reago/package.json'
 import {version as reagoReactVersion} from '../../package/reago-react/package.json'
 
@@ -20,7 +20,14 @@ export default defineConfig({
 
   head: [
     ['link', {rel: 'icon', href: '/favicon.ico', sizes: '48x48'}],
-    ['link', {rel: 'icon', href: '/favicon.svg', sizes: 'any', type: 'image/svg+xml'}]
+    ['link', {rel: 'icon', href: '/favicon.svg', sizes: 'any', type: 'image/svg+xml'}],
+    ...(process.env.NODE_ENV === 'production' ? [
+      ['script', {
+        defer: 'true',
+        src: 'https://analytics.areven.com/script.js',
+        'data-website-id': 'ae07b193-3848-413d-ac98-173c6ad79577'
+      }] satisfies HeadConfig
+    ] : [])
   ],
 
   sitemap: {
