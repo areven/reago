@@ -114,6 +114,6 @@ dispatch($atom)(42);
 assert(read($atom) === 42);
 ```
 
-:::info
+::: info
 For more examples and an extensive documentation of atom actions, please refer to the `atomAction` API reference.
 :::

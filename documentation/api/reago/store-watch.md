@@ -63,7 +63,7 @@ The returned object has only one method:
 * `.clear()`: Discards the watcher and stops observing the given atom. The atom might be unmounted
   if it is no longer subscribed to by anyone.
 
-::: warning
+::: warning CAUTION
 It is highly important to discard watchers that are no longer needed, otherwise you risk leaking
 atoms that will be never unmounted and will be unnecessarily recomputed. If you're using framework-specific
 bindings, such as React's `useRead*Atom`, they manage the lifecycle of watchers on their own.

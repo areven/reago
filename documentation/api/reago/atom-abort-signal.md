@@ -6,10 +6,10 @@
 const abortSignal = atomAbortSignal()
 ```
 
-:::info
+::: info INFO
 `AbortSignal` is a built-in JavaScript interface that allows you to communicate with an asynchronous
-operation (such as a fetch request) and abort it if required. It's part of the standard `AbortController` API,
-which enables fine-grained control over tasks such as network requests or timers.
+operation (such as a fetch request) and abort it if required. It is part of the standard `AbortController`
+API, which enables fine-grained control over tasks such as network requests or timers.
 :::
 
 
@@ -66,8 +66,9 @@ function* $userData() {
   const signal = atomAbortSignal();
 
   try {
-    const data = yield fetch(`/api/user-data/${userId}`, {signal});
-    return data.json();
+    const response = yield fetch(`/api/user-data/${userId}`, {signal});
+    const data = yield response.json();
+    return data;
   } catch (err) {
     return null;
   }

@@ -27,6 +27,16 @@ export default defineConfig({
     hostname: 'https://reago.dev'
   },
 
+  markdown: {
+    container: {
+      tipLabel: 'TIP',
+      warningLabel: 'CAUTION',
+      dangerLabel: 'DANGER',
+      infoLabel: 'INFO',
+      detailsLabel: 'Details'
+    }
+  },
+
   themeConfig: {
     siteTitle: false,
     logo: {
@@ -67,7 +77,8 @@ export default defineConfig({
       '/api/': [
         {text: 'API reference', items: [
           {text: 'Introduction', link: '/api/'},
-          {text: 'Glossary', link: '/api/glossary'}
+          {text: 'Glossary', link: '/api/glossary'},
+          {text: 'Versioning', link: '/api/versioning'}
         ]},
         {text: 'reago@' + reagoVersion, items: [
           {text: 'Core', items: [

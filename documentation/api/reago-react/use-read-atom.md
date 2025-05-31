@@ -58,7 +58,7 @@ built-in default store if no custom store is set.
 
 The returned value is the same as the value returned by a `store.read(atom, ...args)` call.
 
-If an atom returns a `Promise`, or it's a generative atom that implicitly returns a `Promise`, the hook will
+If an atom returns a `Promise`, or it is a generative atom that implicitly returns a `Promise`, the hook will
 return the `Promise` directly and you will have to handle it manually. For automated handling of asynchronous
 atoms, see `useReadAsyncAtom` and `useReadDeasyncAtom` hooks.
 
@@ -111,13 +111,13 @@ import {atomMemo, read} from 'reago';
 import {useReadAtom} from 'reago-react';
 
 export default function App() {
-  const [data, setData] = useState(null);
+  const [response, setResponse] = useState(null);
   const promise = useReadAtom($currentUserData);
 
   useEffect(
     () => promise.then(
       response => {
-        setData(response.json())
+        setResponse(response)
       },
       err => {
         // ...
@@ -143,7 +143,7 @@ function $currentUserData() {
 }
 ```
 
-::: warning
+::: warning CAUTION
 You should avoid unpacking `Promises` manually in favor of `useReadAsyncAtom` and `useReadDeasyncAtom` hooks.
 They plug into the Reago's internal `Promise` tracking system and can make efficient use of advanced features
 such as React Suspense.

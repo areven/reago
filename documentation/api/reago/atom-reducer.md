@@ -28,7 +28,7 @@ function $atom() {
   can be of any types.
 * `initialArg`: The value from which the initial state is calculated. It can be a value of any type.
   How the initial state is calculated from it depends on the next init argument.
-* `init` (optional): The initializer function that should return the initial state. If it's not specified,
+* `init` (optional): The initializer function that should return the initial state. If it is not specified,
   the initial state is set to `initialArg`. Otherwise, the initial state is set to the result of calling
   `init(initialArg)`.
 
@@ -36,7 +36,7 @@ function $atom() {
 
 `atomReducer` returns an array with exactly two values.
 1. The current state. During the first computation, it is set to `init(initialArg)` or `initialArg` (if
-   there's no `init`).
+   there is no `init`).
 2. The `dispatch` function that lets you update the state to a different value and trigger a recomputation.
 
 The returned array is immutable and is preserved between computations, as long as the state variable
