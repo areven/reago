@@ -77,7 +77,9 @@ export default defineConfig({
     sidebar: {
       '/guide/': [
         {text: 'User guide', items: [
-          {text: 'Introduction', link: '/guide/'}
+          {text: 'What is Reago?', link: '/guide/'},
+          {text: 'Motivation', link: '/guide/motivation'},
+          {text: 'Getting started', link: '/guide/getting-started'}
         ]},
         {items: [{text: 'Continue to API reference', link: '/api/'}]}
       ],

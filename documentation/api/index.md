@@ -16,7 +16,7 @@ For an introduction to Reago, please start with our official [user guide](/guide
 
 ## Core principles
 
-* **Framework agnostic** :leaves:
+* **Framework-agnostic** :leaves:
 
   Reago makes no assumptions about your stack. Vanilla JavaScript is a first-class citizen. Official
   framework bindings are built on top of the public `reago` API.
