@@ -2,9 +2,22 @@
 
 `atomMountEffect` is a hook that lets you implement side effects when an atom is mounted and unmounted.
 
-```ts
+::: code-group
+```ts [Syntax]
 atomMountEffect(setup, dependencies)
 ```
+
+```ts [Types]
+function atomMountEffect(
+  setup: AtomMountEffect,
+  dependencies: unknown[]
+): void
+
+type AtomMountEffect = () => (void | AtomMountEffectCleanup)
+
+type AtomMountEffectCleanup = () => void
+```
+:::
 
 An atom is mounted when someone subscribes to it via `watch()` and unmounted when there are no subscribers
 left. A one-off `read()` does not mount an atom.

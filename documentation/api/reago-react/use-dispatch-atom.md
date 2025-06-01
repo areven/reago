@@ -7,9 +7,21 @@ titleTemplate: :title | Reago for React
 `useDispatchAtom` is a React hook that lets you access an atom's dispatch method for the currently
 active Reago store.
 
-```tsx
+::: code-group
+```tsx [Syntax]
 const dispatch = useDispatchAtom($atom, ...familyArgs)
 ```
+
+```ts [Types]
+function useDispatchAtom<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): AtomDispatcher<T>
+
+type AtomDispatcher<T extends AnyAtom> =
+  (...args: AtomActionArgsOf<T>) => void
+```
+:::
 
 
 ## Reference

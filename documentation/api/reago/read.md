@@ -3,9 +3,18 @@
 `read` reads a value from the active store, which is determined by the current execution context.
 
 
-```ts
+::: code-group
+```ts [Syntax]
 const value = read($atom, ...familyArgs)
 ```
+
+```ts [Types]
+function read<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): AtomResultOf<T>
+```
+:::
 
 
 ## Reference

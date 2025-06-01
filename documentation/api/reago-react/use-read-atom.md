@@ -6,9 +6,18 @@ titleTemplate: :title | Reago for React
 
 `useReadAtom` is a React hook that lets you subscribe to an atom's value in the currently active Reago store.
 
-```tsx
+::: code-group
+```tsx [Syntax]
 const value = useReadAtom($atom, ...familyArgs)
 ```
+
+```ts [Types]
+function useReadAtom<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): AtomResultOf<T>
+```
+:::
 
 The value is returned as is, without any special handling for asynchronous atoms and `Promise`-like objects.
 

@@ -2,9 +2,22 @@
 
 `store.watch` lets you subscribe to value changes of an atom in the given store.
 
-```ts
+::: code-group
+```ts [Syntax]
 const watcher = store.watch($atom, ...familyArgs, listener)
 ```
+
+```ts [Types]
+function watch<T extends AnyAtom>(
+  atom: T,
+  ...args: [...AtomFamilyArgsOf<T>, AtomListener<T>]
+): AtomWatcher<T>
+
+type AtomWatcher<T extends AnyAtom = AnyAtom> = {
+  readonly clear: () => void
+}
+```
+:::
 
 
 ## Reference

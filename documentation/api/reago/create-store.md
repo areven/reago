@@ -2,9 +2,15 @@
 
 `createStore` lets you create a custom store.
 
-```ts
+::: code-group
+```ts [Syntax]
 const store = createStore()
 ```
+
+```ts [Types]
+function createStore(): Store
+```
+:::
 
 
 ## Reference

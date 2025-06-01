@@ -3,9 +3,21 @@
 `atomRef` is a hook that lets you reference a value that should not trigger a recomputation
 when it changes.
 
-```ts
+::: code-group
+```ts [Syntax]
 const ref = atomRef(initialValue)
 ```
+
+```ts [Types]
+function atomRef<Value>(
+  initialValue: Value
+): AtomRef<Value>
+
+interface AtomRef<Value> {
+  current: Value;
+}
+```
+:::
 
 
 ## Reference

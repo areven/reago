@@ -2,9 +2,20 @@
 
 `atomAction` is a hook that lets you define actions within an atom that can be triggered externally.
 
-```ts
+::: code-group
+```ts [Syntax]
 atomState(handler, dependencies)
 ```
+
+```ts [Types]
+function atomAction(
+  handler: AtomAction,
+  dependencies: unknown[]
+): void
+
+type AtomAction = (...args: AtomActionArg[]) => void
+```
+:::
 
 
 ## Reference

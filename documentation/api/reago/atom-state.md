@@ -2,9 +2,26 @@
 
 `atomState` is a hook that lets you add a state variable to your atom.
 
-```ts
+::: code-group
+```ts [Syntax]
 const [state, setState] = atomState(initialState)
 ```
+
+```ts [Types]
+function atomState<Value>(
+  initialState: Value | (() => Value)
+): AtomState<Value>
+
+type AtomState<Value> =
+  [Value, AtomStateSetter<Value>];
+
+type AtomStateSetter<Value> =
+  (nextState: AtomStateSetterNextState<Value>) => void;
+
+type AtomStateSetterNextState<Value> =
+  Value | ((prevState: Value) => Value);
+```
+:::
 
 
 ## Reference

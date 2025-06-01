@@ -2,9 +2,28 @@
 
 `atomReducer` is a hook that lets you add a reducer to your atom.
 
-```ts
+::: code-group
+```ts [Syntax]
 const [state, dispatch] = atomReducer(reducer, initialArg, init?)
 ```
+
+```ts [Types]
+function atomReducer<Value, ActionArgs extends any[] = any[]>(
+  reducer: AtomReducerReducer<Value, ActionArgs>,
+  initialArg: Value,
+  init?: (initialArg: Value) => Value
+): AtomReducer<Value, ActionArgs>
+
+type AtomReducer<Value, ActionArgs extends any[] = any[]> =
+  [Value, AtomReducerDispatcher<ActionArgs>];
+
+type AtomReducerReducer<Value, ActionArgs extends any[]> =
+  (prevState: Value, ...args: ActionArgs) => Value
+
+type AtomReducerDispatcher<ActionArgs extends any[]> =
+  (...args: ActionArgs) => void
+```
+:::
 
 
 ## Reference

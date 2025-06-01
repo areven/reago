@@ -6,9 +6,21 @@ titleTemplate: :title | Reago for React
 
 `useAsyncAtom` is a React hook that is a shorthand for `useReadAsyncAtom` and `useDispatchAtom`.
 
-```tsx
+::: code-group
+```tsx [Syntax]
 const [resolvedValue, dispatch] = useAsyncAtom($atom, ...familyArgs)
 ```
+
+```ts [Types]
+function useAsyncAtom<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): [
+  ReturnType<typeof useReadAsyncAtom<T>>,
+  ReturnType<typeof dispatch<T>>
+]
+```
+:::
 
 
 ## Reference

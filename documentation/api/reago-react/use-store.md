@@ -6,9 +6,15 @@ titleTemplate: :title | Reago for React
 
 `useStore` is a React hook that lets you access the currently active Reago store.
 
-```tsx
+::: code-group
+```tsx [Syntax]
 const store = useStore()
 ```
+
+```ts [Types]
+function useStore(): Store
+```
+:::
 
 
 ## Reference
@@ -19,10 +25,9 @@ Call `useStore` at the top level of your component to access the active Reago st
 
 ```tsx
 import {useStore} from 'reago-react';
-import type {Store} from 'reago';
 
 function MyComponent() {
-  const store: Store = useStore();
+  const store = useStore();
   // ...
 }
 ```

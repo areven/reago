@@ -2,9 +2,22 @@
 
 `atomComputationEffect` is a hook that lets you implement side effects when an atom is computed.
 
-```ts
+::: code-group
+```ts [Syntax]
 atomComputationEffect(setup, dependencies?)
 ```
+
+```ts [Types]
+function atomComputationEffect(
+  setup: AtomComputationEffect,
+  dependencies?: unknown[]
+): void
+
+type AtomComputationEffect = () => (void | AtomComputationEffectCleanup)
+
+type AtomComputationEffectCleanup = () => void
+```
+:::
 
 
 ## Reference

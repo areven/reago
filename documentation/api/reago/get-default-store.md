@@ -2,9 +2,15 @@
 
 `getDefaultStore` lets you retrieve the built-in Reago's default store.
 
-```ts
+::: code-group
+```ts [Syntax]
 const store = getDefaultStore()
 ```
+
+```ts [Types]
+function getDefaultStore(): Store
+```
+:::
 
 
 ## Reference
@@ -14,9 +20,9 @@ const store = getDefaultStore()
 Call `getDefaultStore` anywhere in your code to retrieve the built-in default store.
 
 ```ts
-import {getDefaultStore, type Store} from 'reago';
+import {getDefaultStore} from 'reago';
 
-const store: Store = getDefaultStore();
+const store = getDefaultStore();
 ```
 
 #### Returns

@@ -7,9 +7,18 @@ titleTemplate: :title | Reago for React
 `useReadAsyncAtom` is a React hook that lets you subscribe to a _resolved_ atom's value in the
 currently active Reago store.
 
-```tsx
+::: code-group
+```tsx [Syntax]
 const resolvedValue = useReadAsyncAtom($atom, ...familyArgs)
 ```
+
+```ts [Types]
+function useReadAsyncAtom<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): Awaited<AtomResultOf<T>>
+```
+:::
 
 If an atom is asynchronous or returns a `Promise`-like object, the hook uses React Suspense and Reago's
 internal `Promise` tracking system to unpack it. The returned value is _always_ already resolved.

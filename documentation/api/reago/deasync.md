@@ -2,10 +2,48 @@
 
 `deasync` is an utility function that lets you access asynchronous results synchronously.
 
-```ts
+::: code-group
+```ts [Syntax]
 const {status, result, error} = deasync(variable | promise);
 const $derivedAtom = deasync(atom);
 ```
+
+```ts [Types]
+function deasync<T>(promise: PromiseLike<T>): DeasyncState<Awaited<T>>
+function deasync<T extends AnyAtom>(atom: T): DeasyncAtom<T>
+function deasync<T>(value: T): ResolvedDeasyncState<T>
+
+type DeasyncAtom<T extends AnyAtom> = FunctionalAtom<
+  DeasyncState<Awaited<AtomResultOf<T>>>,
+  AtomFamilyArgsOf<T>,
+  never // actions are not carried over
+>
+
+type DeasyncState<ResultType = unknown, ErrorType = unknown> = (
+  PendingDeasyncState |
+  ResolvedDeasyncState<ResultType> |
+  RejectedDeasyncState<ErrorType>
+);
+
+interface PendingDeasyncState {
+  status: 'pending';
+  result?: undefined;
+  error?: undefined;
+}
+
+interface ResolvedDeasyncState<ResultType> {
+  status: 'resolved';
+  result: ResultType;
+  error?: undefined;
+}
+
+interface RejectedDeasyncState<ErrorType> {
+  status: 'rejected';
+  result?: undefined;
+  error: ErrorType;
+}
+```
+:::
 
 
 ## Reference

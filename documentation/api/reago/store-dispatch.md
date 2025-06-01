@@ -2,9 +2,21 @@
 
 `store.dispatch` lets you trigger actions defined in an atom in the given store.
 
-```ts
+::: code-group
+```ts [Syntax]
 store.dispatch($atom, ...familyArgs)(...actionArgs)
 ```
+
+```ts [Types]
+function dispatch<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): AtomDispatcher<T>
+
+type AtomDispatcher<T extends AnyAtom> =
+  (...args: AtomActionArgsOf<T>) => void
+```
+:::
 
 
 ## Reference

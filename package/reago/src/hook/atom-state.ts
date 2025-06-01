@@ -19,7 +19,7 @@ export type AtomStateSetterNextState<Value> = Value | ((prevState: Value) => Val
 
 export function atomState<Value>(
   initialState: Value | (() => Value)
-): [Value, AtomStateSetter<Value>] {
+): AtomState<Value> {
   const {supervisor, instance} = requireComputationContext();
 
   const frame = requireComputationContextStackFrame<AtomStateFrame<Value>>(atomState, () => {

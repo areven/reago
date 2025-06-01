@@ -2,9 +2,15 @@
 
 `atomAbortSignal` is a hook that lets you get the `AbortSignal` for the active computation.
 
-```ts
+::: code-group
+```ts [Syntax]
 const abortSignal = atomAbortSignal()
 ```
+
+```ts [Types]
+function atomAbortSignal(): AbortSignal
+```
+:::
 
 ::: info INFO
 `AbortSignal` is a built-in JavaScript interface that allows you to communicate with an asynchronous

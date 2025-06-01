@@ -2,9 +2,15 @@
 
 `atomStore` is a hook that lets you access the currently active Reago store.
 
-```ts
+::: code-group
+```ts [Syntax]
 const store = atomStore()
 ```
+
+```ts [Types]
+function atomStore(): Store
+```
+:::
 
 
 ## Reference

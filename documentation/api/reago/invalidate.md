@@ -3,9 +3,18 @@
 `invalidate` lets you force an atom to lazily recompute in the active store, which is determined by
 the current execution context.
 
-```ts
+::: code-group
+```ts [Syntax]
 invalidate($atom, ...familyArgs)
 ```
+
+```ts [Types]
+function invalidate<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): void
+```
+:::
 
 
 ## Reference

@@ -2,9 +2,18 @@
 
 `store.invalidate` lets you force an atom to lazily recompute in the given store.
 
-```ts
+::: code-group
+```ts [Syntax]
 store.invalidate($atom, ...familyArgs)
 ```
+
+```ts [Types]
+function invalidate<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): void
+```
+:::
 
 
 ## Reference

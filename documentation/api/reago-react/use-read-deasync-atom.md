@@ -7,9 +7,45 @@ titleTemplate: :title | Reago for React
 `useReadDeasyncAtom` is a React hook that lets you subscribe to _unpacked_ atom's value in the
 currently active Reago store.
 
-```tsx
+::: code-group
+```tsx [Syntax]
 const {status, result, error} = useReadDeasyncAtom($atom, ...familyArgs)
 ```
+
+```ts [Types]
+function useReadDeasyncAtom<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): DeasyncStateOf<T>
+
+type DeasyncStateOf<T extends AnyAtom> =
+  DeasyncState<Awaited<AtomResultOf<T>>>
+
+type DeasyncState<ResultType = unknown, ErrorType = unknown> = (
+  PendingDeasyncState |
+  ResolvedDeasyncState<ResultType> |
+  RejectedDeasyncState<ErrorType>
+);
+
+interface PendingDeasyncState {
+  status: 'pending';
+  result?: undefined;
+  error?: undefined;
+}
+
+interface ResolvedDeasyncState<ResultType> {
+  status: 'resolved';
+  result: ResultType;
+  error?: undefined;
+}
+
+interface RejectedDeasyncState<ErrorType> {
+  status: 'rejected';
+  result?: undefined;
+  error: ErrorType;
+}
+```
+:::
 
 The hook uses `deasync()` and Reago's internal `Promise` tracking system on the atom value to unpack it.
 `Promise`-like objects are turned into simple objects that can be queried synchronously.

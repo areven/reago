@@ -6,9 +6,21 @@ titleTemplate: :title | Reago for React
 
 `useAtom` is a React hook that is a shorthand for `useReadAtom` and `useDispatchAtom`.
 
-```tsx
+::: code-group
+```tsx [Syntax]
 const [value, dispatch] = useAtom($atom, ...familyArgs)
 ```
+
+```ts [Types]
+function useAtom<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): [
+  ReturnType<typeof useReadAtom<T>>,
+  ReturnType<typeof dispatch<T>>
+]
+```
+:::
 
 
 ## Reference

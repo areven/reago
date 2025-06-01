@@ -2,9 +2,18 @@
 
 `store.read` lets you read a value from the given store.
 
-```ts
+::: code-group
+```ts [Syntax]
 const value = store.read($atom, ...familyArgs)
 ```
+
+```ts [Types]
+function read<T extends AnyAtom>(
+  atom: T,
+  ...args: AtomFamilyArgsOf<T>
+): AtomResultOf<T>
+```
+:::
 
 
 ## Reference

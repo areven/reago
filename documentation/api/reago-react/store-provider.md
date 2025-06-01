@@ -7,9 +7,21 @@ titleTemplate: :title | Reago for React
 `StoreProvider` is a React component that lets you set a custom active Reago store for a component tree.
 A store is where values of atoms are stored. A single atom can have different values in different stores.
 
-```tsx
+::: code-group
+```tsx [Syntax]
 <StoreProvider store={store}>...</StoreProvider>
 ```
+
+```ts [Types]
+function StoreProvider({
+  children,
+  store
+}: {
+  children?: ReactNode,
+  store?: Store
+}): FunctionComponentElement<{value: Store | undefined}>
+```
+:::
 
 Using a `StoreProvider` is entirely optional.  If you don't use a `StoreProvider`, Reago will fallback to using
 the built-in default store.
@@ -22,10 +34,10 @@ the built-in default store.
 Wrap your component tree with a `StoreProvider` to change the active Reago store for those components.
 
 ```tsx
-import {createStore, type Store} from 'reago';
+import {createStore} from 'reago';
 import {StoreProvider} from 'reago-react';
 
-const customStore: Store = createStore();
+const customStore = createStore();
 
 function MyComponent1() {
   // reago react hooks placed here will use the default store

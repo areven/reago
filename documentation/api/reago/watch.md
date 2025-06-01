@@ -3,9 +3,22 @@
 `watch` subscribes to value changes of an atom in the active store, which is determined by the current
 execution context.
 
-```ts
+::: code-group
+```ts [Syntax]
 const watcher = watch($atom, ...familyArgs, listener)
 ```
+
+```ts [Types]
+function watch<T extends AnyAtom>(
+  atom: T,
+  ...args: [...AtomFamilyArgsOf<T>, AtomListener<T>]
+): AtomWatcher<T>
+
+type AtomWatcher<T extends AnyAtom = AnyAtom> = {
+  readonly clear: () => void
+}
+```
+:::
 
 
 ## Reference

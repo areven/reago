@@ -2,9 +2,18 @@
 
 `atomMemo` is a hook that lets you cache the result of a calculation between computations.
 
-```ts
+::: code-group
+```ts [Syntax]
 const cachedValue = atomMemo(calculateValue, dependencies)
 ```
+
+```ts [Types]
+function atomMemo<Value>(
+  calculateValue: () => Value,
+  dependencies: unknown[]
+): Value
+```
+:::
 
 
 ## Reference
