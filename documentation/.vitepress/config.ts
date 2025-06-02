@@ -81,6 +81,26 @@ export default defineConfig({
           {text: 'Motivation', link: '/guide/motivation'},
           {text: 'Getting started', link: '/guide/getting-started'}
         ]},
+        {text: 'The basics', items: [
+          {text: 'Creating an atom', link: '/guide/basics/creating-atoms'},
+          {text: 'Adding state to an atom', link: '/guide/basics/adding-state'},
+          {text: 'Exploring other hooks', link: '/guide/basics/exploring-hooks'},
+          {text: 'Subscribing to an atom', link: '/guide/basics/subscribing-to-atoms'},
+          {text: 'Declaring side effects', link: '/guide/basics/declaring-side-effects'},
+          {text: 'Using with frameworks', link: '/guide/basics/using-with-frameworks'}
+        ]},
+        {text: 'Going deeper', items: [
+          {text: 'Dealing with Promises', link: '/guide/intermediate/dealing-with-promises'},
+          {text: 'Creating a generative atom', link: '/guide/intermediate/creating-generative-atoms'},
+          {text: 'Unpacking Promises with deasync', link: '/guide/intermediate/using-deasync'},
+          {text: 'Using TypeScript', link: '/guide/intermediate/using-typescript'}
+        ]},
+        {text: 'Advanced features', items: [
+          {text: 'Creating custom stores', link: '/guide/advanced/creating-custom-stores'},
+          {text: 'Creating an atom family', link: '/guide/advanced/creating-atom-families'},
+          {text: 'Using the AbortSignal', link: '/guide/advanced/using-the-abortsignal'},
+          {text: 'Building a third-party integration', link: '/guide/advanced/building-integrations'},
+        ]},
         {items: [{text: 'Continue to API reference', link: '/api/'}]}
       ],
       '/api/': [
