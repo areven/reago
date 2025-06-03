@@ -172,5 +172,5 @@ code clean and declarative.
 The dependency graph tracks how atoms depend on each other. When an atom reads another during its computation,
 a directed edge is created from the reading atom to the one it reads. This forms a graph of dependencies that
 Reago uses to determine update paths. Only atoms that are mounted - meaning they are actively
-subscribed to — are guaranteed to compute immediately. Others can be lazily evaluated on demand. The graph
+subscribed to - are guaranteed to compute immediately. Others can be lazily evaluated on demand. The graph
 ensures updates propagate efficiently through only the relevant parts of the system.

@@ -67,7 +67,7 @@
 
 ### Patch Changes
 
-- dbc1462: Reago — a state management library, named after the Esperanto word for 'reaction'.
+- dbc1462: Reago - a state management library, named after the Esperanto word for 'reaction'.
 
   Why Esperanto? Because it's the language of connection, designed to bring together people
   from different backgrounds. And just like that, Reago is here to connect your app's states

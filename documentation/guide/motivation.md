@@ -10,7 +10,7 @@ process that led us at [Areven](https://areven.com) to build _yet another soluti
 
 ## A brief history of state management in JavaScript
 
-### The early days – Local state everywhere
+### The early days - Local state everywhere
 
 Before frameworks, state was mostly kept in DOM elements, global variables, or jQuery-based spaghetti.
 There was no structure - just imperative code that manipulated UI directly. As apps grew, this approach did

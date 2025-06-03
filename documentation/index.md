@@ -1,5 +1,5 @@
 ---
-title: Reago - zero-dependency declarative state manager
+title: Reago — a zero-dependency atomic state manager
 titleTemplate: false
 outline: false
 editLink: false

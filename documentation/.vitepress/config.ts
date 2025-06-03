@@ -10,7 +10,10 @@ import {version as reagoReactVersion} from '../../package/reago-react/package.js
 export default defineConfig({
   title: 'Reago',
   titleTemplate: ':title | Reago',
-  description: 'Reago is a typescript-first declarative state manager based on atoms.',
+  description: (
+    `Reago is a declarative state management library based on atoms, hooks and generators. ` +
+    `It's lightweight, framework agnostic, TypeScript-oriented, and easy to use.`
+  ),
   lang: 'en-US',
 
   appearance: 'force-auto',
@@ -92,8 +95,8 @@ export default defineConfig({
         {text: 'Going deeper', items: [
           {text: 'Dealing with Promises', link: '/guide/intermediate/dealing-with-promises'},
           {text: 'Creating a generative atom', link: '/guide/intermediate/creating-generative-atoms'},
-          {text: 'Unpacking Promises with deasync', link: '/guide/intermediate/using-deasync'},
-          {text: 'Using TypeScript', link: '/guide/intermediate/using-typescript'}
+          {text: 'Using the deasync() helper', link: '/guide/intermediate/using-deasync'},
+          {text: 'Using with TypeScript', link: '/guide/intermediate/using-typescript'}
         ]},
         {text: 'Advanced features', items: [
           {text: 'Creating custom stores', link: '/guide/advanced/creating-custom-stores'},

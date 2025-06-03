@@ -46,7 +46,7 @@ function $selectedCountry() {
   return 'Japan';
 }
 
-console.log(`You selected ${read($selectedCountry)} 😍`);
+console.log(`You selected ${read($selectedCountry)} 😍`); // [!code highlight]
 
 ```
 
@@ -87,7 +87,7 @@ function $number() {
 }
 
 function $doubledNumber() {
-  return read($number) * 2;
+  return read($number) * 2; // [!code highlight]
 }
 
 console.log(`Derived value is ${read($doubledNumber)}`);
