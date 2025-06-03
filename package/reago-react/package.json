@@ -3,7 +3,7 @@
   "author": "Areven, Sebastian Nowak",
   "license": "MIT",
   "version": "0.3.0",
-  "description": "React bindings for the `reago` state manager",
+  "description": "Official React bindings for the Reago atomic state manager",
   "keywords": [
     "reago",
     "react",
@@ -22,6 +22,7 @@
   "sideEffects": false,
   "files": [
     "readme.md",
+    "license.md",
     "changelog.md",
     "./dist/**/*",
     "!**/*.tsbuildinfo"

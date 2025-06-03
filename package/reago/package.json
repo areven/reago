@@ -3,7 +3,7 @@
   "author": "Areven, Sebastian Nowak",
   "license": "MIT",
   "version": "0.3.0",
-  "description": "Zero-dependency declarative state manager",
+  "description": "Reago is a declarative, atomic state management library for JavaScript and TypeScript",
   "keywords": [
     "reago",
     "state",
@@ -27,6 +27,7 @@
   "sideEffects": false,
   "files": [
     "readme.md",
+    "license.md",
     "changelog.md",
     "./dist/**/*",
     "!**/*.tsbuildinfo"
