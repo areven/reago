@@ -1,7 +1,7 @@
 <a href="https://reago.dev">
   <picture>
-    <source srcset="../../documentation/public/logo-full.dark.svg" media="(prefers-color-scheme: dark)">
-    <img src="../../documentation/public/logo-full.light.svg" alt="Reago logo" width="280">
+    <source srcset="https://raw.githubusercontent.com/areven/reago/main/documentation/public/logo-full.dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="https://raw.githubusercontent.com/areven/reago/main/documentation/public/logo-full.light.svg" alt="Reago logo" width="280">
   </picture>
 </a>
 <br>
