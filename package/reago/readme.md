@@ -31,7 +31,7 @@ https://reago.dev
 
 ## License
 
-Reago is [MIT licensed](./license.md).
+Reago is [MIT licensed](https://reago.dev/resource/license).
 
 ##
 
