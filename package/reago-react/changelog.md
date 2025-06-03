@@ -1,5 +1,11 @@
 # reago-react
 
+## 1.0.1
+
+### Patch Changes
+
+- bb25099: Fixed a deployment issue caused by `changesets` misconfiguration
+
 ## 1.0.0
 
 ### Major Changes
