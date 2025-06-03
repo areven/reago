@@ -20,5 +20,11 @@ export default defineConfig({
         'package/*/src/**'
       ]
     }
+  },
+  optimizeDeps: {
+    include: [
+      'react/jsx-dev-runtime',
+      '@vitest/coverage-istanbul'
+    ]
   }
 });
