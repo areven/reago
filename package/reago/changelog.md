@@ -1,5 +1,11 @@
 # reago
 
+## 1.0.1
+
+### Patch Changes
+
+- f43609b: Fixed the Reago logo on npm pages
+
 ## 1.0.0
 
 ### Major Changes
