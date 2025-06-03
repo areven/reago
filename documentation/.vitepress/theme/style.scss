@@ -123,28 +123,31 @@
   transition: color 150ms !important;
 }
 
-.VPNavBarMenuLink div:first-child {
-  font-weight: 600 !important;
-  color: transparent;
-  user-select: none;
-  padding-left: 12px;
-  padding-right: 12px;
-}
+.VPNavBarMenuLink i {
+  display: block;
+  font-style: normal;
 
-@media (min-width: 960px) {
-  .VPNavBarMenuLink div:first-child {
-    padding-left: 18px;
-    padding-right: 18px;
+  &:first-child {
+    font-weight: 600 !important;
+    color: transparent;
+    user-select: none;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    @media (min-width: 960px) {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
   }
-}
 
-.VPNavBarMenuLink div:last-child {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-align: center;
+  &:last-child {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
 }
 
 .VPNavBarMenuLink.active {
@@ -152,11 +155,11 @@
   border-bottom: 2px solid var(--vp-c-brand-1);
 }
 
-.VPNavBarMenuLink.active div:last-child {
+.VPNavBarMenuLink.active i:last-child {
   font-weight: 600 !important;
 }
 
-.VPNavScreenMenu .VPLink div:last-child {
+.VPNavScreenMenu .VPLink i:last-child {
   display: none;
 }
 
@@ -166,7 +169,7 @@
 @media (min-width: 768px) {
   .VPNavBarSearch {
     position: absolute;
-    right: 72px;
+    right: 40px;
   }
 
   .VPNavBarSearch > #local-search {
@@ -197,10 +200,6 @@
 }
 
 @media (min-width: 960px) {
-  .VPNavBarSearch {
-    right: 40px;
-  }
-
   .VPNavBarSearch > #local-search {
     width: 200px !important;
   }

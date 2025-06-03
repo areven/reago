@@ -75,7 +75,7 @@ export default defineConfig({
         link: '/resource/license',
         activeMatch: '/resource/',
       }
-    ].map(o => ({...o, text: `<div>${o.text}</div><div>${o.text}</div>`})),
+    ].map(o => ({...o, text: `<i>${o.text}</i><i>${o.text}</i>`})),
 
     sidebar: {
       '/guide/': [
