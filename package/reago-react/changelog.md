@@ -1,5 +1,20 @@
 # reago-react
 
+## 1.0.0
+
+### Major Changes
+
+- 687b868: Reago is now stable
+
+  After multiple iterations, internal improvements, and type safety enhancements, Reago has reached its
+  first stable release. The core API is now considered production-ready. Future updates will follow semantic
+  versioning strictly, with a strong focus on API stability.
+
+### Patch Changes
+
+- Updated dependencies [687b868]
+  - reago@1.0.0
+
 ## 0.3.0
 
 ### Patch Changes
