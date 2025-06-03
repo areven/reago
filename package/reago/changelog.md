@@ -1,5 +1,11 @@
 # reago
 
+## 1.0.2
+
+### Patch Changes
+
+- 4bcce0d: Fixed the MIT license links on npm pages
+
 ## 1.0.1
 
 ### Patch Changes
