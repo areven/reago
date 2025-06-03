@@ -2,7 +2,7 @@
   "name": "reago-react",
   "author": "Areven, Sebastian Nowak",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "description": "React bindings for the `reago` state manager",
   "keywords": [
     "reago",
