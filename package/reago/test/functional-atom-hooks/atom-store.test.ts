@@ -2,7 +2,7 @@
 // atomStore functional atom tests
 // =============================================================================
 
-import {atomStore, createStore, getDefaultStore, read, type Store} from 'reago';
+import {atomAction, atomComputationEffect, atomState, atomStore, createStore, getDefaultStore, read, type Store} from 'reago';
 import {expect, test} from 'vitest';
 import {ComputationContextRequiredAtomError} from '~/error';
 
@@ -33,6 +33,26 @@ test('atomStore returns a custom store correctly', () => {
   expect(store1.read($atom)).toBe(store1);
   expect(store2.read($atom)).toBe(store2);
   expect(store3.read($atom)).toBe(store3);
+});
+
+test('atomStore supports destructuring without losing the store context', () => {
+  const store = createStore();
+
+  function $atom() {
+    const [value, setValue] = atomState(false);
+    atomAction(setValue, []);
+
+    const {dispatch} = atomStore();
+    atomComputationEffect(() => {
+      dispatch($atom)(true);
+    });
+
+    return value;
+  }
+
+  expect(store.read($atom)).toBe(false);
+  expect(store.read($atom)).toBe(true);
+  expect(read($atom)).toBe(false);
 });
 
 test('atomStore cannot be called outside of a computation', () => {

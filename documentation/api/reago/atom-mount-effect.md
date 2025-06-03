@@ -125,11 +125,11 @@ Timer-based expiration can be easily implemented using computation effects.
 import {atomComputationEffect, atomStore} from 'reago';
 
 function $unixTime() {
-  const store = atomStore();
+  const {invalidate} = atomStore();
 
   atomComputationEffect(() => {
     const timeout = setTimeout(() => {
-      store.invalidate($currentUnixTime);
+      invalidate($currentUnixTime);
     }, 1000);
     return () => clearTimeout(timeout);
   });

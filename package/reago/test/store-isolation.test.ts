@@ -5,6 +5,47 @@
 import {atomAction, atomState, createStore, getDefaultStore} from 'reago';
 import {expect, test} from 'vitest';
 
+test('getDefaultStore() supports destructuring without losing the store context', () => {
+  const store1 = getDefaultStore();
+  const store2 = createStore();
+
+  let counter = 0;
+  function $atom() {
+    return ++counter;
+  }
+
+  store2.read($atom);
+  expect(counter).toBe(1);
+
+  const {dispatch, invalidate, read, watch} = store1;
+  read($atom);
+  expect(counter).toBe(2);
+
+  invalidate($atom);
+  dispatch($atom);
+  watch($atom, () => {}).clear();
+});
+
+test('createStore() supports destructuring without losing the store context', () => {
+  const store1 = createStore();
+  const store2 = getDefaultStore();
+
+  let counter = 0;
+  function $atom() {
+    return ++counter;
+  }
+
+  store2.read($atom);
+  expect(counter).toBe(1);
+
+  const {dispatch, invalidate, read, watch} = store1;
+  read($atom);
+  expect(counter).toBe(2);
+
+  invalidate($atom);
+  dispatch($atom);
+  watch($atom, () => {}).clear();
+});
 
 test('store.read() scope is restricted to the store it was called on', () => {
   const store1 = getDefaultStore();

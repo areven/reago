@@ -94,11 +94,11 @@ the result after a second.
 import {atomComputationEffect, atomStore} from 'reago';
 
 function $unixTime() {
-  const store = atomStore();
+  const {invalidate} = atomStore();
 
   atomComputationEffect(() => {
     const timeout = setTimeout(() => {
-      store.invalidate($currentUnixTime);
+      invalidate($currentUnixTime);
     }, 1000);
     return () => clearTimeout(timeout);
   });
@@ -116,10 +116,10 @@ result when browser fires the `resize` event.
 import {atomComputationEffect, atomStore} from 'reago';
 
 function $windowWidth() {
-  const store = atomStore();
+  const {invalidate} = atomStore();
 
   atomComputationEffect(() => {
-    const handler = () => store.invalidate($windowWidth);
+    const handler = () => invalidate($windowWidth);
     window.addEventListener('resize', handler, {once: true});
     return () => window.removeEventListener('resize', handler);
   });

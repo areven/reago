@@ -12,6 +12,10 @@ export class Store {
 
   constructor(supervisor: Supervisor) {
     this.#supervisor = supervisor;
+    this.read = this.read.bind(this);
+    this.watch = this.watch.bind(this);
+    this.dispatch = this.dispatch.bind(this);
+    this.invalidate = this.invalidate.bind(this);
   }
 
   read<T extends AnyAtom>(

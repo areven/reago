@@ -37,6 +37,8 @@ The active store is determined by the computation context. It is the store you a
 The returned store reference is stable and can be safely omitted from effect dependencies. It is exactly
 the same as the value returned from `getDefaultStore` or one of your `createStore` calls.
 
+It is safe to use destructuring to extract individual store methods. They are bound to the store context.
+
 #### Caveats
 
 * `atomStore` is a hook, so you can only call it at the top level of your atom. You cannot call it inside loops
@@ -57,6 +59,23 @@ function $unixTime() {
   atomComputationEffect(() => {
     const timeout = setTimeout(() => {
       store.invalidate($currentUnixTime);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  });
+  return Math.floor(Date.now() / 1000);
+}
+```
+
+We can simplify it further by using destructuring - store methods are bound to the store context.
+
+```ts
+import {atomComputationEffect, atomStore} from 'reago';
+
+function $unixTime() {
+  const {invalidate} = atomStore(); // [!code highlight]
+  atomComputationEffect(() => {
+    const timeout = setTimeout(() => {
+      invalidate($currentUnixTime); // [!code highlight]
     }, 1000);
     return () => clearTimeout(timeout);
   });
