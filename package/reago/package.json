@@ -2,7 +2,7 @@
   "name": "reago",
   "author": "Areven, Sebastian Nowak",
   "license": "MIT",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Reago is a declarative, atomic state management library for JavaScript and TypeScript",
   "keywords": [
     "reago",
