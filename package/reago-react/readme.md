@@ -7,11 +7,11 @@
 <br>
 <br>
 
-[![Build status](https://img.shields.io/github/actions/workflow/status/areven/reago/code-validation.yml?branch=main&style=flat&colorA=a76733&colorB=3c3c43)](https://github.com/pmndrs/jotai/actions?query=workflow%3ALint)
-[![Build size](https://img.shields.io/bundlephobia/minzip/reago-react?label=bundle%20size&style=flat&colorA=a76733&colorB=3c3c43)](https://bundlephobia.com/result?p=reago-react)
 [![Version](https://img.shields.io/npm/v/reago-react?style=flat&colorA=a76733&colorB=3c3c43)](https://www.npmjs.com/package/reago)
 [![Downloads](https://img.shields.io/npm/dt/reago-react.svg?style=flat&colorA=a76733&colorB=3c3c43)](https://www.npmjs.com/package/reago-react)
-
+[![Build size](https://img.shields.io/bundlephobia/minzip/reago-react?label=bundle%20size&style=flat&colorA=a76733&colorB=3c3c43)](https://bundlephobia.com/result?p=reago-react)
+[![Build status](https://img.shields.io/github/actions/workflow/status/areven/reago/code-validation.yml?branch=main&style=flat&colorA=a76733&colorB=3c3c43)](https://github.com/areven/reago/actions/workflows/code-validation.yml)
+[![Code coverage](https://img.shields.io/codecov/c/github/areven/reago?token=69NO8U9S3W&style=flat&labelColor=a76733&color=3c3c43)](https://app.codecov.io/gh/areven/reago/tree/main)
 
 # reago-react
 
