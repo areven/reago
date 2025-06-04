@@ -90,12 +90,13 @@ export default defineConfig({
           {text: 'Exploring other hooks', link: '/guide/basics/exploring-hooks'},
           {text: 'Subscribing to an atom', link: '/guide/basics/subscribing-to-atoms'},
           {text: 'Declaring side effects', link: '/guide/basics/declaring-side-effects'},
-          {text: 'Using with frameworks', link: '/guide/basics/using-with-frameworks'}
+          {text: 'Invalidating atoms manually', link: '/guide/basics/invalidating-atoms'}
         ]},
         {text: 'Going deeper', items: [
           {text: 'Dealing with Promises', link: '/guide/intermediate/dealing-with-promises'},
           {text: 'Creating a generative atom', link: '/guide/intermediate/creating-generative-atoms'},
           {text: 'Using the deasync() helper', link: '/guide/intermediate/using-deasync'},
+          {text: 'Using with frameworks', link: '/guide/intermediate/using-with-frameworks'},
           {text: 'Using with TypeScript', link: '/guide/intermediate/using-typescript'}
         ]},
         {text: 'Advanced features', items: [
