@@ -1,5 +1,11 @@
 # reago-react
 
+## 1.0.3
+
+### Patch Changes
+
+- f2b3721: Updated the readme badges on npm pages
+
 ## 1.0.2
 
 ### Patch Changes
