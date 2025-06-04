@@ -129,7 +129,7 @@ function $unixTime() {
 
   atomComputationEffect(() => {
     const timeout = setTimeout(() => {
-      invalidate($currentUnixTime);
+      invalidate($unixTime);
     }, 1000);
     return () => clearTimeout(timeout);
   });
