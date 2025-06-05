@@ -20,6 +20,13 @@
 }
 
 
+// Global
+
+.disable-transitions * {
+  transition: unset !important;
+}
+
+
 // Navigation bar
 
 :root {

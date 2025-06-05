@@ -24,6 +24,16 @@ export default defineConfig({
   head: [
     ['link', {rel: 'icon', href: '/favicon.ico', sizes: '48x48'}],
     ['link', {rel: 'icon', href: '/favicon.svg', sizes: 'any', type: 'image/svg+xml'}],
+    ['script', {}, `
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        const cl = document.documentElement.classList;
+        cl.add('disable-transitions');
+        cl.toggle('dark', e.matches);
+        setTimeout(() => {
+          cl.remove('disable-transitions', e.matches);
+        }, 0);
+      });
+    `],
     ...(process.env.NODE_ENV === 'production' ? [
       ['script', {
         defer: 'true',
