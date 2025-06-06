@@ -311,3 +311,21 @@ test('deasync() can wrap a generative atom', async () => {
     result: 11
   });
 });
+
+test('deasync() called on an atom always returns the same derived atom', () => {
+  function $atom1() {
+    return Promise.resolve(123);
+  }
+
+  function* $atom2() {
+    return 42;
+  }
+
+  const atom1Ref1 = deasync($atom1);
+  const atom1Ref2 = deasync($atom1);
+  expect(atom1Ref1).toBe(atom1Ref2);
+
+  const atom2Ref1 = deasync($atom2);
+  const atom2Ref2 = deasync($atom2);
+  expect(atom2Ref1).toBe(atom2Ref2);
+});

@@ -55,12 +55,18 @@ export function deasync(input: unknown): unknown {
   }
 }
 
+
+// Raw values
+
 function deasyncRaw<T>(value: T): ResolvedDeasyncState<T> {
   return {
     status: 'resolved',
     result: value
   };
 }
+
+
+// Promises
 
 function deasyncPromise<T>(promise: PromiseLike<T>): DeasyncState<Awaited<T>> {
   trackPromise(promise);
@@ -82,24 +88,41 @@ function deasyncPromise<T>(promise: PromiseLike<T>): DeasyncState<Awaited<T>> {
   }
 }
 
+
+// Atoms
+
+const stableDeasyncAtom = new WeakMap<AnyAtom, DeasyncAtom<AnyAtom>>();
+
 function deasyncAtom<T extends AnyAtom>(atom: T): DeasyncAtom<T> {
-  return (...args) => {
-    const result = read(atom, ...args);
-    const unpacked = isPromiseLike(result) ? deasyncPromise(result) : deasyncRaw(result);
+  let derivedAtom: DeasyncAtom<T> | undefined = stableDeasyncAtom.get(atom);
 
-    const [_tick, refresh] = atomReducer(x => x + 1, 0);
-    atomComputationEffect(
-      () => {
-        if (unpacked.status === 'pending' && isPromiseLike(result)) {
-          result.then(refresh, refresh);
-        }
-      },
-      [unpacked.status, result]
-    );
+  if (!derivedAtom) {
+    derivedAtom = (...args) => {
+      return deasyncAtomImplementation<T>(read(atom, ...args));
+    };
+    stableDeasyncAtom.set(atom, derivedAtom);
+  }
 
-    return atomMemo(
-      () => unpacked,
-      [unpacked.status, (unpacked as any).result, (unpacked as any).error]
-    );
-  };
+  return derivedAtom;
+}
+
+function deasyncAtomImplementation<T extends AnyAtom>(
+  result: AtomResultOf<T>
+): DeasyncState<Awaited<AtomResultOf<T>>> {
+  const unpacked = isPromiseLike(result) ? deasyncPromise(result) : deasyncRaw(result);
+
+  const [_tick, refresh] = atomReducer(x => x + 1, 0);
+  atomComputationEffect(
+    () => {
+      if (unpacked.status === 'pending' && isPromiseLike(result)) {
+        result.then(refresh, refresh);
+      }
+    },
+    [unpacked.status, result]
+  );
+
+  return atomMemo(
+    () => unpacked,
+    [unpacked.status, (unpacked as any).result, (unpacked as any).error]
+  );
 }

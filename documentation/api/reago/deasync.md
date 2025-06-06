@@ -129,6 +129,7 @@ due to the `Promise` API limitations, it will first return the `pending` status,
 #### Returns
 
 * For non-atoms, `deasync` returns an object representing the unpacked input.
+
   ```tsx
   interface DeasyncState<ResultType, ErrorType> {
     status: 'pending' | 'resolved' | 'rejected';
@@ -139,6 +140,10 @@ due to the `Promise` API limitations, it will first return the `pending` status,
 
 * For atoms, `deasync` returns a new derived atom that tracks the original atom and pipes its value
   through `deasync`.
+
+  The returned atom reference is stable - calling `deasync` multiple times on the same atom will
+  always return the same derived atom. It is safe to call `deasync` directly where it is needed,
+  without storing the derived atom reference explicitly.
 
 #### Caveats
 * If a `Promise` is already settled, but Reago have not encountered it before, `deasync` will initially
@@ -181,3 +186,43 @@ const unpackedPromise = read($deasyncAtom);
 assert(unpackedPromise.status === 'resolved');
 assert(unpackedPromise.result === 42);
 ```
+
+#### Using a derived atom without storing its reference
+
+If you have an atom that returns a `Promise`, you can use `deasync` to create a derived atom
+that tracks the same value, but unpacks it.
+
+Reago guarantees that multiple `deasync` calls on the same atom will always return the same derived
+atom, so instead of explicitly storing its reference, you can inline the `deasync` call wherever it
+is needed.
+
+```ts
+import {deasync, read} from 'reaog';
+
+function* $atomReturningAPromise() {
+  yield new Promise(resolve => setTimeout(resolve, 1000));
+  return 42;
+}
+
+function $atomReturningAValue() {
+  const {status, result, error} = read(deasync($atomReturningAPromise));
+
+  switch (status) {
+    case 'pending':
+      return 'still loading';
+    case 'resolved':
+      return `the value is ${result}`;
+    default:
+      return 'something went wrong';
+  }
+}
+```
+
+::: danger Pay attention to the function call order
+Note that the you have to call `read(deasync($atom))`, not `deasync(read($atom))`.
+
+First, we create a derived atom that returns the unpacked `Promise` and then we subscribe to it.
+
+If we would do it the other way around, we would subscribe to the `Promise` reference, unpack it once
+via `deasync`, but the atom would not recompute when the `Promise` settles.
+:::
