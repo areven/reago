@@ -187,7 +187,7 @@ assert(unpackedPromise.status === 'resolved');
 assert(unpackedPromise.result === 42);
 ```
 
-#### Using a derived atom without storing its reference
+### Using a derived atom without storing its reference
 
 If you have an atom that returns a `Promise`, you can use `deasync` to create a derived atom
 that tracks the same value, but unpacks it.
