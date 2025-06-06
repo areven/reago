@@ -197,7 +197,7 @@ atom, so instead of explicitly storing its reference, you can inline the `deasyn
 is needed.
 
 ```ts
-import {deasync, read} from 'reaog';
+import {deasync, read} from 'reago';
 
 function* $atomReturningAPromise() {
   yield new Promise(resolve => setTimeout(resolve, 1000));
