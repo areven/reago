@@ -1,5 +1,14 @@
 # reago
 
+## 1.1.0
+
+### Minor Changes
+
+- 101a469: Stabilized the `deasync($atom)` helper to persist the derived atom across calls
+
+  This makes it safe to use `deasync($atom)` inline, directly where it is needed, without manually persisting
+  the returned reference. Other `deasync()` call signatures are unaffected.
+
 ## 1.0.3
 
 ### Patch Changes
