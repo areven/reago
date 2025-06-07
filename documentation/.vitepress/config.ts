@@ -106,8 +106,7 @@ export default defineConfig({
           {text: 'Dealing with Promises', link: '/guide/intermediate/dealing-with-promises'},
           {text: 'Creating a generative atom', link: '/guide/intermediate/creating-generative-atoms'},
           {text: 'Using the deasync() helper', link: '/guide/intermediate/using-deasync'},
-          {text: 'Using with frameworks', link: '/guide/intermediate/using-with-frameworks'},
-          {text: 'Using with TypeScript', link: '/guide/intermediate/using-typescript'}
+          {text: 'Using with frameworks', link: '/guide/intermediate/using-with-frameworks'}
         ]},
         {text: 'Advanced features', items: [
           {text: 'Creating custom stores', link: '/guide/advanced/creating-custom-stores'},
