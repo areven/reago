@@ -277,10 +277,18 @@
   width: 1.5px;
 }
 
+
 // Undesired text selection
 
 .VPNavBarTitle,
 .DocSearch-Button {
   user-select: none;
   -webkit-user-select: none;
+}
+
+
+// Utils
+
+.dark .dark-filter-invert {
+  filter: invert(100%);
 }

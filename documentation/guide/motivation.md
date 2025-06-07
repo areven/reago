@@ -2,7 +2,7 @@
 
 You might be thinking - ugh, _another_ state management library?
 
-[![XKCD #927: Standards](./xkcd_927.png){width=500px}](https://xkcd.com/927/)
+[![XKCD #927: Standards](./xkcd_927.png){.dark-filter-invert width=500px}](https://xkcd.com/927/)
 
 Fair. So, here is the story. This is not a justification - just an honest explanation of the thought
 process that led us at [Areven](https://areven.com) to build _yet another solution_.
