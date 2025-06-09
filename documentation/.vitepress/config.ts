@@ -111,8 +111,7 @@ export default defineConfig({
         {text: 'Advanced features', items: [
           {text: 'Creating custom stores', link: '/guide/advanced/creating-custom-stores'},
           {text: 'Creating an atom family', link: '/guide/advanced/creating-atom-families'},
-          {text: 'Using the AbortSignal', link: '/guide/advanced/using-the-abortsignal'},
-          {text: 'Building a third-party integration', link: '/guide/advanced/building-integrations'},
+          {text: 'Using the AbortSignal', link: '/guide/advanced/using-the-abortsignal'}
         ]},
         {items: [{text: 'Continue to API reference', link: '/api/'}]}
       ],

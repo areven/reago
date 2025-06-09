@@ -111,5 +111,6 @@ If you are using Reago with a third-party framework through an official integrat
 [API reference](/api/) of the package for the details on how to use custom stores.
 
 For example, the `reago-react` integration provides:
-* A `StoreProvider` component, that provides a custom store to its component subtree.
-* A `useStore()` hook, that returns the active store.
+
+* A `StoreProvider` component that provides a custom store to its component subtree.
+* A `useStore()` hook that returns the active store.

@@ -15,8 +15,7 @@ This article covers the basics of each official integration. For a detailed brea
 ::: tip Is your tool of choice not in the list?
 Building your own custom integration is _trivial_.
 
-We provide [a detailed guide](/guide/advanced/building-integrations) that walks you through the process of
-creating your own bindings.
+Please refer to the source code of existing integrations for guidance. They are all very tiny.
 
 Alternatively, you can give us a nudge via [GitHub Discussions](https://github.com/areven/reago/discussions).
 :::

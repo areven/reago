@@ -116,9 +116,11 @@ import {Suspense} from 'react';
 import {useReadAsyncAtom} from 'reago-react';
 
 export default function App() {
-  return <Suspense fallback={<Loading/>}>
-    <AsyncComponent/>
-  </Suspense>;
+  return (
+    <Suspense fallback={<Loading/>}>
+      <AsyncComponent/>
+    </Suspense>
+  );
 }
 
 function Loading() {

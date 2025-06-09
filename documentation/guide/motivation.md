@@ -105,12 +105,12 @@ function UserProfile({userId}) {
   );
 
   useEffect(() => {
-    setState({false, false, null});
+    setState([false, false, null]);
     queryPromise.then(
-      (result) => {
+      result => {
         setState([true, false, result]);
       },
-      (err) => {
+      err => {
         setState([false, true, err]);
       }
     );

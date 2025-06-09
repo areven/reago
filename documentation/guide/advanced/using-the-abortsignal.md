@@ -58,7 +58,7 @@ obtain the related `AbortSignal` and use it to abort long-running tasks.
 
 You can obtain the `AbortSignal` for the current computation by calling the `atomAbortSignal()` hook.
 
-Many of the JavaScript APIs can accept the `AbortSignal` directly - and one of them is `fetch`.
+Many of the JavaScript APIs can accept the `AbortSignal` directly, and one of them is `fetch`.
 
 Here is how you can cancel a `fetch()` request when it is no longer needed.
 
@@ -91,7 +91,7 @@ if (signal.aborted) {
 }
 ```
 
-You can also make it throw if it is aborted - which sometimes can make things more concise.
+You can also make it throw if it is aborted, which sometimes can make things more concise.
 
 ```ts
 const signal = atomAbortSignal();

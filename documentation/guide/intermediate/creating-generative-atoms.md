@@ -164,7 +164,7 @@ The same restrictions apply to generative atoms, with one extra, possibly surpri
 * It is perfectly fine to keep using hooks after `yield`. It is not an issue that you paused a
   computation to wait for an asynchronous value - Reago can still track them.
 
-This is a perfectly valid code:
+This is perfectly valid code:
 
 ```ts
 import {atomAction, atomState, read} from 'reago';
@@ -224,7 +224,7 @@ Reago not only implements the `async` / `await` syntax - it makes it more effici
 When you pass a `Promise` to `yield`, Reago waits for it to settle and passes back the outcome.
 But that is not all. Reago automatically tracks all `Promise`-like objects it encounters.
 
-The standard `Promise` API lacks an essential feature - it is not possible to synchronously check whether
+The standard `Promise` API lacks an essential feature: it is not possible to synchronously check whether
 a `Promise` settled and get the outcome. If you hold a reference to a `Promise`, even if you know it already
 resolved, you still have to call `.then()` and asynchronously wait for the callback to fire.
 

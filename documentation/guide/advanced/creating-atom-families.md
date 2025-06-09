@@ -2,7 +2,7 @@
 
 Every atom we have created so far accepted no arguments. But what if we added some?
 
-The active session data, the selected theme, the user settings - they all fit well into atoms.
+The active session data, the selected theme, the user settings, they all fit well into atoms.
 But how could we model a blog with multiple posts?
 
 Ideally we would have a `$post` atom that could be instantiated multiple times, for each blog post
@@ -79,8 +79,8 @@ assert(read($atomFamily, 'third-id', 333) === 333);
 ::: tip Solving the old mystery
 You were probably wondering why `dispatch(...)(...)` requires two function calls.
 
-It is because the number of family arguments and the number of action arguments are both variable - they
-had to be separated.
+It is because the number of family arguments and the number of action arguments are both variable.
+They had to be separated.
 :::
 
 

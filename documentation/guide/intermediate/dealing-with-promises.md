@@ -1,7 +1,7 @@
 # Dealing with Promises
 
 Reago has first-class support for asynchronous operations. It uses a novel approach based on
-generative atoms, that makes handling asynchronous state extremely easy.
+generative atoms that makes handling asynchronous state extremely easy.
 
 Before diving in, we are going to start with the basics and build from there. This article
 shows the verbose and rather inefficient way of handling `Promise`-like objects using hooks. While
@@ -10,7 +10,7 @@ very low level, it does a good job of explaining how Reago works under the hood.
 
 ## Returning a Promise from an atom
 
-An atom can return arbitrary data type, with no limitations. Reago never alters the returned value - and
+An atom can return arbitrary data type, with no limitations. Reago never alters the returned value, and
 it applies to `Promise`-like objects too. If your atom returns a `Promise`, it is returned as is.
 
 ```ts
@@ -42,7 +42,7 @@ for them to settle to compare the values they resolve to.
 
 The atom we declared above returns the `Promise` synchronously and is effectively treated synchronously as well.
 
-Subscribers will be immediately notified the `Promise` reference changed - not after it settles.
+Subscribers will be immediately notified the `Promise` reference changed, not after it settles.
 :::
 
 
@@ -81,7 +81,7 @@ function $repositoryStarsCount() {
 
 This is starting to look messy and a bit... _dated_.
 
-Here is the problem - JavaScript does not offer a way to track the execution context across
+Here is the problem: JavaScript does not offer a way to track the execution context across
 asynchronous computations. Reago can only detect the store context and correctly track hooks
 if the atom function is synchronous.
 

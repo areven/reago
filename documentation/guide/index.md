@@ -47,9 +47,11 @@ import {read} from 'reago';
 import {useReadAsyncAtom} from 'reago-react';
 
 export default function App() {
-  return <Suspense fallback={<Loading/>}>
-    <ReagoStars/>
-  </Suspense>;
+  return (
+    <Suspense fallback={<Loading/>}>
+      <ReagoStars/>
+    </Suspense>
+  );
 }
 
 function Loading() {
@@ -62,7 +64,7 @@ function ReagoStars() {
 }
 
 function* $repositoryData() {
-  const query = yield fetch(`https://api.github.com/repos/areven/reago`);
+  const query = yield fetch('https://api.github.com/repos/areven/reago');
   return yield query.json();
 }
 
