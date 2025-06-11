@@ -49,7 +49,7 @@ The official documentation is available at https://reago.dev. It includes a comp
 a structured user guide to help you get started quickly.
 
 * [Reago website](https://reago.dev)
-* [User guide](https://reago.dev/guide/)
+* [User guide](https://reago.dev/guide/getting-started)
 * [API reference](https://reago.dev/api/)
 
 

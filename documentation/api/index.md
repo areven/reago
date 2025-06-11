@@ -12,7 +12,7 @@ This handbook provides detailed reference documentation for working with Reago. 
 The API reference is intended for developers already familiar with Reago concepts and looking for an
 exhaustive technical breakdown of its features.
 
-For an introduction to Reago, please start with our official [user guide](/guide/) first.
+For an introduction to Reago, please start with our official [user guide](/guide/getting-started) first.
 
 ## Core principles
 

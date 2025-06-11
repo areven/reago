@@ -67,13 +67,9 @@ export default defineConfig({
 
     nav: [
       {
-        text: 'Intro',
-        link: '/'
-      },
-      {
         text: 'User guide',
-        link: '/guide/',
-        activeMatch: '/guide/',
+        link: '/',
+        activeMatch: '^\/(?:$|guide\/)',
       },
       {
         text: 'API reference',
@@ -88,9 +84,9 @@ export default defineConfig({
     ].map(o => ({...o, text: `<i>${o.text}</i><i>${o.text}</i>`})),
 
     sidebar: {
-      '/guide/': [
+      '/': [
         {text: 'User guide', items: [
-          {text: 'What is Reago?', link: '/guide/'},
+          {text: 'What is Reago?', link: '/'},
           {text: 'Motivation', link: '/guide/motivation'},
           {text: 'Getting started', link: '/guide/getting-started'}
         ]},
