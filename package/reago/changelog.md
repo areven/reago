@@ -1,5 +1,11 @@
 # reago
 
+## 1.1.1
+
+### Patch Changes
+
+- d95f394: Updated the user guide link on npm pages
+
 ## 1.1.0
 
 ### Minor Changes
