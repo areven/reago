@@ -1,5 +1,11 @@
 # reago-react
 
+## 1.0.4
+
+### Patch Changes
+
+- 4590936: Implemented minor stylistic changes
+
 ## 1.0.3
 
 ### Patch Changes
