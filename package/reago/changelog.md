@@ -1,5 +1,14 @@
 # reago
 
+## 1.1.2
+
+### Patch Changes
+
+- 5c39720: Switched to arrow functions for Store context binding
+
+  This approach allows TypeScript to recognize the `this` context is irrelevant and methods
+  can be safely destructured.
+
 ## 1.1.1
 
 ### Patch Changes
