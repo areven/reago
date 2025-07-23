@@ -102,7 +102,7 @@ test('state of a hook is tied to an atom instance', async () => {
   expect(read($atom1, 2)).toBe(2);
   expect(read($atom1, 3)).toBe(17);
 
-  const $atom2 = function* (id: number): Generator<number> {
+  const $atom2 = function* (id: number) {
     const [value, setValue] = atomState(0);
     atomAction(setValue, []);
     return id + value;

@@ -2,8 +2,9 @@
 // atomStore generative atom tests
 // =============================================================================
 
-import {atomStore, createStore, getDefaultStore, read, type Atom, type Store} from 'reago';
+import {atomStore, createStore, getDefaultStore, read} from 'reago';
 import {expect, test} from 'vitest';
+import type {Atom, Store} from 'reago';
 
 
 test('atomStore returns the default store correctly', async () => {

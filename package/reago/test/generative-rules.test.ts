@@ -67,7 +67,7 @@ test('generative atom will cache results from yielded promises', async () => {
 
   // second run will compute synchronously
   invalidate($atom);
-  read($atom); // no await here!
+  void read($atom); // no await here!
   expect(counter).toBe(2);
 });
 
@@ -105,7 +105,7 @@ test('generative atom will cache exceptions thrown by yielded promises', async (
 
   // second run will compute synchronously
   invalidate($atom);
-  read($atom); // no await here!
+  void read($atom); // no await here!
   expect(counter).toBe(2);
 });
 
@@ -123,7 +123,7 @@ test('generative atom will run the `try .. finally` block for interrupted comput
       afterYield = true;
     } finally {
       cleanup = true;
-      throw new Error('this error will be swallowed as it is not relevant');
+      throw new Error('this error will be swallowed as it is not relevant'); // eslint-disable-line
     }
   }
 

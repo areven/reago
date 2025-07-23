@@ -3,9 +3,10 @@
 // =============================================================================
 
 import LeakDetector from 'jest-leak-detector';
-import {atomAction, atomComputationEffect, atomMemo, atomRef, invalidate, read, watch, type Atom} from 'reago';
+import {atomAction, atomComputationEffect, atomMemo, atomRef, invalidate, read, watch} from 'reago';
 import {expect, test} from 'vitest';
 import {ComputationContextRequiredAtomError, InvalidCleanupFunctionAtomError} from '~/error';
+import type {Atom} from 'reago';
 
 
 test('atomComputationEffect handler without specified dependencies runs on every computation', () => {
@@ -144,7 +145,7 @@ test('atomComputationEffect handler can optionally return a cleanup function', (
 test('atomComputationEffect cleanup function must be a valid function', () => {
   function $atom() {
     atomComputationEffect(() => {
-      return 123 as any;
+      return 123 as any; // eslint-disable-line
     }, []);
   }
 

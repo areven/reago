@@ -51,6 +51,10 @@
   },
   "scripts": {
     "build": "tsup",
-    "test": "vitest"
+    "test": "vitest",
+    "lint": "eslint src/ test/"
+  },
+  "devDependencies": {
+    "@areven/eslint-config": "2.0.0"
   }
 }

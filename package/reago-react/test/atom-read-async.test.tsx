@@ -80,7 +80,7 @@ test('useReadAsyncAtom() throws on rejected promises returned from functional at
       useReadAsyncAtom($atom);
       throw new Error('failed');
     } catch (err: any) {
-      if (err && err.message && err.message === 'expected') {
+      if (err?.message && err.message === 'expected') {
         return <div data-testid='test'>success</div>;
       } else {
         throw err;
@@ -111,7 +111,7 @@ test('useReadAsyncAtom() synchronously throws on known rejected promises returne
       useReadAsyncAtom($atom);
       throw new Error('failed');
     } catch (err: any) {
-      if (err && err.message && err.message === 'expected') {
+      if (err?.message && err.message === 'expected') {
         return <div data-testid='test'>success</div>;
       } else {
         return <div data-testid='test'>fail, suspense triggered</div>;
@@ -313,8 +313,8 @@ test('useReadAsyncAtom() supports atom families', async () => {
     const value2 = useReadAsyncAtom($atom, 'second');
     return (
       <>
-        <div data-testid={'test-1'}>{value1}</div>
-        <div data-testid={'test-2'}>{value2}</div>
+        <div data-testid='test-1'>{value1}</div>
+        <div data-testid='test-2'>{value2}</div>
       </>
     );
   }

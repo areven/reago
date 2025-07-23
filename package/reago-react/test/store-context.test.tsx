@@ -3,13 +3,14 @@
 // =============================================================================
 
 import {useEffect} from 'react';
-import {atomAction, atomState, createStore, getDefaultStore, type Store} from 'reago';
+import {atomAction, atomState, createStore, getDefaultStore} from 'reago';
 import {
   StoreProvider, useAsyncAtom, useAtom, useDeasyncAtom, useDispatchAtom, useReadAsyncAtom,
   useReadAtom, useReadDeasyncAtom, useStore
 } from 'reago-react';
 import {expect, test} from 'vitest';
 import {render} from 'vitest-browser-react';
+import type {Store} from 'reago';
 
 
 test('useStore() without a store provider returns the default store', () => {
@@ -238,7 +239,7 @@ test('useReadAtom() uses the provided store', async () => {
 
   function Component({testId}: {testId: number}) {
     const value = useReadAtom($atom);
-    return <div data-testid={'test-' + testId}>{value}</div>
+    return <div data-testid={'test-' + testId}>{value}</div>;
   }
 
   const screen = render(
@@ -275,7 +276,7 @@ test('useReadAsyncAtom() uses the provided store', async () => {
 
   function Component({testId}: {testId: number}) {
     const value = useReadAsyncAtom($atom);
-    return <div data-testid={'test-' + testId}>{value}</div>
+    return <div data-testid={'test-' + testId}>{value}</div>;
   }
 
   const screen = render(
@@ -312,7 +313,7 @@ test('useReadDeasyncAtom() uses the provided store', async () => {
 
   function Component({testId}: {testId: number}) {
     const value = useReadDeasyncAtom($atom);
-    return <div data-testid={'test-' + testId}>{value.status === 'resolved' ? value.result : 'n/a'}</div>
+    return <div data-testid={'test-' + testId}>{value.status === 'resolved' ? value.result : 'n/a'}</div>;
   }
 
   const screen = render(

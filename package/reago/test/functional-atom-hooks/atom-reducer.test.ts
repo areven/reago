@@ -3,10 +3,11 @@
 // =============================================================================
 
 import {
-  atomAction, atomMemo, atomReducer, atomRef, atomState, dispatch, invalidate, read, type AtomReducer
+  atomAction, atomMemo, atomReducer, atomRef, atomState, dispatch, invalidate, read
 } from 'reago';
 import {expect, expectTypeOf, test} from 'vitest';
 import {ComputationContextRequiredAtomError} from '~/error';
+import type {AtomReducer} from 'reago';
 
 
 test('atomReducer stores the initial value on first computation', () => {
@@ -48,7 +49,7 @@ test('atomReducer supports storing primitive types', () => {
   expect(read($string)).toBe('value');
   expect(read($true)).toBe(true);
   expect(read($false)).toBe(false);
-  expect(read($undefined)).toBe(undefined);
+  expect(read($undefined as any)).toBe(undefined);
   expect(read($null)).toBe(null);
   expectTypeOf(read($symbol)).toBeSymbol();
 });

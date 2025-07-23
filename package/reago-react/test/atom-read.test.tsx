@@ -192,8 +192,8 @@ test('useReadAtom() supports atom families', async () => {
     const value2 = useReadAtom($atom, 'second');
     return (
       <>
-        <div data-testid={'test-1'}>{value1}</div>
-        <div data-testid={'test-2'}>{value2}</div>
+        <div data-testid='test-1'>{value1}</div>
+        <div data-testid='test-2'>{value2}</div>
       </>
     );
   }

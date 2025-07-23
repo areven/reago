@@ -326,7 +326,7 @@ test('read() correctly tracks multiple instances of the same atom', async () => 
 });
 
 test('read() drops dependencies that are no longer reachable', async () => {
-  let counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0, counter5 = 0;
+  let counter1 = 0, counter2 = 0, counter3 = 0;
 
   function* $atom1() {
     ++counter1;

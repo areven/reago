@@ -3,8 +3,9 @@
 // =============================================================================
 
 import LeakDetector from 'jest-leak-detector';
-import {atomAction, atomState, deasync, dispatch, read, watch, type Atom} from 'reago';
+import {atomAction, atomState, deasync, dispatch, read, watch} from 'reago';
 import {expect, test} from 'vitest';
+import type {Atom} from 'reago';
 
 
 test('reago does not hold atoms that are no longer referenced', async () => {

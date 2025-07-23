@@ -3,10 +3,11 @@
 // =============================================================================
 
 import {
-  atomAction, atomMemo, atomRef, atomState, dispatch, invalidate, read, type AtomState
+  atomAction, atomMemo, atomRef, atomState, dispatch, invalidate, read
 } from 'reago';
 import {expect, test} from 'vitest';
 import {ComputationContextRequiredAtomError} from '~/error';
+import type {AtomState} from 'reago';
 
 
 test('atomState stores the initial fixed value on first computation', () => {

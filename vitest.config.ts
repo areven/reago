@@ -2,11 +2,11 @@
 // Vitest configuration
 // =============================================================================
 
-import {defineConfig} from 'vitest/config';
+import {defineConfig, type ViteUserConfig} from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 
-export default defineConfig({
+const config: ViteUserConfig = defineConfig({
   plugins: [tsconfigPaths()],
   resolve: {
     conditions: ['raw']
@@ -28,3 +28,5 @@ export default defineConfig({
     ]
   }
 });
+
+export default config;

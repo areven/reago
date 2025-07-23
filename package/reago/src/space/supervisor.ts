@@ -6,9 +6,9 @@ import {
   COMPUTED, COMPUTING, FRESH, FUNCTIONAL_ATOM, GENERATIVE_ATOM, LOADED, METADATA,
   MOUNTED_DIRECTLY, MOUNTED_TRANSITIVELY, NO_VALUE, OUTDATED, STALE, UNLOADED, UNMOUNTED
 } from '~/const';
-import {createAtomFamily, type AtomFamily} from '~/core/atom-family';
-import {createAtomInstance, type AtomInstance} from '~/core/atom-instance';
-import {createAtomWatcher, type AtomListener, type AtomWatcher} from '~/core/atom-watcher';
+import {createAtomFamily} from '~/core/atom-family';
+import {createAtomInstance} from '~/core/atom-instance';
+import {createAtomWatcher} from '~/core/atom-watcher';
 import {assert, HookCountMismatchAtomError, InvalidCleanupFunctionAtomError} from '~/error';
 import {runWithCallbackContext} from '~/reactor/callback-context';
 import {createComputation, runComputation} from '~/reactor/computation';
@@ -18,6 +18,9 @@ import {swapOrRecreatePromise, unbindSwappablePromiseIfPending} from '~/util/swa
 import {trackPromise, trackRejectedPromise, trackResolvedPromise} from '~/util/tracked-promise';
 import {Store} from './store';
 import type {AnyAtom, AtomActionArgsOf, AtomFamilyArgsOf, AtomImplResultOf, AtomResultOf} from '~/core/atom';
+import type {AtomFamily} from '~/core/atom-family';
+import type {AtomInstance} from '~/core/atom-instance';
+import type {AtomListener, AtomWatcher} from '~/core/atom-watcher';
 import type {AtomComputationEffectCleanup} from '~/hook/atom-computation-effect';
 
 

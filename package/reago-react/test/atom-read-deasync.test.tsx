@@ -310,8 +310,8 @@ test('useReadDeasyncAtom() supports atom families', async () => {
     const {result: value2} = useReadDeasyncAtom($atom, 'second');
     return (
       <>
-        <div data-testid={'test-1'}>{value1}</div>
-        <div data-testid={'test-2'}>{value2}</div>
+        <div data-testid='test-1'>{value1}</div>
+        <div data-testid='test-2'>{value2}</div>
       </>
     );
   }

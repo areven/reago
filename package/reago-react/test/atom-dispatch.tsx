@@ -57,7 +57,7 @@ test('useDispatchAtom() returns the same callback for the same atom instance', a
     ++renderCount;
     refs.push(useDispatchAtom($atom));
 
-    const [_tick, rerender] = useReducer(x => x + 1, 0);
+    const [_tick, rerender] = useReducer((x: number) => x + 1, 0);
     return <button onClick={rerender}>rerender</button>;
   }
 
@@ -136,7 +136,7 @@ test('useDispatchAtom() returns a different callback if atom args change', async
     ++renderCount;
     refs.push(useDispatchAtom($atom, ++familyId));
 
-    const [_tick, rerender] = useReducer(x => x + 1, 0);
+    const [_tick, rerender] = useReducer((x: number) => x + 1, 0);
     return <button onClick={rerender}>rerender</button>;
   }
 

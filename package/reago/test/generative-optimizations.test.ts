@@ -91,7 +91,7 @@ test('generative atom syncs its actions synchronously if yielded promises have k
   dispatch($atom)(8);
 
   // without using await (!), we should know the last value
-  read($atom);
+  void read($atom);
   expect(lastReturnedValue).toBe(8);
 });
 

@@ -5,6 +5,7 @@
 import {atomAction, atomState, createStore, getDefaultStore} from 'reago';
 import {expect, test} from 'vitest';
 
+
 test('getDefaultStore() supports destructuring without losing the store context', () => {
   const store1 = getDefaultStore();
   const store2 = createStore();

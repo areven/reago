@@ -2,10 +2,10 @@
 // Store provider
 // =============================================================================
 
-import {
-  createContext, createElement, useRef, type Context, type FunctionComponentElement, type ReactNode
-} from 'react';
-import {createStore, type Store} from 'reago';
+import {createContext, createElement, useRef} from 'react';
+import {createStore} from 'reago';
+import type {Context, FunctionComponentElement, ReactNode} from 'react';
+import type {Store} from 'reago';
 
 
 export const StoreContext: Context<Store | undefined> = createContext<Store | undefined>(undefined);
@@ -24,7 +24,7 @@ export function StoreProvider({
 
   return createElement(
     StoreContext.Provider,
-    {value: store || storeRef.current},
+    {value: store ?? storeRef.current},
     children
   );
 }

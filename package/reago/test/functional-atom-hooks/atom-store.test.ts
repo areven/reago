@@ -3,11 +3,11 @@
 // =============================================================================
 
 import {
-  atomAction, atomComputationEffect, atomState, atomStore, createStore, getDefaultStore, read,
-  type Store
+  atomAction, atomComputationEffect, atomState, atomStore, createStore, getDefaultStore, read
 } from 'reago';
 import {expect, test} from 'vitest';
 import {ComputationContextRequiredAtomError} from '~/error';
+import type {Store} from 'reago';
 
 
 test('atomStore returns the default store correctly', () => {

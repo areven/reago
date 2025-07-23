@@ -2,9 +2,10 @@
 // Public watch() API tests
 // =============================================================================
 
-import {atomAction, createStore, getDefaultStore, read, watch, type AtomWatcher} from 'reago';
+import {atomAction, createStore, getDefaultStore, read, watch} from 'reago';
 import {expect, test} from 'vitest';
 import {IllegalOperationAtomError} from '~/error';
+import type {AtomWatcher} from 'reago';
 
 
 test('watch() is by default a proxy to the default store', () => {

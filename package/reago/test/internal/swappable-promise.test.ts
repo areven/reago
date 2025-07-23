@@ -43,7 +43,7 @@ test('swappable promise can be created with a not yet rejected promise', async (
 test('swappable promise can be created with no promise and linked later', async () => {
   const swappable = createSwappablePromise(null);
   const promise = Promise.resolve(Symbol.dispose);
-  swapOrRecreatePromise(swappable, promise);
+  void swapOrRecreatePromise(swappable, promise);
   await expect(swappable).resolves.toBe(Symbol.dispose);
 });
 

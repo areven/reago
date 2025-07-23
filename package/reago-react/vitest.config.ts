@@ -2,11 +2,11 @@
 // Vitest configuration
 // =============================================================================
 
-import {defineProject, mergeConfig} from 'vitest/config';
+import {defineProject, mergeConfig, type ViteUserConfig} from 'vitest/config';
 import baseConfig from '../../vitest.config';
 
 
-export default mergeConfig(baseConfig, defineProject({
+const config: ViteUserConfig = mergeConfig(baseConfig, defineProject({
   test: {
     include: [
       'test/**/*.test.ts',
@@ -21,3 +21,5 @@ export default mergeConfig(baseConfig, defineProject({
     }
   }
 }));
+
+export default config;

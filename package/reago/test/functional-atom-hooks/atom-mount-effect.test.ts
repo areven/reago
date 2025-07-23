@@ -525,7 +525,7 @@ test('atomMountEffect can be called multiple times with the same function', () =
 test('atomMountEffect cleanup function must be a valid function', () => {
   function $atom() {
     atomMountEffect(() => {
-      return 123 as any;
+      return 123 as any; // eslint-disable-line
     }, []);
   }
 

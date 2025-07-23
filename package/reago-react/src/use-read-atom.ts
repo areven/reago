@@ -16,7 +16,7 @@ export function useReadAtom<T extends AnyAtom>(
   const value = store.read(atom, ...args);
 
   // allow triggering a re-render on demand
-  const [_tick, refresh] = useReducer(x => x + 1, 0);
+  const [_tick, refresh] = useReducer((x: number) => x + 1, 0);
 
   // listen to value changes
   useEffect(() => {

@@ -3,9 +3,10 @@
 // =============================================================================
 
 import ReactExports from 'react';
-import {deasync, type AnyAtom, type AtomFamilyArgsOf, type AtomResultOf} from 'reago';
+import {deasync} from 'reago';
 import {useReadAtom} from './use-read-atom';
 import {isPromiseLike} from './util';
+import type {AnyAtom, AtomFamilyArgsOf, AtomResultOf} from 'reago';
 
 
 export function useReadAsyncAtom<T extends AnyAtom>(

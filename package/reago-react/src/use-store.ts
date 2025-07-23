@@ -3,8 +3,9 @@
 // =============================================================================
 
 import {useContext} from 'react';
-import {getDefaultStore, type Store} from 'reago';
+import {getDefaultStore} from 'reago';
 import {StoreContext} from './provider';
+import type {Store} from 'reago';
 
 
 export function useStore(): Store {

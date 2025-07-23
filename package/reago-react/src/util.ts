@@ -2,6 +2,10 @@
 // Utils
 // =============================================================================
 
-export function isPromiseLike(value: any): value is PromiseLike<unknown> {
-  return value instanceof Object && typeof value.then === 'function';
+export function isPromiseLike(value: unknown): value is PromiseLike<unknown> {
+  return (
+    value instanceof Object &&
+    'then' in value &&
+    typeof value.then === 'function'
+  );
 }

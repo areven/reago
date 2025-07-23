@@ -28,7 +28,7 @@ test('atomMemo supports returning primitive types', () => {
   expect(read($string)).toBe('value');
   expect(read($true)).toBe(true);
   expect(read($false)).toBe(false);
-  expect(read($undefined)).toBe(undefined);
+  expect(read($undefined as any)).toBe(undefined);
   expect(read($null)).toBe(null);
   expect(read($symbolIterator)).toBe(Symbol.iterator);
 });
