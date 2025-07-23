@@ -14,6 +14,9 @@ fi
 # consume changesets and set new versions
 npx changeset version
 
+# sync the lock file
+npm install --save
+
 # force lower-case file name for changelog.md
 if ! [ -f .NPMRC ]; then
   # case-sensitive fs
