@@ -1,5 +1,11 @@
 # reago
 
+## 1.1.3
+
+### Patch Changes
+
+- 4590936: Implemented minor stylistic changes
+
 ## 1.1.2
 
 ### Patch Changes
