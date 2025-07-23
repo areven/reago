@@ -110,7 +110,7 @@ test('generative atom will cache exceptions thrown by yielded promises', async (
 });
 
 test('generative atom will run the `try .. finally` block for interrupted computations', async () => {
-  let beforeYield = false, afterYield = false, cleanup = false, killed = false;;
+  let beforeYield = false, afterYield = false, cleanup = false, killed = false;
 
   function* $atom() {
     if (killed) {
@@ -148,7 +148,7 @@ test('generative atom will ignore errors thrown from interrupted computations', 
   function* $atom() {
     yield Promise.resolve();
     if (!killed) {
-      throw new Error('will be ignored')
+      throw new Error('will be ignored');
     } else {
       return 123;
     }

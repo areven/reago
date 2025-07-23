@@ -80,7 +80,7 @@ test('atomRef supports storing objects', async () => {
   const object = {key: 'value'};
   const $object = function* () {
     return atomRef(object).current;
-  }
+  };
   await expect(read($object)).resolves.toBe(object);
 });
 

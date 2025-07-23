@@ -32,7 +32,7 @@ export function atomState<Value>(
       value = initialState;
     }
 
-    const setter = (nextState: AtomStateSetterNextState<Value>) => {
+    const setter = (nextState: AtomStateSetterNextState<Value>): void => {
       const next = nextState instanceof Function ? nextState(frame.data[0]) : nextState;
       if (compareEqual(frame.data[0], next)) return;
       frame.data = [next, frame.data[1]];

@@ -29,7 +29,7 @@ export function createAtomWatcher<T extends AnyAtom = AnyAtom>(
     [METADATA]: {
       supervisor,
       instance,
-      listener,
+      listener
     },
     clear: () => {
       // don't use the function args here or you'll cause a memory leak

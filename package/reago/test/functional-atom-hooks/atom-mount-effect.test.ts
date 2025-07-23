@@ -377,10 +377,10 @@ test('atomMountEffect sets up new handlers only after running all cleanup tasks 
 
 test('atomMountEffect does a shallow comparison of dependencies', () => {
   let counter = 0;
-  let results: number[] = [];
+  const results: number[] = [];
 
   function $atom() {
-    let currentCounter = ++counter;
+    const currentCounter = ++counter;
 
     atomMountEffect(
       () => {
@@ -405,7 +405,7 @@ test('atomMountEffect does a shallow comparison of dependencies', () => {
 
 test('atomMountEffect does not make a copy of the dependency array to use for comparison', () => {
   let counter = 0;
-  let deps = [123];
+  const deps = [123];
   let wrongHandler = false;
 
   function $atom() {
@@ -432,7 +432,7 @@ test('atomMountEffect does not make a copy of the dependency array to use for co
 
 test('atomMountEffect discards handlers that appeared in an older computation but are now unreachable', () => {
   let throwError = false;
-  let results: number[] = [];
+  const results: number[] = [];
 
   function $atom() {
     atomMountEffect(() => {
@@ -462,8 +462,8 @@ test('atomMountEffect discards handlers that appeared in an older computation bu
 
 test('atomMountEffect cleans up handlers that appeared in an older computation but are now unreachable', () => {
   let throwError = false;
-  let mountOrder: number[] = [];
-  let unmountOrder: number[] = [];
+  const mountOrder: number[] = [];
+  const unmountOrder: number[] = [];
 
   function $atom() {
     atomMountEffect(() => {

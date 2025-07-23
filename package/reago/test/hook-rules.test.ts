@@ -86,7 +86,7 @@ test('state of a hook is tied to an atom instance', async () => {
     const [value, setValue] = atomState(0);
     atomAction(setValue, []);
     return id + value;
-  }
+  };
 
   expect(read($atom1, 1)).toBe(1);
   expect(read($atom1, 2)).toBe(2);
@@ -106,7 +106,7 @@ test('state of a hook is tied to an atom instance', async () => {
     const [value, setValue] = atomState(0);
     atomAction(setValue, []);
     return id + value;
-  }
+  };
 
   expect(await read($atom2, 1)).toBe(1);
   expect(await read($atom2, 2)).toBe(2);
@@ -222,7 +222,7 @@ test('hooks cannot be used in an async function after `await`', async () => {
 
   const promise = read($invalidAtom);
   await expect(promise).rejects.toThrow(ComputationContextRequiredAtomError);
-})
+});
 
 test('hooks cannot be called outside of a computation', () => {
   expect(() => atomRef(null)).toThrowError(ComputationContextRequiredAtomError);

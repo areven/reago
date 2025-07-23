@@ -304,10 +304,10 @@ test('atomComputationEffect sets up new handlers only after running all cleanup 
 
 test('atomComputationEffect does a shallow comparison of dependencies', () => {
   let counter = 0;
-  let results: number[] = [];
+  const results: number[] = [];
 
   function $atom() {
-    let currentCounter = ++counter;
+    const currentCounter = ++counter;
 
     atomComputationEffect(
       () => {
@@ -333,7 +333,7 @@ test('atomComputationEffect does a shallow comparison of dependencies', () => {
 
 test('atomComputationEffect does not make a copy of the dependency array to use for comparison', () => {
   let counter = 0;
-  let deps = [123];
+  const deps = [123];
   let wrongHandler = false;
 
   function $atom() {
@@ -357,8 +357,8 @@ test('atomComputationEffect does not make a copy of the dependency array to use 
 
 test('atomComputationEffect cleans up handlers that appeared in an older computation but are now unreachable', () => {
   let throwError = false;
-  let setupOrder: number[] = [];
-  let cleanupOrder: number[] = [];
+  const setupOrder: number[] = [];
+  const cleanupOrder: number[] = [];
 
   function $atom() {
     atomComputationEffect(() => {
@@ -401,7 +401,7 @@ test('atomComputationEffect cleans up handlers from atoms that were garbage coll
         cleaned = true;
       };
     }, []);
-  }
+  };
   const detector = createDetector($atom);
 
   read($atom!);

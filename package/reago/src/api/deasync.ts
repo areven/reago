@@ -84,7 +84,7 @@ function deasyncPromise<T>(promise: PromiseLike<T>): DeasyncState<Awaited<T>> {
     return {
       status: 'rejected',
       error: state.error
-    }
+    };
   }
 }
 

@@ -86,7 +86,7 @@ test('atomReducer can be used multiple times within an atom', () => {
       inc2();
     }, []);
     return val1 + val2.value;
-  };
+  }
 
   expect(read($atom)).toBe(579);
   expect(read($atom)).toBe(579);

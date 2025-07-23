@@ -35,10 +35,10 @@ export class InvalidCleanupFunctionAtomError extends AtomError {
 }
 
 export class GeneratorPromiseExpectedAtomError extends AtomError {
-  constructor(value: any) {
+  constructor(value: unknown) {
     super(
       `atom: generator yielded a value that is not a Promise\n` +
-      `  value: ${value}`
+      `  value: ${String(value)}`
     );
   }
 }

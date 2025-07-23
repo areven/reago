@@ -14,7 +14,7 @@ export interface AtomReducerFrame<Value, ActionArgs extends any[]> extends AtomH
 }
 
 export type AtomReducer<Value, ActionArgs extends any[] = any[]> = [Value, AtomReducerDispatcher<ActionArgs>];
-export type AtomReducerReducer<Value, ActionArgs extends any[]> = (prevState: Value, ...args: ActionArgs) => Value
+export type AtomReducerReducer<Value, ActionArgs extends any[]> = (prevState: Value, ...args: ActionArgs) => Value;
 export type AtomReducerDispatcher<ActionArgs extends any[]> = (...args: ActionArgs) => void;
 
 export function atomReducer<Value, ActionArgs extends any[] = any[]>(
@@ -34,7 +34,7 @@ export function atomReducer<Value, ActionArgs extends any[] = any[]>(
       value = initialArg;
     }
 
-    const dispatcher = (...args: ActionArgs) => {
+    const dispatcher = (...args: ActionArgs): void => {
       const next = reducer(frame.data[0], ...args);
       if (compareEqual(frame.data[0], next)) return;
       frame.data = [next, frame.data[1]];

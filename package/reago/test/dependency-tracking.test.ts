@@ -74,7 +74,7 @@ test('read() registers a non-linear dependency chain', async () => {
 
   function $atom3() {
     ++counter3;
-    return read($atom1) + read($atom2) ;
+    return read($atom1) + read($atom2);
   }
 
   expect(read($atom3)).toBe(10);

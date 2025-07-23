@@ -36,7 +36,7 @@ test('atomAction handler runs exactly once per dispatch', () => {
 });
 
 test('atomAction handlers run in the order they were defined', () => {
-  let order: number[] = [];
+  const order: number[] = [];
 
   function $atom() {
     atomAction(() => {
@@ -104,7 +104,7 @@ test('atomAction reuses the handler from first computation if dependencies were 
 });
 
 test('atomAction updates the stored handler if dependencies were changed', () => {
-  let results: number[] = [];
+  const results: number[] = [];
 
   function $atom() {
     const [value, setValue] = atomState(8);
@@ -127,10 +127,10 @@ test('atomAction updates the stored handler if dependencies were changed', () =>
 
 test('atomAction does a shallow comparison of dependencies', () => {
   let counter = 0;
-  let results: number[] = [];
+  const results: number[] = [];
 
   function $atom() {
-    let currentCounter = ++counter;
+    const currentCounter = ++counter;
 
     atomAction(
       () => {
@@ -155,7 +155,7 @@ test('atomAction does a shallow comparison of dependencies', () => {
 
 test('atomAction does not make a copy of the dependency array to use for comparison', () => {
   let counter = 0;
-  let deps = [123];
+  const deps = [123];
   let wrongHandler = false;
 
   function $atom() {
@@ -180,7 +180,7 @@ test('atomAction does not make a copy of the dependency array to use for compari
 
 test('atomAction discards handlers that appeared in an older computation but are now unreachable', () => {
   let throwError = false;
-  let results: number[] = [];
+  const results: number[] = [];
 
   function $atom() {
     atomAction(() => {

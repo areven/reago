@@ -17,7 +17,7 @@ import {compareEqual} from '~/util/comparison';
 import {swapOrRecreatePromise, unbindSwappablePromiseIfPending} from '~/util/swappable-promise';
 import {trackPromise, trackRejectedPromise, trackResolvedPromise} from '~/util/tracked-promise';
 import {Store} from './store';
-import type {AnyAtom, AtomActionArgsOf, AtomFamilyArgsOf, AtomResultOf, AtomImplResultOf} from '~/core/atom';
+import type {AnyAtom, AtomActionArgsOf, AtomFamilyArgsOf, AtomImplResultOf, AtomResultOf} from '~/core/atom';
 import type {AtomComputationEffectCleanup} from '~/hook/atom-computation-effect';
 
 
@@ -28,7 +28,7 @@ export class Supervisor {
 
   #flushTimeout: ReturnType<typeof setTimeout> | null = null;
   readonly #computationQueue: Set<AtomInstance<AnyAtom>> = new Set();
-  readonly #watcherDispatchQueue: Set<AtomWatcher<AnyAtom>> = new Set();
+  readonly #watcherDispatchQueue: Set<AtomWatcher> = new Set();
 
   readonly #computationEffectQueue: Set<AtomInstance<AnyAtom>> = new Set();
   readonly #computationEffectCleanupRegistry: FinalizationRegistry<AtomComputationEffectCleanup>;
@@ -261,7 +261,7 @@ export class Supervisor {
           return newComputation.result as AtomImplResultOf<T>;
         },
         /* istanbul ignore next -- @preserve */
-        (err) => {
+        (err: unknown) => {
           // should be unreachable - errors are reported via `computation.error`
           newComputation.error = err;
           if (!newComputation.abortController.signal.aborted) {

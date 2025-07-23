@@ -6,7 +6,7 @@ import {stableWeakRef} from './stable-weakref';
 
 
 export class IterableWeakSet<T extends WeakKey> {
-  #set = new Set<WeakRef<T>>();
+  readonly #set: Set<WeakRef<T>> = new Set();
 
   add(value: T): this {
     this.#set.add(stableWeakRef(value));
@@ -31,7 +31,7 @@ export class IterableWeakSet<T extends WeakKey> {
     return false;
   }
 
-  *[Symbol.iterator](): Generator<T, void, unknown> {
+  * [Symbol.iterator](): Generator<T, void, unknown> {
     for (const ref of this.#set.values()) {
       const value = ref.deref();
       if (value) {

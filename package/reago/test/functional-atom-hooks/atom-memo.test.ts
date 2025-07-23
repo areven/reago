@@ -87,7 +87,7 @@ test('atomMemo does not recompute memoized value if dependencies are unchanged',
 
 test('atomMemo recomputes memoized value if dependencies have changed', () => {
   let counter = 0;
-  let deps = [123, 'value', null];
+  const deps = [123, 'value', null];
 
   function $atom() {
     return atomMemo(() => {
@@ -147,7 +147,7 @@ test('atomMemo does a shallow comparison of dependencies', () => {
 
 test('atomMemo does not make a copy of the dependency array to use for comparison', () => {
   let counter = 0;
-  let deps = [123];
+  const deps = [123];
 
   function $atom() {
     return atomMemo(() => {
@@ -175,7 +175,7 @@ test('atomMemo rethrows errors thrown by initializer', () => {
 
 test('atomMemo memoizes errors thrown by initializer', () => {
   let throwError = true;
-  let deps = [true];
+  const deps = [true];
 
   function $atom() {
     return atomMemo(() => {

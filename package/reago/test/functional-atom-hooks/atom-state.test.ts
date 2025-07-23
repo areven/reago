@@ -50,7 +50,7 @@ test('atomState supports storing primitive types', () => {
   expect(read($string)).toBe('value');
   expect(read($true)).toBe(true);
   expect(read($false)).toBe(false);
-  expect(read($undefined)).toBe(undefined);
+  expect(read($undefined as any)).toBe(undefined);
   expect(read($null)).toBe(null);
   expect(read($symbolIterator)).toBe(Symbol.iterator);
 });
@@ -84,7 +84,7 @@ test('atomState can be used multiple times within an atom', () => {
     const [obj1, setObj1] = atomState(123);
     const [obj2, setObj2] = atomState({value: 456});
     return obj1 + obj2.value;
-  };
+  }
 
   expect(read($atom)).toBe(579);
 });
@@ -156,7 +156,7 @@ test('atomState setter can compute new value from the previous one if provided a
   function $atom() {
     const [value, setValue] = atomState<number>(1);
     atomAction(() => {
-      setValue(x => x + 1)
+      setValue(x => x + 1);
     }, []);
     return value;
   }

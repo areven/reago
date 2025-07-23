@@ -19,7 +19,7 @@ test('reago does not hold atoms that are no longer referenced', async () => {
 
 test('reago holds atoms that are tracked as dependencies', async () => {
   let $atom1: Atom<number> | undefined = () => 123;
-  let $atom2: Atom<number> | undefined = () => read($atom1!) * 2;
+  const $atom2: Atom<number> | undefined = () => read($atom1!) * 2;
   const detector1 = createDetector($atom1);
 
   // add $atom1 as a dependency of $atom2
@@ -35,7 +35,7 @@ test('reago does not hold atoms that were tracked as dependants', async () => {
     const [value, setValue] = atomState(123);
     atomAction(setValue, []);
     return value;
-  }
+  };
 
   let $atom2: Atom<number> | undefined = () => read($atom1) * 2;
   const detector = createDetector($atom2);
@@ -54,7 +54,7 @@ test('reago does not hold atoms that were tracked as dependants', async () => {
 
 test('reago holds atoms that are mounted', async () => {
   // $atom1 value can be freely changed
-  let $atom1 = () => {
+  const $atom1 = () => {
     const [value, setValue] = atomState(123);
     atomAction(setValue, []);
     return value;
@@ -98,13 +98,13 @@ test('reago does not hold yielded promises that are no longer referenced', async
   let promise1: Promise<number> | undefined = Promise.resolve(123);
   let promise2: Promise<number> | undefined = Promise.reject();
 
-  let $atom: Atom<Promise<number>> | undefined = function* () {
+  const $atom: Atom<Promise<number>> | undefined = function* () {
     try {
       yield promise1!;
       yield promise2!;
     } catch (err) {}
     return 8;
-  }
+  };
 
   const detector1 = createDetector(promise1);
   const detector2 = createDetector(promise2);

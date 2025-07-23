@@ -14,6 +14,6 @@ export interface AtomFamily<T extends AnyAtom> {
 export function createAtomFamily<T extends AnyAtom>(atom: T): AtomFamily<T> {
   return {
     atom,
-    instanceMap: new Map(),
+    instanceMap: new Map()
   };
 }

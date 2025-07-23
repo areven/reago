@@ -45,7 +45,7 @@ export function trackPromise<Type>(promise: PromiseLike<Type>): void {
         result
       });
     },
-    (error) => {
+    (error: unknown) => {
       promiseState.set(promise, {
         status: REJECTED,
         error

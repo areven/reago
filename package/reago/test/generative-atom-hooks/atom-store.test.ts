@@ -17,7 +17,7 @@ test('atomStore returns the default store correctly', async () => {
     const store2 = atomStore();
     if (store1 !== store2) throw new Error('fail');
     return store1;
-  }
+  };
 
   await expect(read($atom)).resolves.toBe(defaultStore);
   await expect(defaultStore.read($atom)).resolves.toBe(defaultStore);
@@ -32,7 +32,7 @@ test('atomStore returns a custom store correctly', async () => {
   const $atom: Atom<Promise<Store>> = function* () {
     yield Promise.resolve(123);
     return atomStore();
-  }
+  };
 
   await expect(store1.read($atom)).resolves.toBe(store1);
   await expect(store2.read($atom)).resolves.toBe(store2);

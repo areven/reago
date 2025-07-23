@@ -47,18 +47,18 @@ test('atomAction handler will run even if an exception was thrown after it was r
     throw new Error('fail');
   }
 
-    // run everything up to the first yield
-    const promise = read($atom);
-    expect(registered).toBeFalsy();
-    expect(triggered).toBeFalsy();
+  // run everything up to the first yield
+  const promise = read($atom);
+  expect(registered).toBeFalsy();
+  expect(triggered).toBeFalsy();
 
-    // trigger a dispatch but it doesn't see the atomAction yet
-    dispatch($atom)();
-    expect(registered).toBeFalsy();
-    expect(triggered).toBeFalsy();
+  // trigger a dispatch but it doesn't see the atomAction yet
+  dispatch($atom)();
+  expect(registered).toBeFalsy();
+  expect(triggered).toBeFalsy();
 
-    // when computation finishes, the dispatch will run
-    await promise.catch(() => {});
-    expect(registered).toBeTruthy();
-    expect(triggered).toBeTruthy();
+  // when computation finishes, the dispatch will run
+  await promise.catch(() => {});
+  expect(registered).toBeTruthy();
+  expect(triggered).toBeTruthy();
 });

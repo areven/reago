@@ -57,7 +57,7 @@ export function createSwappablePromise<Type>(initial: PromiseLike<Type> | null =
             resolve(result);
           }
         },
-        (error) => {
+        (error: unknown) => {
           if (promise[METADATA].status === PENDING && promise[METADATA].promise === p) {
             promise[METADATA] = {
               status: REJECTED

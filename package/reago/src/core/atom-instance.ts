@@ -3,7 +3,7 @@
 // =============================================================================
 
 import {
-  COMPUTING, COMPUTED, MOUNTED_DIRECTLY, MOUNTED_TRANSITIVELY, UNMOUNTED, FRESH, OUTDATED, STALE
+  COMPUTED, COMPUTING, FRESH, MOUNTED_DIRECTLY, MOUNTED_TRANSITIVELY, OUTDATED, STALE, UNMOUNTED
 } from '~/const';
 import {IterableWeakSet} from '~/util/iterable-weakset';
 import type {AtomActionFrame} from '~/hook/atom-action';

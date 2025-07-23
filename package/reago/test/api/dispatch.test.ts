@@ -20,15 +20,15 @@ test('dispatch() is by default a proxy to the default store', () => {
     return value;
   }
 
-  expect(defaultStore.read($atom)).toBe(0)
+  expect(defaultStore.read($atom)).toBe(0);
   expect(customStore.read($atom)).toBe(0);
 
   dispatch($atom)(13);
-  expect(defaultStore.read($atom)).toBe(13)
+  expect(defaultStore.read($atom)).toBe(13);
   expect(customStore.read($atom)).toBe(0);
 
   customStore.dispatch($atom)(8);
-  expect(defaultStore.read($atom)).toBe(13)
+  expect(defaultStore.read($atom)).toBe(13);
   expect(customStore.read($atom)).toBe(8);
 });
 
@@ -56,15 +56,15 @@ test('dispatch() inside atomAction is a proxy to the store the effect is running
     }, []);
   }
 
-  expect(defaultStore.read($atom1)).toBe(0)
+  expect(defaultStore.read($atom1)).toBe(0);
   expect(customStore.read($atom1)).toBe(0);
 
   defaultStore.dispatch($atom2)(13);
-  expect(defaultStore.read($atom1)).toBe(13)
+  expect(defaultStore.read($atom1)).toBe(13);
   expect(customStore.read($atom1)).toBe(0);
 
   customStore.dispatch($atom2)(8);
-  expect(defaultStore.read($atom1)).toBe(13)
+  expect(defaultStore.read($atom1)).toBe(13);
   expect(customStore.read($atom1)).toBe(8);
 });
 
