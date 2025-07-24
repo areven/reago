@@ -17,6 +17,7 @@ permissions:
   contents: write
   packages: write
   pull-requests: write
+  id-token: write
 
 concurrency:
   group: changeset/${{ github.workflow }}/${{ github.ref }}

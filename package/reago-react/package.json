@@ -18,6 +18,10 @@
   "bugs": {
     "url": "https://github.com/areven/reago/issues"
   },
+  "publishConfig": {
+    "provenance": true,
+    "access": "public"
+  },
   "type": "module",
   "sideEffects": false,
   "files": [

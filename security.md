@@ -28,7 +28,7 @@ way is to use the "Report a vulnerability" button under the "Security" tab of th
 This creates a private communication channel between the reporter and the maintainers.
 
 If you are absolutely unable to or have strong reasons not to use GitHub's vulnerability
-reporting workflow, please reach out to the author directly at https://github.com/sebastian-nowak.
+reporting workflow, please reach out to us directly at https://areven.com.
 
 
 ### Preferred language
