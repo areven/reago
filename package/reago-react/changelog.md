@@ -1,5 +1,11 @@
 # reago-react
 
+## 1.0.5
+
+### Patch Changes
+
+- 8aeb9be: Generated npm provenance statements for the package
+
 ## 1.0.4
 
 ### Patch Changes
