@@ -51,7 +51,7 @@
   "scripts": {
     "build": "tsup",
     "test": "vitest",
-    "lint": "eslint src/ test/"
+    "eslint": "eslint src/ test/"
   },
   "peerDependencies": {
     "@types/react": ">=17.0.0",
@@ -64,7 +64,7 @@
     }
   },
   "devDependencies": {
-    "@areven/eslint-config-react": "2.0.0",
+    "@areven/eslint-config-react": "4.1.0",
     "@types/react": "18.3.12",
     "react": "18.3.1",
     "react-dom": "18.3.1",
