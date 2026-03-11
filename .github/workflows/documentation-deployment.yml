@@ -32,7 +32,7 @@ jobs:
       - name: Setup nodejs
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
       - name: Setup github pages
         uses: actions/configure-pages@v4
       - name: Cache ~/.npm
